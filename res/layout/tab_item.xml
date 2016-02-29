@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/tab_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+     <TextView
+         android:id="@id/item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:gravity="center_horizontal"
+        android:text="@string/home_title"
+        android:drawablePadding="4dp"
+        android:textColor="#fff"
+        android:drawableTop="@drawable/ic_launcher"
+        android:textSize="11.0sp" />
+    
+
+</RelativeLayout>
