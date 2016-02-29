@@ -25,9 +25,9 @@ public class MainActivity extends FragmentActivity {
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         inflater = getLayoutInflater();
         addTab("HOME", R.drawable.icon_home, HomeFragment.class);
-		addTab("持仓", R.drawable.optionp_osition_img, HoldFragment.class);
-		addTab("成交", R.drawable.deal_img, DealFragment.class);
-		addTab("设置", R.drawable.setting_img, SetFragment.class);
+		addTab("持仓", R.drawable.icon_option, HoldFragment.class);
+		addTab("成交", R.drawable.icon_deal, DealFragment.class);
+		addTab("设置", R.drawable.icon_setting, SetFragment.class);
 	}
 
 	private void addTab(String title, int drawableRes, Class fragmentClass) {
