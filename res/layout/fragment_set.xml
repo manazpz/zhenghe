@@ -216,7 +216,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn4" >
+                android:background="@drawable/btn" >
 
                 <TextView
                     android:id="@+id/cancel"
@@ -236,7 +236,7 @@
                 android:layout_height="40dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn4"
+                android:background="@drawable/btn"
                 android:orientation="vertical" >
 
                 <TextView
