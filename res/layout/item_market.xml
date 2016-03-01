@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" 
+    android:background="#122847">
+
+    <LinearLayout
+        android:id="@+id/layout_tital"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tv_tital"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:textSize="15sp"
+            android:textColor="#FFB90F"
+            android:text="美元日元（USDJPY）" />
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="32dp" >
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true" >
+
+            <TextView
+                android:id="@+id/tv_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="执行价 "
+                android:textColor="#adadad"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_execute"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="112.000000"
+                android:layout_toRightOf="@+id/tv_price"
+                android:textColor="#ff0000"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/tv_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="#adadad"
+                android:text="买入" />
+
+            <TextView
+                android:id="@+id/tv_sellprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:textColor="#ff0000"
+                android:text="112.736000" />
+
+            <TextView
+                android:id="@+id/tv_sell"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="50dp"
+                android:textColor="#adadad"
+                android:layout_toLeftOf="@+id/tv_sellprice"
+                android:text="卖出" />
+
+            <TextView
+                android:id="@+id/tv_buyprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="30dp"
+                android:textColor="#ff0000"
+                android:layout_toRightOf="@+id/tv_buy"
+                android:text="112.747000" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:paddingTop="8dp"
+            android:layout_weight="1">
+            
+             <TextView
+                android:id="@+id/opening"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="#adadad"
+                android:text="开盘" />
+
+            <TextView
+                android:id="@+id/tv_newpricenum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:textColor="#ff0000"
+                android:text="112.736000" />
+
+            <TextView
+                android:id="@+id/tv_newprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="50dp"
+                android:textColor="#adadad"
+                android:layout_toLeftOf="@+id/tv_newpricenum"
+                android:text="最新" />
+
+            <TextView
+                android:id="@+id/tv_openprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/opening"
+                android:textColor="#fff"
+                android:text="112.747000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp"
+            android:layout_weight="1">
+            
+             <TextView
+                android:id="@+id/tv_updown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="#adadad"
+                android:text="涨跌" />
+
+            <TextView
+                android:id="@+id/tv_topprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:textColor="#ff0000"
+                android:text="112.736000" />
+
+            <TextView
+                android:id="@+id/tv_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="50dp"
+                android:layout_toLeftOf="@+id/tv_topprice"
+                android:textColor="#adadad"
+                android:text="最高" />
+
+            <TextView
+                android:id="@+id/tv_updownprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/tv_updown"
+                android:textColor="#ff0000"
+                android:text="112.747000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="8dp" 
+            android:layout_weight="1">
+            
+             <TextView
+                android:id="@+id/tv_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:textColor="#adadad"
+                android:text="幅度" />
+
+            <TextView
+                android:id="@+id/tv_lowprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="10dp"
+                android:textColor="#f9f900"
+                android:text="112.736000" />
+
+            <TextView
+                android:id="@+id/tv_low"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="50dp"
+                android:layout_toLeftOf="@+id/tv_lowprice"
+                android:textColor="#adadad"
+                android:text="最低" />
+
+            <TextView
+                android:id="@+id/tv_rangeprice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="30dp"
+                android:layout_toRightOf="@+id/tv_range"
+                android:textColor="#ff0000"
+                android:text="112.747000" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>
