@@ -8,8 +8,10 @@
     <RelativeLayout
         android:id="@+id/tital"
         android:layout_width="match_parent"
-        android:layout_height="40dp" 
-        android:background="#707070">
+        android:layout_height="wrap_content"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:background="#c0c0c0">
 
         <RelativeLayout
             android:layout_width="80dp"

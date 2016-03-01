@@ -3,31 +3,215 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.fragment.HomeFragment" >
+    
+    <LinearLayout
+        android:id="@+id/layout_tab"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#000"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layout_icon"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="#ff00dd"
+        android:layout_below="@+id/layout_tab"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layout_icon"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="5dp"
+            >
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/hold" 
+                >
+
+                <TextView
+                    android:id="@+id/tv_current_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="#fff"
+                    android:text="当前：112.364" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/price" >
+
+                <TextView
+                    android:id="@+id/tv_hold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="#fff"
+                    android:text="持仓：0.00元" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" 
+            android:paddingTop="10dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:background="@drawable/setprice">
+
+                <Button
+                    android:id="@+id/btn_minus"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="#0000"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/tv_addprice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="#000"
+                    android:text="1,000元" />
+
+                <Button
+                    android:id="@+id/btn_add"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/tv_addprice"
+                    android:background="#0000" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/profit" >
+
+                <TextView
+                    android:id="@+id/tv_profit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:paddingLeft="5dp"
+                    android:text="盈亏：1513.00元" />
+
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" 
+            android:paddingTop="10dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:background="@drawable/setprice">
+                
+                <Button
+                    android:id="@+id/btn_timeminus"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="#0000"
+                    android:text="" />
+
+                <TextView
+                    android:id="@+id/tv_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:textColor="#000"
+                    android:text="30秒" />
+
+                <Button
+                    android:id="@+id/btn_timeadd"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/tv_time"
+                    android:background="#0000" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/profit" >
+                
+               <TextView
+                    android:id="@+id/tv_balance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#fff"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:text="余额：111513.00元" /> 
+                
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:orientation="horizontal" >
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:layout_marginBottom="50dp" >
 
         <RelativeLayout
+            android:id="@+id/relativeLayout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@drawable/high"
-            >
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/high" >
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@drawable/low"
-            >
-
-
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/low" >
         </RelativeLayout>
 
     </RelativeLayout>
