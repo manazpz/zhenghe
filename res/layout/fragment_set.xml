@@ -14,20 +14,23 @@
         android:background="#c0c0c0">
 
         <RelativeLayout
-            android:layout_width="80dp"
-            android:layout_height="wrap_content" 
+            android:layout_width="wrap_content"
+            android:layout_height="30dp" 
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:background="#000">
+            android:background="@drawable/back_blue">
 
             <TextView
                 android:id="@+id/textView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingTop="5dp"
+                android:paddingLeft="20dp"
+          	    android:paddingRight="20dp"
                 android:text="设置"
                 android:layout_centerHorizontal="true"
                 android:textColor="#fff"
-                android:textSize="20sp" />
+                android:textSize="15sp" />
 
         </RelativeLayout>
 
