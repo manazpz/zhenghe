@@ -91,6 +91,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="25dp"
+            android:checked="true"
             android:button="@drawable/cb_selector" />
     </RelativeLayout>
     <View
@@ -122,6 +123,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="25dp"
+            android:checked="true"
             android:button="@drawable/cb_selector" />
     </RelativeLayout>
     <View

@@ -9,5 +9,6 @@
     <string name="deal">成交</string>
     <string name="option">持仓</string>
     <string name="updata">刷新</string>
+    <string name="title_activity_login">LoginActivity</string>
 
 </resources>
