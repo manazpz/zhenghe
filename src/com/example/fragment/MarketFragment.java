@@ -2,7 +2,6 @@ package com.example.fragment;
 
 import com.example.hs.R;
 import com.example.hs.R.layout;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;

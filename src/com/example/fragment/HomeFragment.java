@@ -1,5 +1,7 @@
 package com.example.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -7,24 +9,33 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
-import com.example.hs.AnnouncementFragment;
 import com.example.hs.R;
-import com.example.hs.R.layout;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 /**
  * A simple {@link Fragment} subclass.
  *
  */
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements OnClickListener{
 
 	private View layout;
 	private LayoutInflater inflater;
 	private ViewPager vp_type;
 	private int BANNER_COUNT = 3 * 100000;
 	private boolean isDrag;
+	private RelativeLayout layout_setprice;
+	private Button btn_add;
+	private Button btn_minus;
+	private Button btn_timeminus;
+	private Button btn_timeadd;
+	private TextView tv_addprice;
 
 	public HomeFragment() {
 	}
@@ -42,6 +53,21 @@ public class HomeFragment extends Fragment {
 
 	private void initUI(View layout) {
 		initVP(layout);
+		initchoice(layout);
+	}
+
+	private void initchoice(View layout) {
+		layout_setprice = (RelativeLayout) layout.findViewById(R.id.layout_setprice);
+		btn_add = (Button) layout.findViewById(R.id.btn_add);
+		btn_minus = (Button) layout.findViewById(R.id.btn_minus);
+		btn_timeminus = (Button) layout.findViewById(R.id.btn_timeminus);
+		btn_timeadd = (Button) layout.findViewById(R.id.btn_timeadd);
+		tv_addprice = (TextView) layout.findViewById(R.id.tv_addprice);
+		layout_setprice.setOnClickListener(this);
+		btn_add.setOnClickListener(this);
+		btn_minus.setOnClickListener(this);
+		btn_timeminus.setOnClickListener(this);
+		btn_timeadd.setOnClickListener(this);
 	}
 
 	private void initVP(View layout) {
@@ -111,6 +137,52 @@ public class HomeFragment extends Fragment {
 		public void onPageSelected(int arg0) {
 		}
 
+	}
+	
+	protected void dialogprice() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+		builder.setTitle("投资金额")
+		.setIcon(android.R.drawable.ic_dialog_info)
+		.setView(new EditText(getContext()))
+		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				
+			}
+		}).show();
+		
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.layout_setprice:
+			dialogprice();
+			break;
+		case R.id.btn_add:
+			add();
+			break;
+		case R.id.btn_minus:
+			
+			break;
+		case R.id.btn_timeminus:
+			
+			break;
+		case R.id.btn_timeadd:
+			
+			break;
+		
+
+		default:
+			break;
+		}
+	}
+
+	private void add() {
+		int i =100;
+		i++;
+		
 	}
 
 }

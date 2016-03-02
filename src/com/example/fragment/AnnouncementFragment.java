@@ -1,4 +1,7 @@
-package com.example.hs;
+package com.example.fragment;
+
+import com.example.hs.R;
+import com.example.hs.R.layout;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,10 +14,8 @@ import android.view.ViewGroup;
  *
  */
 public class AnnouncementFragment extends Fragment {
-
-	private View layout;
-	private View item_announcement;
 	private int pageNum;
+	private View layout;
 
 	public AnnouncementFragment(int position) {
 		this.pageNum = position;
