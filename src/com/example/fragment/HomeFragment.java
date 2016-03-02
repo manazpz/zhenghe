@@ -1,7 +1,11 @@
 package com.example.fragment;
 
+import android.R.color;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,15 +13,26 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 
+import java.util.ArrayList;
+
+import com.activeandroid.util.Log;
+import com.astuetz.PagerSlidingTabStrip;
 import com.example.hs.R;
+import com.example.hs.R.drawable;
+import com.example.hs.Util;
+
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +51,12 @@ public class HomeFragment extends Fragment implements OnClickListener{
 	private Button btn_timeminus;
 	private Button btn_timeadd;
 	private TextView tv_addprice;
+	private long price =100;
+	private int timechange = 0;
+	private String str ;
+	private String time[]={"30秒","1分钟","5分钟","15分钟","半小时","1小时"};
+	private TextView tv_time;
+	private PagerSlidingTabStrip tabs;
 
 	public HomeFragment() {
 	}
@@ -54,6 +75,32 @@ public class HomeFragment extends Fragment implements OnClickListener{
 	private void initUI(View layout) {
 		initVP(layout);
 		initchoice(layout);
+		setSlideMenu();
+	}
+
+	private void setSlideMenu() {
+		// 包含TextView的LinearLayout
+		LinearLayout menuLinerLayout = (LinearLayout) layout.findViewById(R.id.linearLayoutMenu);
+		menuLinerLayout.setOrientation(LinearLayout.HORIZONTAL);
+		// 参数设置
+		LinearLayout.LayoutParams menuLinerLayoutParames = new LinearLayout.LayoutParams(
+		LinearLayout.LayoutParams.WRAP_CONTENT, 
+		LinearLayout.LayoutParams.WRAP_CONTENT,
+		1);
+		menuLinerLayoutParames.gravity = Gravity.CENTER_HORIZONTAL;
+		 // 添加TextView控件
+        for(int i = 0;i < 4;i++){
+        TextView tvMenu = new Button(getContext());
+        tvMenu.setLayoutParams(new LayoutParams(30,30)); 
+        tvMenu.setPadding(30, 0, 30, 0);
+        tvMenu.setBackgroundColor(Color.DKGRAY);
+        tvMenu.setDrawingCacheBackgroundColor(color.holo_red_light);
+        tvMenu.setText(Util.TITLESALL[i]);
+        tvMenu.setTextColor(Color.WHITE);
+        tvMenu.setGravity(Gravity.CENTER_HORIZONTAL);
+        menuLinerLayout.addView(tvMenu,menuLinerLayoutParames);
+        }
+        
 	}
 
 	private void initchoice(View layout) {
@@ -63,6 +110,7 @@ public class HomeFragment extends Fragment implements OnClickListener{
 		btn_timeminus = (Button) layout.findViewById(R.id.btn_timeminus);
 		btn_timeadd = (Button) layout.findViewById(R.id.btn_timeadd);
 		tv_addprice = (TextView) layout.findViewById(R.id.tv_addprice);
+		tv_time = (TextView) layout.findViewById(R.id.tv_time);
 		layout_setprice.setOnClickListener(this);
 		btn_add.setOnClickListener(this);
 		btn_minus.setOnClickListener(this);
@@ -82,6 +130,12 @@ public class HomeFragment extends Fragment implements OnClickListener{
 
 		public PagerBannerAdapter(FragmentManager fm) {
 			super(fm);
+		}
+		
+		@Override
+		public CharSequence getPageTitle(int position) {
+			Log.e("getPageTitle", position+"");
+			return null;
 		}
 
 		@Override
@@ -140,15 +194,19 @@ public class HomeFragment extends Fragment implements OnClickListener{
 	}
 	
 	protected void dialogprice() {
+		final EditText editText = new EditText(getContext());
 		AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 		builder.setTitle("投资金额")
 		.setIcon(android.R.drawable.ic_dialog_info)
-		.setView(new EditText(getContext()))
+		.setView(editText)
 		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-			
+
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				
+				str = editText.getText().toString();
+				if(str != null && !"".equals(str)){
+					tv_addprice.setText(str);
+				}
 			}
 		}).show();
 		
@@ -164,13 +222,13 @@ public class HomeFragment extends Fragment implements OnClickListener{
 			add();
 			break;
 		case R.id.btn_minus:
-			
+			reduce();
 			break;
 		case R.id.btn_timeminus:
-			
+			timereduce();
 			break;
 		case R.id.btn_timeadd:
-			
+			timeadd();
 			break;
 		
 
@@ -179,10 +237,39 @@ public class HomeFragment extends Fragment implements OnClickListener{
 		}
 	}
 
-	private void add() {
-		int i =100;
-		i++;
+	private void timereduce() {
+		timechange--;
+		if(timechange<0){
+			timechange=0;
+		}
+		tv_time.setText(time[timechange]);
+	}
+
+	private void timeadd() {
+		timechange++;
+		if(timechange>=6){
+			timechange=5;
+		}
+		tv_time.setText(time[timechange]);
+	}
+
+	private void reduce() {
+		price-=100;
+		if(price==0){
+			price=100;
+			new AlertDialog.Builder(getContext()).setIcon(android.R.drawable.btn_star)
+			.setTitle("投注金额不能为0").setPositiveButton("确定", null).show();
+		}
 		
+		tv_addprice.setText(""+price+"元");
+	}
+
+	private void add() {
+		price+=100;
+		if(price>=1000){
+			tv_addprice.setText(""+price/1000+","+"元");
+		}
+		tv_addprice.setText(""+price+"元");
 	}
 
 }
