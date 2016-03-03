@@ -38,6 +38,7 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="textPersonName" />
+    	<requestFocus />
 
     <EditText
         android:id="@+id/edt_psw"
@@ -48,7 +49,6 @@
         android:layout_centerHorizontal="true"
         android:ems="10"
         android:inputType="textPassword" >
-        <requestFocus />
     </EditText>
 
     <Button
