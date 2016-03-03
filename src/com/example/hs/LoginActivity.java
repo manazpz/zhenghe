@@ -43,7 +43,6 @@ public class LoginActivity extends Activity implements OnClickListener{
 			@Override
 			public void reading(String result) {
 				String[] s = result.split("\\|");
-				Log.e("asd", s[s.length-1]);
 				if ("密码错误".equals(s[s.length-1]) || "账号错误".equals(s[s.length-1])) {
 					com.example.bing_dictionary.Toast.makeText(
 							LoginActivity.this, s[s.length-1],
