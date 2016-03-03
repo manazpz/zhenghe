@@ -52,6 +52,7 @@ public class AnScoket {
 			
 			@Override
 			public void onWritten(final TcpClient tcpClient) {
+				sc.writeing(true);
 			}
 
 			@Override
@@ -83,7 +84,7 @@ public class AnScoket {
 			public void onConnect(TcpClient tcpClient) {
 			    new MyThread(loginstr, tcpClient).start();
 			}
-		}, "121.41.15.147", 5555);
+		}, host, port);
 
 	}
 }
