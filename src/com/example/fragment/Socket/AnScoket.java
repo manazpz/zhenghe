@@ -67,12 +67,16 @@ public class AnScoket {
 
 			@Override
 			public void onDisconnected(TcpClient tcpClient) {
-				Toast.makeText(context, "网络断开", Toast.LENGTH_SHORT).show();
+				com.example.bing_dictionary.Toast.makeText(
+						context, "网络断开，请查看网络是否连接？",
+						com.example.bing_dictionary.Toast.LENGTH_LONG).show();
 			}
 
 			@Override
 			public void onConnectFailed(TcpClient tcpClient) {
-				Toast.makeText(context, "连接失败,请查看网络是否连接？", Toast.LENGTH_SHORT).show();
+				com.example.bing_dictionary.Toast.makeText(
+						context, "连接失败,请重连？",
+						com.example.bing_dictionary.Toast.LENGTH_LONG).show();
 			}
 
 			@Override
