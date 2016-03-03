@@ -49,7 +49,9 @@ public class LoginActivity extends Activity implements OnClickListener{
 							LoginActivity.this, s[s.length-1],
 							com.example.bing_dictionary.Toast.LENGTH_LONG).show();
 				}else {
-					startActivity(new Intent(LoginActivity.this, MainActivity.class));
+					Intent intent = new Intent(LoginActivity.this, ServiceActivity.class);
+					intent.putExtra("servicelist", s);
+					startActivity(intent);
 				}
 				
 			}
