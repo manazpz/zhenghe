@@ -32,25 +32,29 @@ public class ServiceActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.activity_service);
 		initUI();
 		initChoiceservice();
-		service_choice.setOnSelectListener(new onSelectListener(){
-			@Override
-			public void onSelect(String text){
-				
-				startActivity(new Intent(ServiceActivity.this, MainActivity.class));
-			}
-		});
+//		service_choice.setOnSelectListener(new onSelectListener(){
+//			@Override
+//			public void onSelect(String text){
+//				
+//				startActivity(new Intent(ServiceActivity.this, MainActivity.class));
+//			}
+//		});
 
 	}
 
 	private void initUI() {
 		service_choice = (PickerView) findViewById(R.id.service_choice);
-		btn_sure = (Button) findViewById(R.id.btn_sure);
+		findViewById(R.id.btn_sure).setOnClickListener(this);;
 	}
 
 	private void initChoiceservice() {
 		
 		Intent intent = getIntent();
 		String[] extra = intent.getStringArrayExtra("servicelist");
+		for (int i = 0; i < extra.length; i++) {
+			Log.e("text", ""+extra[i]);
+		}
+		
 		for (int i = 0; i < extra.length; i++) {
 			String[] split = extra[i].split("\\,");
 			if(i>=3){
@@ -65,7 +69,7 @@ public class ServiceActivity extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_sure:
-//			startActivity(new Intent(ServiceActivity.this, MainActivity.class));
+			startActivity(new Intent(ServiceActivity.this, MainActivity.class));
 			break;
 
 		default:
