@@ -7,13 +7,20 @@ import java.util.regex.Pattern;
 
 import com.example.bing_dictionary.PickerView;
 import com.example.bing_dictionary.PickerView.onSelectListener;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+
 
 /**
  * 

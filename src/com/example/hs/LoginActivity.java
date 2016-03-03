@@ -3,6 +3,9 @@ package com.example.hs;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 
+import com.example.datasave.Admin;
+import com.example.datasave.MyData;
+import com.example.datasave.MySharedPreferences;
 import com.example.fragment.Socket.AnScoket;
 import com.example.fragment.Socket.SocketCall;
 import com.smorra.asyncsocket.TcpClient;
@@ -10,6 +13,7 @@ import com.smorra.asyncsocket.TcpClientCallback;
 import com.xinbo.utils.RegexValidateUtil;
 import android.app.Activity;
 import android.content.Intent;
+import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.text.Editable;
 import android.util.Log;
@@ -29,6 +33,8 @@ public class LoginActivity extends Activity implements OnClickListener{
 	private String username;
 	private String psw;
 	private AnScoket anScoket;
+	private final String host = "121.41.15.147";
+	private final int port = 5555;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +42,10 @@ public class LoginActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.activity_login);
 		initUI();
 	}
+	
 
 	private void initData() {
-		anScoket = new AnScoket(LoginActivity.this, "121.41.15.147", 5555, new SocketCall() {
+		anScoket = new AnScoket(LoginActivity.this, host, port, new SocketCall() {
 			
 			@Override
 			public void reading(String result) {
@@ -48,11 +55,21 @@ public class LoginActivity extends Activity implements OnClickListener{
 							LoginActivity.this, s[s.length-1],
 							com.example.bing_dictionary.Toast.LENGTH_LONG).show();
 				}else {
+					MyData app = (MyData) getApplication();
+					app.password = psw;
 					Intent intent = new Intent(LoginActivity.this, ServiceActivity.class);
 					intent.putExtra("servicelist", s);
 					startActivity(intent);
+					finish();
 				}
 				
+			}
+
+			@Override
+			public void writeing(Boolean flag) {
+				if (flag) {
+					MySharedPreferences.WriteAdmin(LoginActivity.this, username, psw);
+				}
 			}
 		});
 		anScoket.setLoginstr("ulogin|111|"+username+"|"+psw);
@@ -70,6 +87,9 @@ public class LoginActivity extends Activity implements OnClickListener{
 		edt_username = (EditText) findViewById(R.id.edt_username);
 		edt_psw = (EditText) findViewById(R.id.edt_psw);
 		btn_login.setOnClickListener(this);
+		Admin admin = MySharedPreferences.ReadAdmin(LoginActivity.this);
+		edt_username.setText(admin.getUsername());
+		edt_psw.setText(admin.getPassword());
 	}
 
 	@Override
