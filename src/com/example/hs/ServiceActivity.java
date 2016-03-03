@@ -2,20 +2,11 @@ package com.example.hs;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.example.bing_dictionary.PickerView;
-import com.example.bing_dictionary.PickerView.onSelectListener;
-
+import com.example.datasave.MyData;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -37,6 +28,7 @@ public class ServiceActivity extends Activity implements OnClickListener{
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_service);
+		MyData.getInstance().addActivity(this);
 		initUI();
 		initChoiceservice();
 //		service_choice.setOnSelectListener(new onSelectListener(){

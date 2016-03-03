@@ -72,6 +72,7 @@ public class SetFragment extends Fragment implements OnClickListener {
 		layout.findViewById(R.id.relativeLayout2).setOnClickListener(this);
 		layout.findViewById(R.id.layout_capital).setOnClickListener(this);
 		layout.findViewById(R.id.relativeLayout3).setOnClickListener(this);
+		layout.findViewById(R.id.cancel).setOnClickListener(this);
 		password_choice = (CheckBox) layout.findViewById(R.id.check_choice);
 		mprice = (TextView) layout.findViewById(R.id.price);
 		boolean flag = MySharedPreferences.rcheck(getContext(), "check", "CHECK");
@@ -106,6 +107,9 @@ public class SetFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.relativeLayout2:
 			aDialog();
+			break;
+		case R.id.cancel:
+			MyData.getInstance().exit();
 			break;
 		case R.id.relativeLayout3:
 			startActivity(new Intent(getContext(), ChangePassword_Activity.class));

@@ -2,7 +2,6 @@ package com.example.hs;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-
 import com.example.datasave.Admin;
 import com.example.datasave.MyData;
 import com.example.datasave.MySharedPreferences;
@@ -40,6 +39,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		MyData.getInstance().addActivity(this);
 		initUI();
 	}
 	

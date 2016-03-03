@@ -1,5 +1,6 @@
 package com.example.hs;
 
+import com.example.datasave.MyData;
 import com.example.fragment.DealFragment;
 import com.example.fragment.HoldFragment;
 import com.example.fragment.HomeFragment;
@@ -21,6 +22,7 @@ public class MainActivity extends FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);//将xml视图转换为view视图
+		MyData.getInstance().addActivity(this);
 		mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         inflater = getLayoutInflater();
