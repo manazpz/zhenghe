@@ -52,7 +52,6 @@ public class AnScoket {
 			
 			@Override
 			public void onWritten(final TcpClient tcpClient) {
-				Toast.makeText(context, "上传成功", Toast.LENGTH_SHORT).show();
 			}
 
 			@Override
