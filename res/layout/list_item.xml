@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff" >
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:text="xauusd"
+        android:textColor="#e00" />
+
+    <TextView
+        android:id="@+id/tv_starttime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="3dp"
+        android:text="开始:2016-2-29 19:47:15/ 1233.032"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv_endtime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/tv_starttime"
+        android:layout_marginLeft="3dp"
+        android:layout_marginTop="1dp"
+        android:text="结束:2016-2-29 19:47:15/ 1233.032"
+        android:textSize="10sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_alignLeft="@+id/tv_endtime"
+        android:layout_below="@+id/tv_endtime"
+        android:layout_marginTop="5dp" />
+
+    <TextView
+        android:id="@+id/tv_repay "
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/tv_name"
+        android:layout_alignBottom="@+id/tv_name"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:text="回报：1674"
+        android:textColor="#e00"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv_period"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/tv_repay "
+        android:layout_below="@+id/tv_repay "
+        android:layout_marginTop="3dp"
+        android:text="周期：30秒"
+        android:textColor="#000"
+        android:textSize="10sp" />
+
+    <TextView
+        android:id="@+id/tv_investment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_starttime"
+        android:layout_marginLeft="16dp"
+        android:layout_toRightOf="@+id/tv_name"
+        android:textColor="#000"
+        android:textSize="10sp"
+        android:text="投资：▲涨 ￥1110" />
+
+</RelativeLayout>

@@ -33,7 +33,7 @@
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/lv_deal"
+        android:id="@+id/lv_hold"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1" >

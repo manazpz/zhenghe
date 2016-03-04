@@ -3,75 +3,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bghangqing"
-    tools:context="com.example.fragment.HomeFragment" >  
-    
-    	<RelativeLayout
-    	    android:id="@+id/layout_tab"
+    tools:context="com.example.fragment.HomeFragment" >
+
+    <RelativeLayout
+        android:id="@+id/layout_tab"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" >
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
-            android:layout_height="30dp" >
-            
-        <HorizontalScrollView 
-			android:layout_width="match_parent"
-        	android:layout_height="30dp"
-        	android:scrollbars="none" >
+            android:layout_height="30dp"
+            android:scrollbars="none" >
 
             <LinearLayout
                 android:id="@+id/linearLayoutMenu"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical" 
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="vertical" >
             </LinearLayout>
-        	
-		</HorizontalScrollView>  
-            
-    	</RelativeLayout>
+        </HorizontalScrollView>
+    </RelativeLayout>
 
-    <RelativeLayout
+    <FrameLayout
         android:id="@+id/layout_icon"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_below="@+id/layout_tab"
-        android:orientation="vertical" >
-        
-       <android.support.v4.view.ViewPager
-           android:id="@+id/vp_type"
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:padding="3dp" >
-        </android.support.v4.view.ViewPager>
+        android:layout_below="@+id/layout_tab" >
 
-       <ImageView
-           android:id="@+id/imageView1"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_centerHorizontal="true"
-           android:layout_centerVertical="true"
-           android:visibility="gone"
-           android:src="@drawable/daojishi5" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
 
-    </RelativeLayout>
+            <android.support.v4.view.ViewPager
+                android:id="@+id/vp_type"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="3dp" >
+            </android.support.v4.view.ViewPager>
+
+            <ImageView
+                android:id="@+id/iv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true" />
+
+            <RelativeLayout
+                android:id="@+id/rl_timerl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" >
+
+                <ImageView
+                    android:id="@+id/iv_state"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="7dp"
+                    android:src="@drawable/downdeadtime" />
+
+                <TextView
+                    android:id="@+id/tv_jishu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/iv_state"
+                    android:layout_toRightOf="@+id/iv_state"
+                    android:textColor="#fff"
+                    android:textSize="13sp" />
+            </RelativeLayout>
+        </RelativeLayout>
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/layout_icon"
+        android:orientation="vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        android:orientation="vertical" >
+        android:paddingTop="5dp" >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="5dp"
-            >
+            android:paddingTop="5dp" >
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/hold" 
-                >
+                android:background="@drawable/hold" >
 
                 <TextView
                     android:id="@+id/tv_current_price"
@@ -79,9 +102,8 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:textColor="#fff"
-                    android:text="当前：112.364" />
-
+                    android:text="当前：112.364"
+                    android:textColor="#fff" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -97,24 +119,22 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:textColor="#fff"
-                    android:text="持仓：0.00元" />
-
+                    android:text="持仓：0.00元"
+                    android:textColor="#fff" />
             </RelativeLayout>
-
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" 
-            android:paddingTop="10dp">
+            android:layout_height="match_parent"
+            android:paddingTop="10dp" >
 
             <RelativeLayout
                 android:id="@+id/layout_setprice"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:clickable="true"
-                android:background="@drawable/setprice">
+                android:layout_height="wrap_content"
+                android:background="@drawable/setprice"
+                android:clickable="true" >
 
                 <Button
                     android:id="@+id/btn_minus"
@@ -129,10 +149,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
+                    android:text="100元"
                     android:textColor="#000"
-                    android:textStyle="bold"
                     android:textSize="16sp"
-                    android:text="100元" />
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btn_add"
@@ -142,7 +162,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/tv_addprice"
                     android:background="#0000" />
-
             </RelativeLayout>
 
             <RelativeLayout
@@ -156,29 +175,26 @@
                     android:id="@+id/tv_profit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#fff"
-                    android:layout_centerVertical="true"
                     android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
                     android:paddingLeft="5dp"
-                    android:textStyle="bold"
-                    android:text="盈亏：1513.00元" />
-
-
+                    android:text="盈亏：1513.00元"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
             </RelativeLayout>
-
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" 
-            android:paddingTop="10dp">
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp" >
 
             <RelativeLayout
                 android:id="@+id/layout_settime"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
-                android:background="@drawable/setprice">
-                
+                android:layout_height="wrap_content"
+                android:background="@drawable/setprice" >
+
                 <Button
                     android:id="@+id/btn_timeminus"
                     android:layout_width="30dp"
@@ -192,10 +208,10 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
+                    android:text="30秒"
                     android:textColor="#000"
-                    android:textStyle="bold"
                     android:textSize="16sp"
-                    android:text="30秒" />
+                    android:textStyle="bold" />
 
                 <Button
                     android:id="@+id/btn_timeadd"
@@ -213,49 +229,46 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/profit" >
-                
-               <TextView
+
+                <TextView
                     android:id="@+id/tv_balance"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#fff"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:textStyle="bold"
-                    android:text="余额：111513.00元" /> 
-                
+                    android:text="余额：111513.00元"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
             </RelativeLayout>
-
         </RelativeLayout>
-
     </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:layout_marginBottom="50dp" >
+        android:paddingRight="20dp" >
 
         <RelativeLayout
             android:id="@+id/relativeLayout1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:clickable="true"
-            android:background="@drawable/high" >
+            android:background="@drawable/high"
+            android:clickable="true" >
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/relativeLayout2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:clickable="true"
-            android:background="@drawable/low" >
+            android:background="@drawable/low"
+            android:clickable="true" >
         </RelativeLayout>
-
     </RelativeLayout>
 
 </RelativeLayout>

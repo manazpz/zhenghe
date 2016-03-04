@@ -140,15 +140,16 @@
     <RelativeLayout
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="170dp" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/iv_ewm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:scaleType="fitXY"
+            android:layout_marginTop="20dp"
             android:src="@drawable/ic_launcher" />
 
     </RelativeLayout>
