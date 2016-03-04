@@ -14,5 +14,6 @@
     <string name="title_activity_change_password_">ChangePassword_Activity</string>
     <string name="title_activity_credits">CreditsActivity</string>
     <string name="title_activity_connect">ConnectActivity</string>
+    <string name="title_activity_choice_bank">ChoiceBankActivity</string>
 
 </resources>

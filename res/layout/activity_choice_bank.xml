@@ -16,7 +16,7 @@
         android:layout_centerVertical="true"
         android:textSize="17.0sp"
         android:textColor="#fff"
-        android:text="请选择服务器" /> 
+        android:text="请选择银行" /> 
         
     </RelativeLayout>
 
@@ -28,21 +28,11 @@
         android:background="#ffffff" >
        
          <com.example.bing_dictionary.PickerView
-            android:id="@+id/service_choice"
+            android:id="@+id/bank_choice"
             android:layout_marginTop="150.0dp"
             android:layout_width="match_parent"
             android:layout_height="120.0dp" />
 
-        <Button
-            android:id="@+id/btn_sure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="101dp"
-            android:background="@drawable/loginbt"
-            android:textColor="#fff"
-            android:text="确定" />
 
 	</RelativeLayout>
 

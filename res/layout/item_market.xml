@@ -16,7 +16,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
-            android:textSize="15sp"
+            android:textSize="19.0sp"
             android:textColor="#FFB90F"
             android:text="美元日元（USDJPY）" />
 
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:text="执行价 "
                 android:textColor="#adadad"
-                android:textSize="14sp" />
+                android:textSize="18.0sp" />
 
             <TextView
                 android:id="@+id/tv_execute"
@@ -48,7 +48,7 @@
                 android:text="112.000000"
                 android:layout_toRightOf="@+id/tv_price"
                 android:textColor="#ff0000"
-                android:textSize="14sp" />
+                android:textSize="18.0sp" />
 
         </RelativeLayout>
     </RelativeLayout>
@@ -70,6 +70,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColor="#adadad"
+                android:textSize="18.0sp"
                 android:text="买入" />
 
             <TextView
@@ -79,6 +80,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="10dp"
+                android:textSize="18.0sp"
                 android:textColor="#ff0000"
                 android:text="112.736000" />
 
@@ -87,8 +89,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="50dp"
+                android:layout_marginRight="15dp"
                 android:textColor="#adadad"
+                android:textSize="18.0sp"
                 android:layout_toLeftOf="@+id/tv_sellprice"
                 android:text="卖出" />
 
@@ -97,8 +100,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="15dp"
                 android:textColor="#ff0000"
+                android:textSize="18.0sp"
                 android:layout_toRightOf="@+id/tv_buy"
                 android:text="112.747000" />
 
@@ -107,7 +111,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content" 
-            android:paddingTop="8dp"
+            android:paddingTop="16dp"
             android:layout_weight="1">
             
              <TextView
@@ -116,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColor="#adadad"
+                android:textSize="18.0sp"
                 android:text="开盘" />
 
             <TextView
@@ -126,6 +131,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="10dp"
                 android:textColor="#ff0000"
+                android:textSize="18.0sp"
                 android:text="112.736000" />
 
             <TextView
@@ -133,8 +139,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="50dp"
+                android:layout_marginRight="15dp"
                 android:textColor="#adadad"
+                android:textSize="18.0sp"
                 android:layout_toLeftOf="@+id/tv_newpricenum"
                 android:text="最新" />
 
@@ -143,16 +150,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/opening"
                 android:textColor="#fff"
+                android:textSize="18.0sp"
                 android:text="112.747000" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp"
+            android:paddingTop="16dp"
             android:layout_weight="1">
             
              <TextView
@@ -161,6 +169,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColor="#adadad"
+                android:textSize="18.0sp"
                 android:text="涨跌" />
 
             <TextView
@@ -171,6 +180,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="10dp"
                 android:textColor="#ff0000"
+                android:textSize="18.0sp"
                 android:text="112.736000" />
 
             <TextView
@@ -178,9 +188,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="50dp"
+                android:layout_marginRight="15dp"
                 android:layout_toLeftOf="@+id/tv_topprice"
                 android:textColor="#adadad"
+                android:textSize="18.0sp"
                 android:text="最高" />
 
             <TextView
@@ -188,16 +199,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/tv_updown"
                 android:textColor="#ff0000"
+                android:textSize="18.0sp"
                 android:text="112.747000" />
         </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="8dp" 
+            android:paddingTop="16dp" 
             android:layout_weight="1">
             
              <TextView
@@ -206,6 +218,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:textColor="#adadad"
+                android:textSize="18.0sp"
                 android:text="幅度" />
 
             <TextView
@@ -216,6 +229,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="10dp"
                 android:textColor="#f9f900"
+                android:textSize="18.0sp"
                 android:text="112.736000" />
 
             <TextView
@@ -223,9 +237,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="50dp"
+                android:layout_marginRight="15dp"
                 android:layout_toLeftOf="@+id/tv_lowprice"
                 android:textColor="#adadad"
+                android:textSize="18.0sp"
                 android:text="最低" />
 
             <TextView
@@ -233,9 +248,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/tv_range"
                 android:textColor="#ff0000"
+                android:textSize="18.0sp"
                 android:text="112.747000" />
         </RelativeLayout>
 
