@@ -21,6 +21,7 @@ import com.example.hs.CreditsActivity;
 import com.example.hs.LoginActivity;
 import com.example.hs.R;
 import com.example.hs.R.layout;
+import com.example.zxing.CreatEwm;
 import com.google.gson.FieldNamingStrategy;
 
 import android.view.LayoutInflater;
@@ -31,6 +32,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import butterknife.OnCheckedChanged;
 import android.widget.RelativeLayout;
@@ -60,8 +62,14 @@ public class SetFragment extends Fragment implements OnClickListener {
 			layout = inflater.inflate(R.layout.fragment_set, container, false);
 			// 初始化静态UI
 			initUI();
+			initEwm();
 		}
 		return layout;
+	}
+
+	private void initEwm() {
+		ImageView mewm = (ImageView) layout.findViewById(R.id.iv_ewm);
+		new CreatEwm().createQRImage("http://www.baidu.com", mewm);
 	}
 
 	private void initUI() {
@@ -197,7 +205,13 @@ public class SetFragment extends Fragment implements OnClickListener {
 				}
 			}
 		})
-		.setNegativeButton("取消", null).show();
+		.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		}).show();
 	}
 
 }

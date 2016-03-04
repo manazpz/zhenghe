@@ -1,12 +1,19 @@
 package com.example.datasave;
 
+
+import com.example.hs.R;
+import com.tencent.connect.avatar.ImageActivity;
+
+
 import java.util.LinkedList;
 import java.util.List;
 import android.app.Activity;
+
 import android.app.Application;
 
 public class MyData extends Application {
 	public String password;
+
 	private List<Activity> mList = new LinkedList<Activity>();
 	private static MyData instance;
 
@@ -44,3 +51,4 @@ public class MyData extends Application {
 		System.gc();
 		}
 }
+

@@ -35,9 +35,9 @@ public class HoldFragment extends Fragment {
 	}
 
 	private void initUI() {
-		ListView mdeal = (ListView) layout.findViewById(R.id.lv_deal);
-		DealAdapter dealAdapter = new DealAdapter();
-		mdeal.setAdapter(dealAdapter);
+		ListView mdeal = (ListView) layout.findViewById(R.id.lv_hold);
+		OptionAdapter optionAdapter = new OptionAdapter();
+		mdeal.setAdapter(optionAdapter);
 	}
 
 }
@@ -54,7 +54,7 @@ class OptionAdapter extends BaseAdapter {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewOption holder;
 		if (convertView == null) {
-			convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, null);
+			convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, null);
 			holder = new ViewOption();
 			convertView.setTag(holder);
 		}

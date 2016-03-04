@@ -31,13 +31,7 @@ public class ServiceActivity extends Activity implements OnClickListener{
 		MyData.getInstance().addActivity(this);
 		initUI();
 		initChoiceservice();
-//		service_choice.setOnSelectListener(new onSelectListener(){
-//			@Override
-//			public void onSelect(String text){
-//				
-//				startActivity(new Intent(ServiceActivity.this, MainActivity.class));
-//			}
-//		});
+
 
 	}
 

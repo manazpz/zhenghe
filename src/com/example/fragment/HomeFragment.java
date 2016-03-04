@@ -4,10 +4,12 @@ import android.R.color;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,13 +18,17 @@ import android.support.v4.view.ViewPager.OnPageChangeListener;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.activeandroid.util.Log;
 import com.astuetz.PagerSlidingTabStrip;
 import com.example.bing_dictionary.Mydialog;
+import com.example.datasave.MyData;
 import com.example.datasave.MySharedPreferences;
+import com.example.datasave.contsData;
+import com.example.hs.CreditsActivity;
 import com.example.hs.R;
 import com.example.hs.R.drawable;
 import com.example.hs.Util;
@@ -33,11 +39,15 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import cn.bmob.v3.c.V;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -60,8 +70,18 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private int timechange = 0;
 	private String str;
 	private String time[] = { "30秒", "1分钟", "5分钟", "15分钟", "半小时", "1小时" };
+	private HashMap<String, Integer> timenum = new HashMap<String, Integer>();
 	private TextView tv_time;
 	private PagerSlidingTabStrip tabs;
+	private ImageView countimg;
+	private RelativeLayout higt;
+	private RelativeLayout low;
+	private int count;
+	private int countnum;
+	private Animation animation;
+	private TextView mMoney;
+	private TextView mTitle1;
+	private TextView mTitle2;
 
 	public HomeFragment() {
 	}
@@ -73,14 +93,40 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			layout = inflater.inflate(R.layout.fragment_home, container, false);
 			// 初始化静态UI
 			initUI(layout);
+			initData();
+			
 		}
 		return layout;
+	}
+
+	private void initData() {
+		timenum.put(time[0], 30000);
+		timenum.put(time[1], 60000);
+		timenum.put(time[2], 300000);
+		timenum.put(time[3], 900000);
+		timenum.put(time[4], 1800000);
+		timenum.put(time[5], 3600000);
+		
 	}
 
 	private void initUI(View layout) {
 		initVP(layout);
 		initchoice(layout);
+		inittime(layout);
 		setSlideMenu();
+	}
+
+	private void inittime(View layout) {
+		countimg = (ImageView) layout.findViewById(R.id.iv_time);
+		higt = (RelativeLayout) layout.findViewById(R.id.relativeLayout1);
+		higt.setOnClickListener(this);
+		low = (RelativeLayout) layout.findViewById(R.id.relativeLayout2);
+		low.setOnClickListener(this);
+		animation = AnimationUtils.loadAnimation(getContext(), R.anim.count_down_exit);
+		
+		mtimerl = (RelativeLayout) layout.findViewById(R.id.rl_timerl);
+		mstate = (ImageView) layout.findViewById(R.id.iv_state);
+		mjishu = (TextView) layout.findViewById(R.id.tv_jishu);
 	}
 
 	private void setSlideMenu() {
@@ -222,6 +268,49 @@ public class HomeFragment extends Fragment implements OnClickListener {
 					}
 				}).show();
 	}
+	
+	public  void hlDialog(final int flag) {
+		View view = inflater.inflate(R.layout.dialog_order, null);
+		mMoney = (TextView) view.findViewById(R.id.tv_money);
+		mTitle1 = (TextView) view.findViewById(R.id.tv_title1);
+		mTitle2 = (TextView) view.findViewById(R.id.tv_title2);
+		if (flag == 1) {
+			mMoney.setText("投资金额："+tv_addprice.getText().toString());
+			mTitle1.setText(tv_time.getText().toString()+"之后与现在的价格相比");
+			mTitle2.setText("更高而进行投资");
+		}else {
+			mMoney.setText("投资金额："+tv_addprice.getText().toString());
+			mTitle1.setText(tv_time.getText().toString()+"之后与现在的价格相比");
+			mTitle2.setText("更底而进行投资");
+		}
+		new AlertDialog.Builder(getActivity()).setTitle("投资确认").setView(view)
+		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				countnum = timenum.get(tv_time.getText().toString()).intValue();
+				count = 5;
+				higt.setClickable(false);
+				low.setClickable(false);
+				handlern.removeMessages(1);
+				handlern.sendEmptyMessageDelayed(0, 100);
+				if (flag == 1) {
+					mtimerl.setVisibility(View.VISIBLE);
+					mstate.setImageResource(R.drawable.downdeadtime);
+				}else {
+					mtimerl.setVisibility(View.VISIBLE);
+					mstate.setImageResource(R.drawable.updeadtime);
+				}
+			}
+		})
+		.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		}).show();
+	}
 
 	@Override
 	public void onClick(View v) {
@@ -242,6 +331,12 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			break;
 		case R.id.btn_timeadd:
 			timeadd();
+			break;
+		case R.id.relativeLayout1:
+			hlDialog(1);
+			break;
+		case R.id.relativeLayout2:
+			hlDialog(0);
 			break;
 
 		default:
@@ -285,6 +380,68 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		}
 	}
 
+	Handler handler = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			if (msg.what == 0) {
+					countimg.setImageResource(contsData.img[getCount()]);
+					
+					if (count <= 0) {
+						handler.removeMessages(0);
+						handler.sendEmptyMessageDelayed(1, 1000);
+						countimg.setVisibility(View.GONE);
+					}else {
+						countimg.setVisibility(View.VISIBLE);
+						handler.sendEmptyMessageDelayed(0, 1000);
+					}
+					small();
+			}
+		};
+	};
 	
+	Handler handlern = new Handler() {
+		public void handleMessage(android.os.Message msg) {
+			if (msg.what == 0) {
+				mjishu.setText(getcountnum()/1000+","+getcountnum()%1000/100);
+				if (countnum <= 0) {
+					handlern.removeMessages(0);
+					handlern.sendEmptyMessageDelayed(1, 100);
+					higt.setClickable(true);
+					low.setClickable(true);
+					mtimerl.setVisibility(View.GONE);
+					countnum = timenum.get(tv_time.getText().toString());
+				}else {
+					handlern.sendEmptyMessageDelayed(0, 100);
+				}
+				if (countnum == 5000) {
+					handler.removeMessages(1);
+					handler.sendEmptyMessageDelayed(0, 1000);
+				}
+			}
+		};
+	};
+	private RelativeLayout mtimerl;
+	private ImageView mstate;
+	private TextView mjishu;
+	
+	private int getCount() {
+		count--;
+		if (count < 0) {
+			count = 0;
+		}
+		return count;
+	}
+	
+	private int getcountnum() {
+		countnum -= 50;
+		if (countnum < 0) {
+			countnum = 0;
+		}
+		return countnum;
+	}
+	
+	public void small() {
+		animation.reset();
+		countimg.startAnimation(animation);
+	}
 
 }
