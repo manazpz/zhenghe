@@ -22,13 +22,12 @@
             android:name=".MainActivity"
             android:label="@string/app_name"
             android:screenOrientation="portrait" >
-           
         </activity>
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" >
-             <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -40,12 +39,21 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".ConnectActivity"
+            android:label="@string/title_activity_connect" >
+        </activity>
+        <activity
             android:name=".ChangePassword_Activity"
             android:label="@string/title_activity_change_password_" >
         </activity>
         <activity
             android:name=".CreditsActivity"
             android:label="@string/title_activity_credits" >
+        </activity>
+
+        <activity
+            android:name=".ChoiceBankActivity"
+            android:label="@string/title_activity_choice_bank" >
         </activity>
     </application>
 
