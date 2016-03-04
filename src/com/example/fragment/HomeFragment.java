@@ -146,13 +146,13 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			position %= 3;
 			switch (position) {
 			case 1:
-				return new MarketFragment(position);
+				return new ChartFragment(position);
 			case 2:
-				return new AnnouncementFragment(position);
+				return new MarketFragment(position);
 			default:
 				break;
 			}
-			return new ChartFragment(position);
+			return new AnnouncementFragment(position);
 		}
 
 		@Override

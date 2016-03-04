@@ -90,6 +90,16 @@ public class LoginActivity extends Activity implements OnClickListener{
 		Admin admin = MySharedPreferences.ReadAdmin(LoginActivity.this);
 		edt_username.setText(admin.getUsername());
 		edt_psw.setText(admin.getPassword());
+		edittextSelection();
+		
+	}
+
+
+	private void edittextSelection() {
+		Editable text = edt_username.getText();
+		edt_username.setSelection(text.length());
+		Editable text1 = edt_psw.getText();
+		edt_psw.setSelection(text1.length());
 	}
 
 	@Override
