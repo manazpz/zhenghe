@@ -22,6 +22,8 @@ public class ServiceActivity extends Activity implements OnClickListener{
 	private String [] service = null;
 	private Button btn_sure;
 	private List<String> data = new ArrayList<String>();
+	private final String host = "121.41.15.147";
+	private final int port = 5555;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -31,8 +33,12 @@ public class ServiceActivity extends Activity implements OnClickListener{
 		MyData.getInstance().addActivity(this);
 		initUI();
 		initChoiceservice();
-		
+		initData();
 
+	}
+
+	private void initData() {
+		
 	}
 
 	private void initUI() {
