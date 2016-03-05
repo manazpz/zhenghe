@@ -118,7 +118,12 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		
 		MyData app = (MyData) getActivity().getApplication();
 		userdata = app.userdata;
-		android.util.Log.e("asd", userdata.getUsername());
+		current_price.setText("当前："+userdata.getPrice());
+		hold.setText("持仓："+userdata.getInvested()+"元");
+		profitorlose.setText("盈亏："+userdata.getDefeatorvictory()+"元");
+		balance.setText("余额："+userdata.getExpendablefund()+"元");
+		
+		
 	}
 
 	private void initUI(View layout) {
@@ -140,6 +145,10 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		mtimerl = (RelativeLayout) layout.findViewById(R.id.rl_timerl);
 		mstate = (ImageView) layout.findViewById(R.id.iv_state);
 		mjishu = (TextView) layout.findViewById(R.id.tv_jishu);
+		current_price = (TextView) layout.findViewById(R.id.tv_current_price);
+		hold = (TextView) layout.findViewById(R.id.tv_hold);
+		profitorlose = (TextView) layout.findViewById(R.id.tv_profitorlose);
+		balance = (TextView) layout.findViewById(R.id.tv_balance);
 	}
 
 	private void setSlideMenu() {
@@ -270,8 +279,13 @@ public class HomeFragment extends Fragment implements OnClickListener {
 							Mydialog.Dialog_ON_OFF(dialog, true);
 						} else {
 							if (m.matches()) {
-								tv_addprice.setText(str);
-								price = Long.parseLong(str);
+								String[] split = userdata.getExpendablefund().split("\\.");
+								if (Long.valueOf(str).longValue() > Long.valueOf(split[0]).longValue()) {
+									yDialog();
+								}else {
+									tv_addprice.setText(str);
+									price = Long.parseLong(str);
+								}
 								Mydialog.Dialog_ON_OFF(dialog, true);
 							} else {
 								editText.setError("请输入数字！");
@@ -298,9 +312,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		}
 		new AlertDialog.Builder(getActivity()).setTitle("投资确认").setView(view)
 		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-			
-			
-
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				countnum = timenum.get(tv_time.getText().toString()).intValue();
@@ -313,7 +324,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 					if(countnum == timenum.get("1分钟")){
 						mediaPlayer = MediaPlayer.create(getContext(), R.raw.oneminute);
 						mediaPlayer.start();
-					}else if(countnum == timenum.get("30秒")){
+					}
+					if(countnum == timenum.get("30秒")){
 						mediaPlayer = MediaPlayer.create(getContext(), R.raw.thirtyseconds);
 						mediaPlayer.start();
 					}
@@ -338,6 +350,25 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			}
 		}).show();
 	}
+	
+	public  void yDialog() {
+		new AlertDialog.Builder(getActivity()).setTitle("提示").setMessage("余额不足")
+		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		}).show();
+	}
+	public  void maxDialog() {
+		new AlertDialog.Builder(getActivity()).setTitle("提示").setMessage("投资金额不能大于1000元")
+		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		}).show();
+	}
+	
+	
 
 	@Override
 	public void onClick(View v) {
@@ -360,7 +391,11 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			timeadd();
 			break;
 		case R.id.relativeLayout1:
-			hlDialog(1);
+			if (price > 1000) {
+				maxDialog();
+			}else {
+				hlDialog(1);
+			}
 			break;
 		case R.id.relativeLayout2:
 			hlDialog(0);
@@ -408,7 +443,15 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private void add(long i) {
 		price += i;
 		if (price >= 1000) {
-			tv_addprice.setText(price / 1000 + "," + price%1000 + "元");
+			String[] split = userdata.getExpendablefund().split("\\.");
+			long pricemax = Long.valueOf(split[0]).longValue();
+			if (price > pricemax) {
+				yDialog();
+				price  = pricemax;
+				tv_addprice.setText(pricemax / 1000 + "," + pricemax%1000 + "元");
+			}else {
+				tv_addprice.setText(price / 1000 + "," + price%1000 + "元");
+			}
 		}else {
 			tv_addprice.setText("" + price + "元");
 		}
@@ -469,6 +512,10 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private ImageView mstate;
 	private TextView mjishu;
 	private RelativeLayout layout_show;
+	private TextView current_price;
+	private TextView hold;
+	private TextView profitorlose;
+	private TextView balance;
 	
 	private int getCount() {
 		count--;
