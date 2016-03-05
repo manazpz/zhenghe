@@ -12,10 +12,10 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="MAChart" />
+            android:text="" />
 
-        <cn.limc.androidcharts.view.MAChart
-            android:id="@+id/machart"
+        <com.example.androidcharts.view.MAChart
+           android:id="@+id/machart"
             android:layout_width="fill_parent"
             android:layout_height="220.0dip" />
 
