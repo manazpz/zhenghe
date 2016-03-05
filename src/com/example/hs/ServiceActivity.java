@@ -115,7 +115,6 @@ public class ServiceActivity extends Activity implements OnClickListener {
 		switch (v.getId()) {
 		case R.id.btn_sure:
 			service_choice.gettext();
-			startActivity(new Intent(ServiceActivity.this, MainActivity.class));
 			break;
 
 		default:
