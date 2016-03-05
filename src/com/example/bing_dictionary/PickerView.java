@@ -55,6 +55,12 @@ public class PickerView extends View
 	private int mViewWidth;
 
 	private float mLastDownY;
+	
+	private Boolean flag = false;
+	
+	public void setflag(Boolean flag) {
+		this.flag = flag;
+	}
 	/**
 	 * 滑动的距离
 	 */
@@ -109,13 +115,14 @@ public class PickerView extends View
 		if (mSelectListener != null)
 			mSelectListener.onSelect(mDataList.get(mCurrentSelected));
 	}
-
+	
 	public void setData(List<String> datas)
 	{
 		mDataList = datas;
 		mCurrentSelected = datas.size() / 2;
 		invalidate();
 	}
+
 
 	/**
 	 * 选择选中的item的index
@@ -278,7 +285,9 @@ public class PickerView extends View
 			doMove(event);
 			break;
 		case MotionEvent.ACTION_UP:
-			doUp(event);
+			if (flag) {
+				doUp(event);
+			}
 			break;
 		}
 		return true;
@@ -328,6 +337,11 @@ public class PickerView extends View
 			mTask.cancel();
 			mTask = null;
 		}
+		mTask = new MyTimerTask(updateHandler);
+		timer.schedule(mTask, 0, 10);
+	}
+	
+	public void gettext() {
 		mTask = new MyTimerTask(updateHandler);
 		timer.schedule(mTask, 0, 10);
 	}
