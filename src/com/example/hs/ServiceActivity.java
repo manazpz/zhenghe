@@ -47,6 +47,7 @@ public class ServiceActivity extends Activity implements OnClickListener {
 	}
 
 	private void initData(String text) {
+		contsData.sername = text;
 		String str = contsData.jhost.get(text + "j");
 		String[] sername = str.split("\\:");
 		janScoket = new AnScoket(ServiceActivity.this, sername[0], Integer.parseInt(sername[1]), new SocketCall() {
