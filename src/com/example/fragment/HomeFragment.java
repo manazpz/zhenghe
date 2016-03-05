@@ -125,7 +125,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		low = (RelativeLayout) layout.findViewById(R.id.relativeLayout2);
 		low.setOnClickListener(this);
 		animation = AnimationUtils.loadAnimation(getContext(), R.anim.count_down_exit);
-		
+		layout_show = (RelativeLayout) layout.findViewById(R.id.layout_show);
+		layout_show.setOnClickListener(this);
 		mtimerl = (RelativeLayout) layout.findViewById(R.id.rl_timerl);
 		mstate = (ImageView) layout.findViewById(R.id.iv_state);
 		mjishu = (TextView) layout.findViewById(R.id.tv_jishu);
@@ -299,8 +300,13 @@ public class HomeFragment extends Fragment implements OnClickListener {
 					low.setClickable(false);
 					handlern.removeMessages(1);
 					handlern.sendEmptyMessageDelayed(0, 100);
-					mediaPlayer = MediaPlayer.create(getContext(), R.raw.oneminute);
-					mediaPlayer.start();
+					if(countnum == timenum.get("1分钟")){
+						mediaPlayer = MediaPlayer.create(getContext(), R.raw.oneminute);
+						mediaPlayer.start();
+					}else if(countnum == timenum.get("30秒")){
+						mediaPlayer = MediaPlayer.create(getContext(), R.raw.thirtyseconds);
+						mediaPlayer.start();
+					}
 					if (flag == 1) {
 						mtimerl.setVisibility(View.VISIBLE);
 						mstate.setImageResource(R.drawable.downdeadtime);
@@ -349,10 +355,17 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		case R.id.relativeLayout2:
 			hlDialog(0);
 			break;
+		case R.id.layout_show:
+			layoutshow();
+			break;
 
 		default:
 			break;
 		}
+	}
+
+	private void layoutshow() {
+		layout_show.setVisibility(View.GONE);
 	}
 
 	private void timereduce() {
@@ -412,6 +425,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	Handler handlern = new Handler() {
 		public void handleMessage(android.os.Message msg) {
 			if (msg.what == 0) {
+				
 				mjishu.setText(getcountnum()/1000+","+getcountnum()%1000/100);
 				if (countnum <= 0) {
 					handlern.removeMessages(0);
@@ -419,14 +433,14 @@ public class HomeFragment extends Fragment implements OnClickListener {
 					higt.setClickable(true);
 					low.setClickable(true);
 					mtimerl.setVisibility(View.GONE);
+					layout_show.setVisibility(View.VISIBLE);
 					countnum = timenum.get(tv_time.getText().toString());
 				}else {
 					handlern.sendEmptyMessageDelayed(0, 100);
 				}
-				if (countnum == 5000) {
+				if (countnum == 6000) {
 					handler.removeMessages(1);
 					handler.sendEmptyMessageDelayed(0, 1000);
-					mediaPlayer.stop();
 				}
 			}else if (msg.what == 2) {
 				getcountnum();
@@ -444,6 +458,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private RelativeLayout mtimerl;
 	private ImageView mstate;
 	private TextView mjishu;
+	private RelativeLayout layout_show;
 	
 	private int getCount() {
 		count--;

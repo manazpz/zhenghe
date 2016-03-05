@@ -8,8 +8,10 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -31,7 +33,7 @@ public class CreditsActivity extends Activity implements OnClickListener{
 	private void init() {
 		et_bink = (EditText) findViewById(R.id.et_bink);
 		findViewById(R.id.rl_back).setOnClickListener(this);
-		findViewById(R.id.et_bink).setOnClickListener(this);
+		et_bink.setOnClickListener(this);
 	}
 
 	@Override
