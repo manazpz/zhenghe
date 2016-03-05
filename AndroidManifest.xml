@@ -27,16 +27,17 @@
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+           
         </activity>
         <activity
             android:name=".ServiceActivity"
             android:label="@string/title_activity_service"
             android:screenOrientation="portrait" >
+             <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ConnectActivity"
