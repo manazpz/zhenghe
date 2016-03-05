@@ -29,6 +29,7 @@ public class ChoiceBankActivity extends Activity {
 			data.add(Util.BANKALL[i]);
 		}
 		bank_choice.setData(data);
+		bank_choice.setflag(true);
 		bank_choice.setOnSelectListener(new onSelectListener(){
 
 			@Override
