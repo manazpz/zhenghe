@@ -34,12 +34,6 @@ public class MainActivity extends FragmentActivity {
 		addTab("持仓", R.drawable.icon_option, HoldFragment.class);
 		addTab("成交", R.drawable.icon_deal, DealFragment.class);
 		addTab("设置", R.drawable.icon_setting, SetFragment.class);
-		Intent intent = getIntent();
-		userData data = (userData)intent.getSerializableExtra("userxx");
-		new HomeFragment(data);
-		new HoldFragment(data);
-		new SetFragment(data);
-		new DealFragment(data);
 	}
 
 	private void addTab(String title, int drawableRes, Class fragmentClass) {

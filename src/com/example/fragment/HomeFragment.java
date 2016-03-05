@@ -116,6 +116,9 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		timenum.put(time[4], 1800000);
 		timenum.put(time[5], 3600000);
 		
+		MyData app = (MyData) getActivity().getApplication();
+		userdata = app.userdata;
+		android.util.Log.e("asd", userdata.getUsername());
 	}
 
 	private void initUI(View layout) {

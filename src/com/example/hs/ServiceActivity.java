@@ -61,9 +61,9 @@ public class ServiceActivity extends Activity implements OnClickListener {
 					String text = new String(Base64.decode(result, Base64.DEFAULT));
 					String[] str = text.split("\\|");
 					addData(str);
-					Intent intent = new Intent(ServiceActivity.this, MainActivity.class);
-					intent.putExtra("userxx", userdata);
-					startActivity(intent);
+					MyData app = (MyData) getApplication();
+					app.userdata = userdata;
+					startActivity(new Intent(ServiceActivity.this, MainActivity.class));
 				}
 			}
 		});
