@@ -52,11 +52,13 @@ public class AnScoket {
 			
 			@Override
 			public void onWritten(final TcpClient tcpClient) {
+				Log.e("上传成功", "上传成功");
 				sc.writeing(true);
 			}
 
 			@Override
 			public void onRead(TcpClient tcpClient, byte[] readBytes) {
+				Log.e("读取成功", "读取成功");
 				try {
 					readStr = new String(readBytes, "utf-8");
 					sc.reading(readStr);
