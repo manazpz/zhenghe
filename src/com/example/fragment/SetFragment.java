@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.InputType;
 import android.util.Log;
 import java.lang.annotation.Annotation;
 import java.util.regex.Matcher;
@@ -21,6 +22,7 @@ import com.example.hs.CreditsActivity;
 import com.example.hs.LoginActivity;
 import com.example.hs.R;
 import com.example.hs.R.layout;
+import com.example.jsData.userData;
 import com.example.zxing.CreatEwm;
 import com.google.gson.FieldNamingStrategy;
 
@@ -50,9 +52,12 @@ public class SetFragment extends Fragment implements OnClickListener {
 	private TextView mprice;
 	private String str;
 	private EditText mpw;
+	private userData data;
 
+	public SetFragment(userData data) {
+		this.data = data;
+	}
 	public SetFragment() {
-
 	}
 
 	@Override

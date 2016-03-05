@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 
 import com.example.hs.R;
 import com.example.hs.R.layout;
+import com.example.jsData.userData;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,10 +20,14 @@ import android.widget.ListView;
 public class HoldFragment extends Fragment {
 	private LayoutInflater inflater;
 	private View layout;
+	private userData data;
 
-	public HoldFragment() {
-		// Required empty public constructor
+	public HoldFragment(userData data) {
+		this.data = data;
 	}
+	public HoldFragment() {
+	}
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

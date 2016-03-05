@@ -32,6 +32,7 @@ import com.example.datasave.contsData;
 import com.example.hs.CreditsActivity;
 import com.example.hs.R;
 import com.example.hs.R.drawable;
+import com.example.jsData.userData;
 import com.example.hs.Util;
 
 import android.view.Gravity;
@@ -84,9 +85,16 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private TextView mTitle1;
 	private TextView mTitle2;
 	private MediaPlayer mediaPlayer;
+	private userData userdata;
+	
 
+	public HomeFragment(userData data) {
+		userdata = data;
+	}
+	
 	public HomeFragment() {
 	}
+
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -96,7 +104,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			// 初始化静态UI
 			initUI(layout);
 			initData();
-			
 		}
 		return layout;
 	}
