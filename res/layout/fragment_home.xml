@@ -74,6 +74,53 @@
                     android:textColor="#fff"
                     android:textSize="13sp" />
             </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layout_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" 
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:src="@drawable/win" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" 
+                    android:layout_marginTop="80dp"
+                    android:layout_below="@+id/imageView1">
+
+                    <TextView
+                        android:id="@+id/tv_profit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="16dp"
+                        android:textColor="#fff"
+                        android:layout_toRightOf="@+id/textView1"
+                        android:text="930.00" />
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="140dp"
+                        android:textColor="#fff"
+                        android:text="亏损：" />
+
+                </RelativeLayout>
+
+            </RelativeLayout>
+
         </RelativeLayout>
     </FrameLayout>
 
@@ -172,7 +219,7 @@
                 android:background="@drawable/profit" >
 
                 <TextView
-                    android:id="@+id/tv_profit"
+                    android:id="@+id/tv_profitorlose"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
