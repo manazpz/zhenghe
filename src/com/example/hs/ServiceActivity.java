@@ -31,7 +31,7 @@ public class ServiceActivity extends Activity implements OnClickListener{
 		MyData.getInstance().addActivity(this);
 		initUI();
 		initChoiceservice();
-
+		
 
 	}
 
@@ -62,7 +62,7 @@ public class ServiceActivity extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_sure:
-			startActivity(new Intent(ServiceActivity.this, MainActivity.class));
+//			startActivity(new Intent(ServiceActivity.this, MainActivity.class));
 			break;
 
 		default:

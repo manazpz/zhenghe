@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -82,6 +83,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private TextView mMoney;
 	private TextView mTitle1;
 	private TextView mTitle2;
+	private MediaPlayer mediaPlayer;
 
 	public HomeFragment() {
 	}
@@ -286,20 +288,29 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		new AlertDialog.Builder(getActivity()).setTitle("投资确认").setView(view)
 		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
 			
+			
+
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				countnum = timenum.get(tv_time.getText().toString()).intValue();
 				count = 5;
-				higt.setClickable(false);
-				low.setClickable(false);
-				handlern.removeMessages(1);
-				handlern.sendEmptyMessageDelayed(0, 100);
-				if (flag == 1) {
-					mtimerl.setVisibility(View.VISIBLE);
-					mstate.setImageResource(R.drawable.downdeadtime);
+				if (countnum < timenum.get("5分钟")) {
+					higt.setClickable(false);
+					low.setClickable(false);
+					handlern.removeMessages(1);
+					handlern.sendEmptyMessageDelayed(0, 100);
+					mediaPlayer = MediaPlayer.create(getContext(), R.raw.oneminute);
+					mediaPlayer.start();
+					if (flag == 1) {
+						mtimerl.setVisibility(View.VISIBLE);
+						mstate.setImageResource(R.drawable.downdeadtime);
+					}else {
+						mtimerl.setVisibility(View.VISIBLE);
+						mstate.setImageResource(R.drawable.updeadtime);
+					}
 				}else {
-					mtimerl.setVisibility(View.VISIBLE);
-					mstate.setImageResource(R.drawable.updeadtime);
+					handlern.removeMessages(1);
+					handlern.sendEmptyMessageDelayed(2, 100);
 				}
 			}
 		})
@@ -415,6 +426,17 @@ public class HomeFragment extends Fragment implements OnClickListener {
 				if (countnum == 5000) {
 					handler.removeMessages(1);
 					handler.sendEmptyMessageDelayed(0, 1000);
+					mediaPlayer.stop();
+				}
+			}else if (msg.what == 2) {
+				getcountnum();
+				if (countnum <= 0) {
+					handlern.removeMessages(2);
+					handlern.sendEmptyMessageDelayed(1, 100);
+					countnum = timenum.get(tv_time.getText().toString());
+				}else {
+					android.util.Log.e("sdf", countnum+"sf");
+					handlern.sendEmptyMessageDelayed(2, 100);
 				}
 			}
 		};

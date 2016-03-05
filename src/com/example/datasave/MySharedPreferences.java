@@ -33,7 +33,7 @@ public class MySharedPreferences {
 	}
 	public static String ReaderPrice(Context context, String key, String filename) {
 		SharedPreferences sp = context.getSharedPreferences(filename, 0);
-		String str = sp.getString(key, "");
+		String str = sp.getString(key, "100");
 		return str;
 	}
 	
