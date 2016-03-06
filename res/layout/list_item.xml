@@ -43,7 +43,7 @@
         android:layout_marginTop="5dp" />
 
     <TextView
-        android:id="@+id/tv_repay "
+        android:id="@+id/tv_repay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@+id/tv_name"
@@ -58,8 +58,8 @@
         android:id="@+id/tv_period"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tv_repay "
-        android:layout_below="@+id/tv_repay "
+        android:layout_alignLeft="@+id/tv_repay"
+        android:layout_below="@+id/tv_repay"
         android:layout_marginTop="3dp"
         android:text="周期：30秒"
         android:textColor="#000"
