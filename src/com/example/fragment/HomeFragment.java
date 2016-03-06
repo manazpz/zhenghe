@@ -502,7 +502,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
 					handlern.sendEmptyMessageDelayed(1, 100);
 					countnum = timenum.get(tv_time.getText().toString());
 				}else {
-					android.util.Log.e("sdf", countnum+"sf");
 					handlern.sendEmptyMessageDelayed(2, 100);
 				}
 			}
