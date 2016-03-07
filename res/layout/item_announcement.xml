@@ -7,6 +7,8 @@
         android:id="@+id/list_announcement"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:divider="#fff"
+        android:dividerHeight="1.0dp"
         >
     </ListView>
 
