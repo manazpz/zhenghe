@@ -16,23 +16,31 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.Base64;
+import android.util.Log;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.activeandroid.util.Log;
 import com.astuetz.PagerSlidingTabStrip;
 import com.example.bing_dictionary.Mydialog;
+import com.example.datasave.Admin;
 import com.example.datasave.MyData;
 import com.example.datasave.MySharedPreferences;
 import com.example.datasave.contsData;
+import com.example.fragment.Socket.AnScoket;
+import com.example.fragment.Socket.CloseThread;
+import com.example.fragment.Socket.SocketCall;
 import com.example.hs.CreditsActivity;
 import com.example.hs.R;
 import com.example.hs.R.drawable;
+import com.example.jsData.cjData;
+import com.example.jsData.codeData;
 import com.example.jsData.userData;
+import com.smorra.asyncsocket.TcpClient;
 import com.example.hs.Util;
 
 import android.view.Gravity;
@@ -47,6 +55,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import cn.bmob.v3.c.V;
@@ -86,6 +96,24 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private TextView mTitle2;
 	private MediaPlayer mediaPlayer;
 	private userData userdata;
+	private RelativeLayout mtimerl;
+	private ImageView mstate;
+	private TextView mjishu;
+	private RelativeLayout layout_show;
+	private TextView current_price;
+	private TextView hold;
+	private TextView profitorlose;
+	private TextView balance;
+	private RadioGroup radioGroup;
+	private RadioButton radio0;
+	private RadioButton radio1;
+	private RadioButton radio2;
+	private RadioButton radio3;
+	private AnScoket janScoket;
+	private ArrayList<codeData> codelist = new ArrayList<codeData>();
+	private String[] splitcodes1;
+	private String[] splitcodes2;
+	private String[] splitcodes3;
 	
 	public HomeFragment() {
 	}
@@ -125,8 +153,66 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		initVP(layout);
 		initchoice(layout);
 		inittime(layout);
+		initcode();
 		setSlideMenu();
+		
 	}
+
+	private void initcode() {
+
+		String str = contsData.jhost.get(contsData.sername + "j");
+		String[] sername = str.split("\\:");
+		janScoket = new AnScoket(getActivity(), sername[0], Integer.parseInt(sername[1]), new SocketCall() {
+
+			@Override
+			public void writeing(Boolean flag) {
+			}
+
+			@Override
+			public void reading(String result, TcpClient tcpClient) {
+				getresult(result, tcpClient);
+			}
+		});
+		MyData app = (MyData) getActivity().getApplication();
+		userdata = app.userdata;
+		Admin admin = MySharedPreferences.ReadAdmin(getActivity());
+		janScoket.setLoginstr("ugetcodelist|" + userdata.getDid() + "|"
+				+ userdata.getUsername() + ">");
+		try {
+			janScoket.SocketOnline();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	private void getresult(String result, TcpClient tcpClient) {
+		if (result.length() > 0) {
+			String[] split = result.split(">");
+			for (int i = 0; i < split.length; i++) {
+				String text1 = new String(Base64.decode(split[i] + ">", Base64.DEFAULT));
+				String[] str = text1.split("\\|");
+				switch (str[0]) {
+				case "ugetcodelist":
+					for (int j = 0; j < str.length; j++) {
+						if(j>0){
+							splitcodes = str[j].split("\\,");
+							codelist.add(new codeData(splitcodes[0], splitcodes[1]));
+						}
+					}
+					radio0.setText(codelist.get(0).getCode());
+					radio1.setText(codelist.get(1).getCode());
+					radio2.setText(codelist.get(2).getCode());
+					radio3.setText(codelist.get(3).getCode());
+					break;
+				
+				default:
+					new CloseThread(tcpClient).start();
+					break;
+				}
+			}
+		}
+
+	}
+
 
 	private void inittime(View layout) {
 		countimg = (ImageView) layout.findViewById(R.id.iv_time);
@@ -147,26 +233,11 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	}
 
 	private void setSlideMenu() {
-		// 包含TextView的LinearLayout
-		LinearLayout menuLinerLayout = (LinearLayout) layout.findViewById(R.id.linearLayoutMenu);
-		menuLinerLayout.setOrientation(LinearLayout.HORIZONTAL);
-		// 参数设置
-		LinearLayout.LayoutParams menuLinerLayoutParames = new LinearLayout.LayoutParams(
-				LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-		menuLinerLayoutParames.gravity = Gravity.CENTER_HORIZONTAL;
-		// 添加TextView控件
-		for (int i = 0; i < 4; i++) {
-			TextView tvMenu = new Button(getContext());
-			tvMenu.setLayoutParams(new LayoutParams(30, 30));
-			tvMenu.setPadding(30, 0, 30, 0);
-			tvMenu.setBackgroundColor(Color.DKGRAY);
-			tvMenu.setDrawingCacheBackgroundColor(color.holo_red_light);
-			tvMenu.setText(Util.TITLESALL[i]);
-			tvMenu.setTextColor(Color.WHITE);
-			tvMenu.setGravity(Gravity.CENTER_HORIZONTAL);
-			menuLinerLayout.addView(tvMenu, menuLinerLayoutParames);
-		}
-
+		radioGroup = (RadioGroup) layout.findViewById(R.id.radioGroup);
+		radio0 = (RadioButton) layout.findViewById(R.id.radio0);
+		radio1 = (RadioButton) layout.findViewById(R.id.radio1);
+		radio2 = (RadioButton) layout.findViewById(R.id.radio2);
+		radio3 = (RadioButton) layout.findViewById(R.id.radio3);
 	}
 
 	private void initchoice(View layout) {
@@ -506,14 +577,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			}
 		};
 	};
-	private RelativeLayout mtimerl;
-	private ImageView mstate;
-	private TextView mjishu;
-	private RelativeLayout layout_show;
-	private TextView current_price;
-	private TextView hold;
-	private TextView profitorlose;
-	private TextView balance;
+	private String[] splitcodes;
 	
 	private int getCount() {
 		count--;
