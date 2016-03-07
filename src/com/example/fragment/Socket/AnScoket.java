@@ -59,7 +59,7 @@ public class AnScoket {
 			public void onRead(TcpClient tcpClient, byte[] readBytes) {
 				try {
 					readStr = new String(readBytes, "utf-8");
-					sc.reading(readStr);
+					sc.reading(readStr, tcpClient);
 				} catch (UnsupportedEncodingException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

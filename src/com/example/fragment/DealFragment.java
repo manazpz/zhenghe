@@ -1,6 +1,7 @@
 package com.example.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
@@ -15,13 +16,17 @@ import com.example.datasave.MyData;
 import com.example.datasave.MySharedPreferences;
 import com.example.datasave.contsData;
 import com.example.fragment.Socket.AnScoket;
+import com.example.fragment.Socket.CloseThread;
 import com.example.fragment.Socket.SocketCall;
 import com.example.hs.MainActivity;
 import com.example.hs.R;
 import com.example.hs.ServiceActivity;
 import com.example.hs.R.layout;
+import com.example.jsData.AnnouncementData;
 import com.example.jsData.cjData;
+import com.example.jsData.upbanben;
 import com.example.jsData.userData;
+import com.smorra.asyncsocket.TcpClient;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,9 +43,10 @@ public class DealFragment extends Fragment {
 	private LayoutInflater inflater;
 	private View layout;
 	private AnScoket janScoket;
-	private ArrayList<String> resultdata = new ArrayList<String>();
 	private ArrayList<cjData> cjlist = new ArrayList<cjData>();
 	private DealAdapter dealAdapter;
+	private userData userdata;
+	private String bql="";
 
 	public DealFragment() {
 	}
@@ -51,9 +57,9 @@ public class DealFragment extends Fragment {
 		if (layout == null) {
 			this.inflater = inflater;
 			layout = inflater.inflate(R.layout.fragment_deal, container, false);
-			initData();
 			initUI();
 		}
+		initData();
 		return layout;
 	}
 
@@ -64,21 +70,18 @@ public class DealFragment extends Fragment {
 
 			@Override
 			public void writeing(Boolean flag) {
-				resultdata.clear();
+				cjlist.clear();
 			}
 
 			@Override
-			public void reading(String result) {
-				if (result.length() > 0) {
-					resultdata.add(result);
-					setdata();
-					dealAdapter.notifyDataSetChanged();
-				}
+			public void reading(String result, TcpClient tcpClient) {
+					getresult(result, tcpClient);
 			}
 		});
-		Admin admin = MySharedPreferences.ReadAdmin(getActivity());
-		janScoket.setLoginstr("<ucjlist|" + admin.getUsername() + "|"
-				+ MD5.getmd5(admin.getUsername(), admin.getPassword()) + ">");
+		MyData app = (MyData) getActivity().getApplication();
+		userdata = app.userdata;
+		janScoket.setLoginstr("<ucjlist|" + userdata.getDid() + "|"
+				+ userdata.getUsername() + ">");
 		try {
 			janScoket.SocketOnline();
 		} catch (IOException e) {
@@ -88,18 +91,39 @@ public class DealFragment extends Fragment {
 		
 	}
 	
-	public void setdata() {
-		for (int i = 0; i < resultdata.size(); i++) {
-			String text = new String(Base64.decode(resultdata.get(i), Base64.DEFAULT));
-			Log.e("sd", text);
-			String[] str = text.split("\\|");
-			cjlist.add(new cjData(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8], 
-					str[9], str[10], str[11], str[12], str[13], str[14], str[15], str[16]));
+	private void getresult(String result, TcpClient tcpClient) {
+		if (result.length() > 0) {
+			//数据连接出错，可参考
+			if (">".equals(result.substring(result.length()-1))) {
+				if (!"".equals(bql)) {
+					result = bql + result;
+					bql = "";
+				}
+				String[] split = result.split(">");
+				Log.e("asd", result);
+				for (int i = 0; i < split.length; i++) {
+					String text1 = new String(Base64.decode(split[i] + ">", Base64.DEFAULT));
+					String[] str = text1.split("\\|");
+					switch (str[0]) {
+					case "cjlist":
+						if (!"0".equals(str[1])) {
+							cjlist.add(new cjData(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8], 
+									str[9], str[10], str[11], str[12], str[13], str[14], str[15], str[16]));
+							dealAdapter.notifyDataSetChanged();
+						}
+						break;
+						
+					default:
+						new CloseThread(tcpClient).start();
+						break;
+					}
+				}
+			}else {
+				bql = result;
+			}
 		}
-		
 	}
-
-
+	
 	private void initUI() {
 		ListView mdeal = (ListView) layout.findViewById(R.id.lv_deal);
 		dealAdapter = new DealAdapter(cjlist);
@@ -139,7 +163,35 @@ class DealAdapter extends BaseAdapter {
 			view = convertView;
 			holder = (Viewdeal) convertView.getTag();
 		}
-		holder.realname.setText(list.get(position).getRealname());
+		holder.realname.setText(list.get(position).getHycode());
+		if ("1".equals(list.get(position).getM_up_down())) {
+			holder.tz.setTextColor(Color.RED);
+			holder.tz.setText("投资：▲涨 ￥"+list.get(position).getTzprice());
+			if ( Double.parseDouble(list.get(position).getStartprice())-Double.parseDouble(list.get(position).getEndprice()) > 0) {
+				holder.zt.setTextColor(Color.RED);
+				holder.zt.setText("状态：▲涨");
+				holder.result.setText("结果：损失");
+			}else {
+				holder.zt.setTextColor(Color.GREEN);
+				holder.zt.setText("状态：▼跌");
+				holder.result.setText("结果：赢利");
+			}
+		}else {
+			holder.tz.setTextColor(Color.GREEN);
+			holder.tz.setText("投资：▼跌 ￥"+list.get(position).getTzprice());
+			if ( Double.parseDouble(list.get(position).getStartprice())-Double.parseDouble(list.get(position).getEndprice()) < 0) {
+				holder.zt.setTextColor(Color.GREEN);
+				holder.zt.setText("状态：▼跌");
+				holder.result.setText("结果：损失");
+			}else {
+				holder.zt.setTextColor(Color.RED);
+				holder.zt.setText("状态：▲涨");
+				holder.result.setText("结果：赢利");
+			}
+		}
+		holder.starttime.setText("开始："+list.get(position).getStartTime()+"/"+list.get(position).getStartprice());
+		holder.endttime.setText("结束："+list.get(position).getEndTime()+"/"+list.get(position).getEndprice());
+		
 		return view;
 	}
 	

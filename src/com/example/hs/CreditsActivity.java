@@ -13,6 +13,7 @@ import com.example.fragment.Socket.AnScoket;
 import com.example.fragment.Socket.SocketCall;
 import com.example.jsData.bankData;
 import com.example.jsData.userData;
+import com.smorra.asyncsocket.TcpClient;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -66,7 +67,7 @@ public class CreditsActivity extends Activity implements OnClickListener{
 			}
 
 			@Override
-			public void reading(String result) {
+			public void reading(String result,TcpClient tcpClient) {
 				if (result.length() > 0) {
 					String text = new String(Base64.decode(result, Base64.DEFAULT));
 					contsData.bankxx = text.split("\\|");
@@ -194,7 +195,7 @@ public class CreditsActivity extends Activity implements OnClickListener{
 			}
 
 			@Override
-			public void reading(String result) {
+			public void reading(String result, TcpClient tcpClient) {
 				if (result.length() > 0) {
 					String text = new String(Base64.decode(result, Base64.DEFAULT));
 					String[] split = text.split("\\|");

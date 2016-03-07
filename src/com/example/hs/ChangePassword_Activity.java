@@ -5,9 +5,10 @@ import java.io.IOException;
 import com.example.datasave.MyData;
 import com.example.datasave.contsData;
 import com.example.fragment.Socket.AnScoket;
-import com.example.fragment.Socket.Ancontens;
 import com.example.fragment.Socket.SocketCall;
 import com.example.jsData.userData;
+import com.smorra.asyncsocket.TcpClient;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 
 public class ChangePassword_Activity extends Activity implements OnClickListener{
 
-	private Ancontens anScoket;
+	private AnScoket anScoket;
 	private EditText dt_newpw;
 	private EditText et_againpw;
 	private Button bt_revise;
@@ -51,13 +52,13 @@ public class ChangePassword_Activity extends Activity implements OnClickListener
 		String str1 = contsData.jhost.get(contsData.sername+"j");
 		String[] changepsw = str1.split("\\:");
 		
-		anScoket = new Ancontens(this, changepsw[0], Integer.parseInt(changepsw[1]), new SocketCall() {
+		anScoket = new AnScoket(this, changepsw[0], Integer.parseInt(changepsw[1]), new SocketCall() {
 			@Override
 			public void writeing(Boolean flag) {
 				
 			}
 			@Override
-			public void reading(String result) {
+			public void reading(String result, TcpClient tcpClient) {
 				if (result.length() > 0) {
 					String text = new String(Base64.decode(result, Base64.DEFAULT));
 					contsData.newpsw = text.split("\\|");
@@ -121,7 +122,7 @@ public class ChangePassword_Activity extends Activity implements OnClickListener
 			}
 
 			@Override
-			public void reading(String result) {
+			public void reading(String result, TcpClient tcpClient) {
 				if (result.length() > 0) {
 					String text = new String(Base64.decode(result, Base64.DEFAULT));
 					String[] split = text.split("\\|");

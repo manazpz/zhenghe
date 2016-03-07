@@ -13,8 +13,10 @@ import com.example.datasave.MyData;
 import com.example.datasave.MySharedPreferences;
 import com.example.datasave.contsData;
 import com.example.fragment.Socket.AnScoket;
+import com.example.fragment.Socket.CloseThread;
 import com.example.fragment.Socket.SocketCall;
 import com.example.jsData.userData;
+import com.smorra.asyncsocket.TcpClient;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -57,14 +59,17 @@ public class ServiceActivity extends Activity implements OnClickListener {
 			}
 
 			@Override
-			public void reading(String result) {
+			public void reading(String result,TcpClient tcpClient) {
 				if (result.length() > 0) {
 					String text = new String(Base64.decode(result, Base64.DEFAULT));
 					String[] str = text.split("\\|");
-					addData(str);
-					MyData app = (MyData) getApplication();
-					app.userdata = userdata;
-					startActivity(new Intent(ServiceActivity.this, MainActivity.class));
+					if ("ugetuserinfo".equals(str[0])) {
+						addData(str);
+						MyData app = (MyData) getApplication();
+						app.userdata = userdata;
+						startActivity(new Intent(ServiceActivity.this, MainActivity.class));
+						new CloseThread(tcpClient).start();
+					}
 				}
 			}
 		});
@@ -92,8 +97,10 @@ public class ServiceActivity extends Activity implements OnClickListener {
 	}
 
 	public void addData(String[] str) {
-		userdata = new userData(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10],
-				str[11], str[12]);
+		if (str.length == 13) {
+			userdata = new userData(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10],
+					str[11], str[12]);
+		}
 	}
 
 	private void initChoiceservice() {

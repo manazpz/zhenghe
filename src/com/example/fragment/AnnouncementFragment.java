@@ -4,10 +4,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import com.example.datasave.MyData;
 import com.example.datasave.contsData;
-import com.example.fragment.Socket.Ancontens;
+import com.example.fragment.Socket.AnScoket;
+import com.example.fragment.Socket.CloseThread;
 import com.example.fragment.Socket.SocketCall;
 import com.example.hs.R;
 import com.example.jsData.AnnouncementData;
+import com.example.jsData.upbanben;
+import com.smorra.asyncsocket.TcpClient;
+
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
@@ -31,12 +35,13 @@ public class AnnouncementFragment extends Fragment {
 	private TextView tv_tital;
 	private TextView tv_message;
 	private TextView tv_time;
-	private Ancontens janScoket;
-	private Ancontens anScoket;
+	private AnScoket anScoket;
 	private String[] strs;
 	private LayoutInflater inflater;
 	private ArrayList<AnnouncementData> list = new ArrayList<AnnouncementData>();
+	private ArrayList<upbanben> uplist = new ArrayList<upbanben>();
 	private AnnouncementData data;
+	private String bql = "";
 
 	public AnnouncementFragment(int position) {
 		this.pageNum = position;
@@ -47,31 +52,26 @@ public class AnnouncementFragment extends Fragment {
 		if (layout == null) {
 			this.inflater = inflater;
 			layout = inflater.inflate(R.layout.item_announcement, container, false);
-			contsData.gonggao.clear();
 			initUI();
-			initData();
-			
 		}
+		list.clear();
+		uplist.clear();
+		initData();
 		return layout;
 	}
 
 	private void initData() {
-		
-		String str1 = contsData.jhost.get(contsData.sername+"j");
+		String str1 = contsData.jhost.get(contsData.sername + "j");
 		String[] announcement = str1.split("\\:");
-		anScoket = new Ancontens(getContext(), announcement[0], Integer.parseInt(announcement[1]), new SocketCall() {
+		anScoket = new AnScoket(getContext(), announcement[0], Integer.parseInt(announcement[1]), new SocketCall() {
 
 			@Override
 			public void writeing(Boolean flag) {
 			}
+
 			@Override
-			public void reading(String result) {
-				if (result.length() > 0) {
-					contsData.gonggao.add(result);
-					Log.e("asd", contsData.gonggao.size()+"");
-					base64();
-					adapter.notifyDataSetChanged();
-				}
+			public void reading(String result, TcpClient tcpClient) {
+				getresult(result, tcpClient);
 			}
 		});
 		anScoket.setLoginstr("<uggao|0|0>");
@@ -81,19 +81,35 @@ public class AnnouncementFragment extends Fragment {
 			e.printStackTrace();
 		}
 	}
-	
-	public void base64() {
-		if(contsData.gonggao.size()==4){
-				String[] str = contsData.gonggao.get(0).split(">");
-				for (int i = 0; i < str.length; i++) {
-					if(i<=1){
-						String text = new String(Base64.decode(str[i]+">", Base64.DEFAULT));
-						String[] splitmessages = text.split("\\|");
-						list.add(new AnnouncementData(splitmessages[2], splitmessages[3], splitmessages[4]));
-						MyData app = (MyData)getActivity().getApplication();
-						app.Announcementdata = data;
+
+	private void getresult(String result, TcpClient tcpClient) {
+		if (result.length() > 0) {
+			if (">".equals(result.substring(result.length() - 1))) {
+				if (!"".equals(bql)) {
+					result = bql + result;
+					bql = "";
+				}
+				String[] split = result.split(">");
+				for (int i = 0; i < split.length; i++) {
+					String text1 = new String(Base64.decode(split[i] + ">", Base64.DEFAULT));
+					String[] splitmessages1 = text1.split("\\|");
+					switch (splitmessages1[0]) {
+					case "uggao":
+						list.add(new AnnouncementData(splitmessages1[2], splitmessages1[3], splitmessages1[4]));
+						adapter.notifyDataSetChanged();
+						break;
+					case "version":
+						uplist.add(new upbanben(splitmessages1[1], splitmessages1[2], splitmessages1[3]));
+						break;
+
+					default:
+						new CloseThread(tcpClient).start();
+						break;
 					}
 				}
+			} else {
+				bql = result;
+			}
 		}
 	}
 
@@ -102,10 +118,8 @@ public class AnnouncementFragment extends Fragment {
 		adapter = new announcementAdapter();
 		list_announcement.setAdapter(adapter);
 	}
-	
-	
-	class announcementAdapter extends BaseAdapter{
 
+	class announcementAdapter extends BaseAdapter {
 
 		@Override
 		public int getCount() {
@@ -123,27 +137,17 @@ public class AnnouncementFragment extends Fragment {
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent ) {
+		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewOption holder;
 			View view;
 			if (convertView == null) {
-			view = LayoutInflater.from(parent.getContext()).inflate(R.layout.announcement_item, null);
-			holder = new ViewOption();
-			view.setTag(holder);
-			holder.tv_tital = (TextView) view.findViewById(R.id.tv_tital);
-			holder.tv_message = (TextView) view.findViewById(R.id.tv_message);
-			holder.tv_time = (TextView) view.findViewById(R.id.tv_time);
-//			for (int j = 0; j < splitmessages.length; j++) {
-//				Log.e("bbbbb", splitmessages[j]);
-//				int b = 1;
-//				b++;
-//				if(splitmessages[j].toString().equals(b)){
-//					tv_time.setText(splitmessages[j+1]);
-//					tv_tital.setText(splitmessages[j+2]);
-//					tv_message.setText(splitmessages[j+3]);
-//				}
-//			}
-			}else {
+				view = LayoutInflater.from(parent.getContext()).inflate(R.layout.announcement_item, null);
+				holder = new ViewOption();
+				view.setTag(holder);
+				holder.tv_tital = (TextView) view.findViewById(R.id.tv_tital);
+				holder.tv_message = (TextView) view.findViewById(R.id.tv_message);
+				holder.tv_time = (TextView) view.findViewById(R.id.tv_time);
+			} else {
 				view = convertView;
 				holder = (ViewOption) convertView.getTag();
 			}
@@ -151,11 +155,11 @@ public class AnnouncementFragment extends Fragment {
 			holder.tv_tital.setText(list.get(position).getTital());
 			holder.tv_message.setText(list.get(position).getMassage());
 			return view;
-			
-			
+
 		}
-		
+
 	}
+
 	class ViewOption {
 		public TextView tv_time;
 		public TextView tv_tital;

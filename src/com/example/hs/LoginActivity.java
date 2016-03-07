@@ -48,7 +48,7 @@ public class LoginActivity extends Activity implements OnClickListener{
 		anScoket = new AnScoket(LoginActivity.this, host, port, new SocketCall() {
 			
 			@Override
-			public void reading(String result) {
+			public void reading(String result, TcpClient tcpClient) {
 				String[] s = result.split("\\|");
 				if ("密码错误".equals(s[s.length-1]) || "账号错误".equals(s[s.length-1])) {
 					com.example.bing_dictionary.Toast.makeText(

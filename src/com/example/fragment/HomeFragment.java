@@ -60,7 +60,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private View layout;
 	private LayoutInflater inflater;
 	private ViewPager vp_type;
-	private int BANNER_COUNT = 3 * 100000;
+	private int BANNER_COUNT = 3;
 	private boolean isDrag;
 	private RelativeLayout layout_setprice;
 	private Button btn_add;
@@ -86,11 +86,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private TextView mTitle2;
 	private MediaPlayer mediaPlayer;
 	private userData userdata;
-	
-
-	public HomeFragment(userData data) {
-		userdata = data;
-	}
 	
 	public HomeFragment() {
 	}
@@ -193,7 +188,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		vp_type = (ViewPager) layout.findViewById(R.id.vp_type);
 		FragmentManager fm = getChildFragmentManager();
 		vp_type.setAdapter(new PagerBannerAdapter(fm));
-		vp_type.setCurrentItem(BANNER_COUNT / 3);
+		vp_type.setCurrentItem(0);
 		vp_type.setOnPageChangeListener(new MyPageChangeListener());
 	}
 
@@ -211,16 +206,15 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 		@Override
 		public Fragment getItem(int position) {
-			position %= 3;
 			switch (position) {
 			case 1:
-				return new ChartFragment(position);
-			case 2:
 				return new MarketFragment(position);
+			case 2:
+				return new AnnouncementFragment(position);
 			default:
 				break;
 			}
-			return new AnnouncementFragment(position);
+			return new ChartFragment(position);
 		}
 
 		@Override
@@ -255,7 +249,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 		@Override
 		public void onPageScrolled(int arg0, float arg1, int arg2) {
-
+			
 		}
 
 		@Override
@@ -340,6 +334,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 					handlern.removeMessages(1);
 					handlern.sendEmptyMessageDelayed(2, 100);
 				}
+				
 			}
 		})
 		.setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -398,7 +393,11 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			}
 			break;
 		case R.id.relativeLayout2:
-			hlDialog(0);
+			if (price > 1000) {
+				maxDialog();
+			}else {
+				hlDialog(1);
+			}
 			break;
 		case R.id.layout_show:
 			layoutshow();
