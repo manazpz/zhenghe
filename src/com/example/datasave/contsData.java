@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.example.hs.R;
+import com.example.jsData.upbanben;
 
 public class contsData {
 	public static final int[] img = new int[] {R.drawable.daojishi1, R.drawable.daojishi2,
@@ -13,6 +14,7 @@ public class contsData {
 	public static HashMap<String, String> jhost = new HashMap<String, String>();
 	public static HashMap<String, String> hhost = new HashMap<String, String>();
 	public static List<String> data = new ArrayList<String>();
+	public static ArrayList<upbanben> uplist = new ArrayList<upbanben>();
 	
 	public static String sername;
 	public static String[] newpsw;
