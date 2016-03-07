@@ -13,7 +13,10 @@ public class contsData {
 	public static HashMap<String, String> jhost = new HashMap<String, String>();
 	public static HashMap<String, String> hhost = new HashMap<String, String>();
 	public static List<String> data = new ArrayList<String>();
+	public static List<String> gonggao = new ArrayList<String>();
+	
 	public static String sername;
+	public static String[] newpsw;
 	public static String[] bankxx;
 	
 }

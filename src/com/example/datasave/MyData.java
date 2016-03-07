@@ -1,9 +1,8 @@
 package com.example.datasave;
 
 
-import com.example.hs.R;
+import com.example.jsData.AnnouncementData;
 import com.example.jsData.userData;
-import com.tencent.connect.avatar.ImageActivity;
 
 
 import java.util.LinkedList;
@@ -15,6 +14,7 @@ import android.app.Application;
 public class MyData extends Application {
 	public String password;
 	public userData userdata;
+	public AnnouncementData Announcementdata;
 	private List<Activity> mList = new LinkedList<Activity>();
 	private static MyData instance;
 

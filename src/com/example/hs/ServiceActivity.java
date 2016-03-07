@@ -109,6 +109,7 @@ public class ServiceActivity extends Activity implements OnClickListener {
 			}
 		}
 		service_choice.setData(contsData.data);
+		
 	}
 
 	@Override

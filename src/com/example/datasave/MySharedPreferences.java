@@ -44,6 +44,7 @@ public class MySharedPreferences {
 		edit.putString("password", password);
 		edit.commit();
 	}
+	
 	public static void ClearAdmin(Context context) {
 		SharedPreferences sp = context.getSharedPreferences("ADMIN", 0);
 		Editor edit = sp.edit();

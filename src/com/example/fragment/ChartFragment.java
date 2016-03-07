@@ -43,7 +43,7 @@ public class ChartFragment extends Fragment {
 	    }
 		private void initMAChart(){
 			
-	        this.machart = (MAChart)layout.findViewById(R.id.machart);
+	        machart = (MAChart)layout.findViewById(R.id.machart);
 	        List<LineEntity> lines = new ArrayList<LineEntity>();
 	        
 	        //计算5日均线
