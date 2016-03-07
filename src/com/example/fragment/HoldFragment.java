@@ -73,6 +73,7 @@ public class HoldFragment extends Fragment {
 
 			@Override
 			public void writeing(Boolean flag) {
+				cclist.clear();
 			}
 
 			@Override

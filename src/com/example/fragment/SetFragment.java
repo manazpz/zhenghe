@@ -17,6 +17,7 @@ import com.example.bing_dictionary.Mydialog;
 import com.example.bing_dictionary.Toast;
 import com.example.datasave.MyData;
 import com.example.datasave.MySharedPreferences;
+import com.example.datasave.contsData;
 import com.example.hs.ChangePassword_Activity;
 import com.example.hs.CreditsActivity;
 import com.example.hs.LoginActivity;
@@ -74,7 +75,7 @@ public class SetFragment extends Fragment implements OnClickListener {
 
 	private void initEwm() {
 		ImageView mewm = (ImageView) layout.findViewById(R.id.iv_ewm);
-		new CreatEwm().createQRImage("http://www.baidu.com", mewm);
+		new CreatEwm().createQRImage(contsData.uplist.get(0).getBanbenweb(), mewm);
 	}
 
 	private void initUI() {

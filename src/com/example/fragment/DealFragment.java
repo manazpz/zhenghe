@@ -59,6 +59,7 @@ public class DealFragment extends Fragment {
 			layout = inflater.inflate(R.layout.fragment_deal, container, false);
 			initUI();
 		}
+		cjlist.clear();
 		initData();
 		return layout;
 	}
@@ -70,7 +71,6 @@ public class DealFragment extends Fragment {
 
 			@Override
 			public void writeing(Boolean flag) {
-				cjlist.clear();
 			}
 
 			@Override
@@ -100,7 +100,6 @@ public class DealFragment extends Fragment {
 					bql = "";
 				}
 				String[] split = result.split(">");
-				Log.e("asd", result);
 				for (int i = 0; i < split.length; i++) {
 					String text1 = new String(Base64.decode(split[i] + ">", Base64.DEFAULT));
 					String[] str = text1.split("\\|");
@@ -119,7 +118,7 @@ public class DealFragment extends Fragment {
 					}
 				}
 			}else {
-				bql = result;
+				bql += result;
 			}
 		}
 	}
@@ -164,6 +163,8 @@ class DealAdapter extends BaseAdapter {
 			holder = (Viewdeal) convertView.getTag();
 		}
 		holder.realname.setText(list.get(position).getHycode());
+		double d1 = Double.parseDouble(list.get(position).getTzprice());
+		double d2 = Double.parseDouble(list.get(position).getYlpricate());
 		if ("1".equals(list.get(position).getM_up_down())) {
 			holder.tz.setTextColor(Color.RED);
 			holder.tz.setText("投资：▲涨 ￥"+list.get(position).getTzprice());
@@ -175,6 +176,7 @@ class DealAdapter extends BaseAdapter {
 				holder.zt.setTextColor(Color.GREEN);
 				holder.zt.setText("状态：▼跌");
 				holder.result.setText("结果：赢利");
+				holder.sy.setText("收益："+d1+d2);
 			}
 		}else {
 			holder.tz.setTextColor(Color.GREEN);
@@ -187,11 +189,11 @@ class DealAdapter extends BaseAdapter {
 				holder.zt.setTextColor(Color.RED);
 				holder.zt.setText("状态：▲涨");
 				holder.result.setText("结果：赢利");
+				holder.sy.setText("收益："+d1+d2);
 			}
 		}
 		holder.starttime.setText("开始："+list.get(position).getStartTime()+"/"+list.get(position).getStartprice());
 		holder.endttime.setText("结束："+list.get(position).getEndTime()+"/"+list.get(position).getEndprice());
-		
 		return view;
 	}
 	

@@ -39,7 +39,6 @@ public class AnnouncementFragment extends Fragment {
 	private String[] strs;
 	private LayoutInflater inflater;
 	private ArrayList<AnnouncementData> list = new ArrayList<AnnouncementData>();
-	private ArrayList<upbanben> uplist = new ArrayList<upbanben>();
 	private AnnouncementData data;
 	private String bql = "";
 
@@ -55,7 +54,7 @@ public class AnnouncementFragment extends Fragment {
 			initUI();
 		}
 		list.clear();
-		uplist.clear();
+		contsData.uplist.clear();
 		initData();
 		return layout;
 	}
@@ -99,7 +98,7 @@ public class AnnouncementFragment extends Fragment {
 						adapter.notifyDataSetChanged();
 						break;
 					case "version":
-						uplist.add(new upbanben(splitmessages1[1], splitmessages1[2], splitmessages1[3]));
+						contsData.uplist.add(new upbanben(splitmessages1[1], splitmessages1[2], splitmessages1[3]));
 						break;
 
 					default:
@@ -108,7 +107,7 @@ public class AnnouncementFragment extends Fragment {
 					}
 				}
 			} else {
-				bql = result;
+				bql += result;
 			}
 		}
 	}
