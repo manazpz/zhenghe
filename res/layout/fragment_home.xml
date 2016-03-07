@@ -10,19 +10,46 @@
         android:layout_width="match_parent"
         android:layout_height="30dp" >
 
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:scrollbars="none" >
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:padding="5dp"
+            android:orientation="horizontal">
 
-            <LinearLayout
-                android:id="@+id/linearLayoutMenu"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:orientation="vertical" >
-            </LinearLayout>
-        </HorizontalScrollView>
+            <RadioButton
+                android:id="@+id/radio0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:button="@null"
+                android:layout_marginRight="5dp"
+                android:text="" />
+
+            <RadioButton
+                android:id="@+id/radio1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:layout_marginRight="5dp"
+                android:text="" />
+
+            <RadioButton
+                android:id="@+id/radio2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:layout_marginRight="5dp"
+                android:text="" />
+            <RadioButton
+                android:id="@+id/radio3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:layout_marginRight="5dp"
+                android:text="" />
+        </RadioGroup>
+
     </RelativeLayout>
 
     <FrameLayout
@@ -78,10 +105,10 @@
             <RelativeLayout
                 android:id="@+id/layout_show"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" 
+                android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
-                android:visibility="gone">
+                android:visibility="gone" >
 
                 <ImageView
                     android:id="@+id/imageView1"
@@ -93,9 +120,9 @@
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" 
-                    android:layout_marginTop="80dp"
-                    android:layout_below="@+id/imageView1">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/imageView1"
+                    android:layout_marginTop="80dp" >
 
                     <TextView
                         android:id="@+id/tv_profit"
@@ -103,9 +130,9 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_marginLeft="16dp"
-                        android:textColor="#fff"
                         android:layout_toRightOf="@+id/textView1"
-                        android:text="930.00" />
+                        android:text="930.00"
+                        android:textColor="#fff" />
 
                     <TextView
                         android:id="@+id/textView1"
@@ -114,13 +141,10 @@
                         android:layout_alignParentLeft="true"
                         android:layout_alignParentTop="true"
                         android:layout_marginLeft="140dp"
-                        android:textColor="#fff"
-                        android:text="亏损：" />
-
+                        android:text="亏损："
+                        android:textColor="#fff" />
                 </RelativeLayout>
-
             </RelativeLayout>
-
         </RelativeLayout>
     </FrameLayout>
 
