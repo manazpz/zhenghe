@@ -70,6 +70,8 @@ public class ServiceActivity extends Activity implements OnClickListener {
 						startActivity(new Intent(ServiceActivity.this, MainActivity.class));
 						new CloseThread(tcpClient).start();
 					}
+				}else {
+					new CloseThread(tcpClient).start();
 				}
 			}
 		});

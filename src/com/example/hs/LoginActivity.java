@@ -6,6 +6,7 @@ import com.example.datasave.Admin;
 import com.example.datasave.MyData;
 import com.example.datasave.MySharedPreferences;
 import com.example.fragment.Socket.AnScoket;
+import com.example.fragment.Socket.CloseThread;
 import com.example.fragment.Socket.SocketCall;
 import com.smorra.asyncsocket.TcpClient;
 import com.smorra.asyncsocket.TcpClientCallback;
@@ -50,17 +51,21 @@ public class LoginActivity extends Activity implements OnClickListener{
 			@Override
 			public void reading(String result, TcpClient tcpClient) {
 				String[] s = result.split("\\|");
-				if ("密码错误".equals(s[s.length-1]) || "账号错误".equals(s[s.length-1])) {
-					com.example.bing_dictionary.Toast.makeText(
-							LoginActivity.this, s[s.length-1],
-							com.example.bing_dictionary.Toast.LENGTH_LONG).show();
+				if ("ulogin".equals(s[0])) {
+					if ("密码错误".equals(s[s.length-1]) || "账号错误".equals(s[s.length-1])) {
+						com.example.bing_dictionary.Toast.makeText(
+								LoginActivity.this, s[s.length-1],
+								com.example.bing_dictionary.Toast.LENGTH_LONG).show();
+					}else {
+						MyData app = (MyData) getApplication();
+						app.password = psw;
+						Intent intent = new Intent(LoginActivity.this, ServiceActivity.class);
+						intent.putExtra("servicelist", s);
+						startActivity(intent);
+						finish();
+					}
 				}else {
-					MyData app = (MyData) getApplication();
-					app.password = psw;
-					Intent intent = new Intent(LoginActivity.this, ServiceActivity.class);
-					intent.putExtra("servicelist", s);
-					startActivity(intent);
-					finish();
+					new CloseThread(tcpClient).start();
 				}
 				
 			}

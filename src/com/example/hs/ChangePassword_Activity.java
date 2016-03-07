@@ -2,9 +2,11 @@ package com.example.hs;
 
 import java.io.IOException;
 
+import com.a.a.is;
 import com.example.datasave.MyData;
 import com.example.datasave.contsData;
 import com.example.fragment.Socket.AnScoket;
+import com.example.fragment.Socket.CloseThread;
 import com.example.fragment.Socket.SocketCall;
 import com.example.jsData.userData;
 import com.smorra.asyncsocket.TcpClient;
@@ -21,7 +23,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class ChangePassword_Activity extends Activity implements OnClickListener{
+public class ChangePassword_Activity extends Activity implements OnClickListener {
 
 	private AnScoket anScoket;
 	private EditText dt_newpw;
@@ -43,20 +45,21 @@ public class ChangePassword_Activity extends Activity implements OnClickListener
 	private void initUI() {
 		dt_newpw = (EditText) findViewById(R.id.dt_newpw);
 		et_againpw = (EditText) findViewById(R.id.et_againpw);
-		findViewById(R.id.bt_revise).setOnClickListener(this);;
+		findViewById(R.id.bt_revise).setOnClickListener(this);
+		;
 		findViewById(R.id.tv_back).setOnClickListener(this);
 	}
-	
-	
+
 	private void initData() {
-		String str1 = contsData.jhost.get(contsData.sername+"j");
+		String str1 = contsData.jhost.get(contsData.sername + "j");
 		String[] changepsw = str1.split("\\:");
-		
+
 		anScoket = new AnScoket(this, changepsw[0], Integer.parseInt(changepsw[1]), new SocketCall() {
 			@Override
 			public void writeing(Boolean flag) {
-				
+
 			}
+
 			@Override
 			public void reading(String result, TcpClient tcpClient) {
 				if (result.length() > 0) {
@@ -67,7 +70,7 @@ public class ChangePassword_Activity extends Activity implements OnClickListener
 		});
 		MyData app = (MyData) getApplication();
 		userdata = app.userdata;
-		anScoket.setLoginstr("<urepwd|" +userdata.getUsername() +"|" +userdata.getPassword()+">");
+		anScoket.setLoginstr("<urepwd|" + userdata.getUsername() + "|" + userdata.getPassword() + ">");
 		try {
 			anScoket.SocketOnline();
 		} catch (IOException e) {
@@ -95,23 +98,23 @@ public class ChangePassword_Activity extends Activity implements OnClickListener
 		againpw = et_againpw.getText().toString();
 		// 判断是否输入
 		if ("".equals(newpw)) {
-		dt_newpw.setError("密码不能为空");
-		return;
+			dt_newpw.setError("密码不能为空");
+			return;
 		}
 		if ("".equals(againpw)) {
-		et_againpw.setError("密码不能为空");
-		return;
+			et_againpw.setError("密码不能为空");
+			return;
 		}
-		
-		if(newpw.equals(againpw)){
+
+		if (newpw.equals(againpw)) {
 			initData();
 			newpswrequest();
 			Log.e("333333", "asasa");
-		}else {
+		} else {
 			Toast.makeText(this, "输入密码不一致，请重新输入", Toast.LENGTH_SHORT).show();
 		}
 	}
-	
+
 	private void newpswrequest() {
 		String str = contsData.jhost.get(contsData.sername + "j");
 		String[] sername = str.split("\\:");

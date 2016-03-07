@@ -10,6 +10,7 @@ import com.example.datasave.MyData;
 import com.example.datasave.MySharedPreferences;
 import com.example.datasave.contsData;
 import com.example.fragment.Socket.AnScoket;
+import com.example.fragment.Socket.CloseThread;
 import com.example.fragment.Socket.SocketCall;
 import com.example.jsData.bankData;
 import com.example.jsData.userData;
@@ -71,16 +72,20 @@ public class CreditsActivity extends Activity implements OnClickListener{
 				if (result.length() > 0) {
 					String text = new String(Base64.decode(result, Base64.DEFAULT));
 					contsData.bankxx = text.split("\\|");
-					bankdata = new bankData(contsData.bankxx[1], contsData.bankxx[2], contsData.bankxx[3], contsData.bankxx[5], contsData.bankxx[6]);
-					binkzh.setText(bankdata.getCardname());
-					name.setText(bankdata.getName());
-					phone.setText(bankdata.getPhone());
-					bl.setText("手续费："+bankdata.getPoundage()+"%");
-					for (int i = 7; i < contsData.bankxx.length; i++) {
-						String[] split = contsData.bankxx[i].split(",");
-						if (bankdata.getCardid().equals(split[0])) {
-							binkname.setText(split[1]);
+					if ("ubankinfo".equals(contsData.bankxx[0])) {
+						bankdata = new bankData(contsData.bankxx[1], contsData.bankxx[2], contsData.bankxx[3], contsData.bankxx[5], contsData.bankxx[6]);
+						binkzh.setText(bankdata.getCardname());
+						name.setText(bankdata.getName());
+						phone.setText(bankdata.getPhone());
+						bl.setText("手续费："+bankdata.getPoundage()+"%");
+						for (int i = 7; i < contsData.bankxx.length; i++) {
+							String[] split = contsData.bankxx[i].split(",");
+							if (bankdata.getCardid().equals(split[0])) {
+								binkname.setText(split[1]);
+							}
 						}
+					}else {
+						new CloseThread(tcpClient).start();
 					}
 				}
 			}
