@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/layout_tital"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <TextView
@@ -25,7 +25,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_marginTop="32dp" >
+        android:layout_below="@id/layout_tital"
+        android:layout_marginTop="5dp" >
 
         <RelativeLayout
             android:id="@+id/relativeLayout1"
