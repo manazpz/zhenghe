@@ -49,7 +49,7 @@
         android:layout_alignBaseline="@+id/tv_name"
         android:layout_alignBottom="@+id/tv_name"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="20dp"
+        android:layout_marginRight="30dp"
         android:text="状态：▲上涨"
         android:textColor="#e00"
         android:textSize="10sp" />
@@ -73,6 +73,9 @@
         android:layout_below="@+id/tv_result"
          android:layout_marginTop="3dp"
         android:text="收益：￥1150"
+        android:maxEms="6"
+        android:singleLine="true"
+        android:ellipsize="end"
         android:textColor="#000"
         android:textSize="10sp" />
 
