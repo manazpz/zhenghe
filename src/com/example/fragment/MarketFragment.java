@@ -62,14 +62,14 @@ public class MarketFragment extends Fragment {
 			public void reading(String result, TcpClient tcpClient) {
 			}
 		});
-		janScoket.setLoginstr("uclient|" + "USDJPY" + "|"
+		janScoket.setLoginstr("uclient|" + contsData.codelist.get(0).getCode() + "|"
 				+ 0);
-//		try {
-//			janScoket.SocketOnline();
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		try {
+			janScoket.SocketOnline();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	

@@ -181,11 +181,12 @@ class DealAdapter extends BaseAdapter {
 				holder.zt.setTextColor(Color.RED);
 				holder.zt.setText("状态：▲涨");
 				holder.result.setText("结果：损失");
+				holder.sy.setText("收益：￥"+0);
 			}else {
 				holder.zt.setTextColor(Color.GREEN);
 				holder.zt.setText("状态：▼跌");
 				holder.result.setText("结果：赢利");
-				holder.sy.setText("收益："+d1+d2);
+				holder.sy.setText("收益：￥"+d1+d2);
 			}
 		}else {
 			holder.tz.setTextColor(Color.GREEN);
@@ -194,11 +195,12 @@ class DealAdapter extends BaseAdapter {
 				holder.zt.setTextColor(Color.GREEN);
 				holder.zt.setText("状态：▼跌");
 				holder.result.setText("结果：损失");
+				holder.sy.setText("收益：￥"+0);
 			}else {
 				holder.zt.setTextColor(Color.RED);
 				holder.zt.setText("状态：▲涨");
 				holder.result.setText("结果：赢利");
-				holder.sy.setText("收益："+d1+d2);
+				holder.sy.setText("收益：￥"+d1+d2);
 			}
 		}
 		holder.starttime.setText("开始："+list.get(position).getStartTime()+"/"+list.get(position).getStartprice());

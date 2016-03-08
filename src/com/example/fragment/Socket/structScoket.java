@@ -58,9 +58,9 @@ public class structScoket {
 			@Override
 			public void onRead(TcpClient tcpClient, byte[] readBytes) {
 				try {
-					 Log.e("asd", readBytes[0]+"a");
 
 					readStr = new String(readBytes, "utf-8");
+					Log.e("asd", readStr);
 					sc.reading(readStr, tcpClient);
 				} catch (UnsupportedEncodingException e) {
 					// TODO Auto-generated catch block
