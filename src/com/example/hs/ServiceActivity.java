@@ -18,10 +18,12 @@ import com.example.fragment.Socket.SocketCall;
 import com.example.jsData.codeData;
 import com.example.jsData.userData;
 import com.smorra.asyncsocket.TcpClient;
+import com.xinbo.utils.GsonUtils;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -67,18 +69,17 @@ public class ServiceActivity extends Activity implements OnClickListener {
 					String[] str = text.split("\\|");
 					if ("ugetuserinfo".equals(str[0])) {
 						addData(str);
-						MyData app = (MyData) getApplication();
-						app.userdata = userdata;
-						startActivity(new Intent(ServiceActivity.this, MainActivity.class));
+						gethy(contsData.sername);
 					} else {
 						new CloseThread(tcpClient).start();
 					}
 				}
 			}
 		});
+		MyData app = (MyData) getApplication();
 		Admin admin = MySharedPreferences.ReadAdmin(ServiceActivity.this);
 		janScoket.setLoginstr("<ugetuserinfo|" + admin.getUsername() + "|"
-				+ MD5.getmd5(admin.getUsername(), admin.getPassword()) + ">");
+				+ MD5.getmd5(admin.getUsername(), app.password) + ">");
 		try {
 			janScoket.SocketOnline();
 		} catch (IOException e) {
@@ -88,7 +89,6 @@ public class ServiceActivity extends Activity implements OnClickListener {
 	}
 
 	private void gethy(String text) {
-		contsData.sername = text;
 		String str = contsData.jhost.get(text + "j");
 		String[] sername = str.split("\\:");
 		hyanScoket = new AnScoket(ServiceActivity.this, sername[0], Integer.parseInt(sername[1]), new SocketCall() {
@@ -107,6 +107,7 @@ public class ServiceActivity extends Activity implements OnClickListener {
 							String[] hym = str[i].split(",");
 							contsData.codelist.add(new codeData(hym[0], hym[1]));
 						}
+						startActivity(new Intent(ServiceActivity.this,MainActivity.class));
 					} else {
 						new CloseThread(tcpClient).start();
 					}
@@ -131,15 +132,18 @@ public class ServiceActivity extends Activity implements OnClickListener {
 			@Override
 			public void onSelect(String text) {
 				initData(text);
-				gethy(text);
+//				gethy(text);
 			}
 		});
 	}
-
+	
+	
 	public void addData(String[] str) {
 		if (str.length == 13) {
 			userdata = new userData(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8], str[9], str[10],
 					str[11], str[12]);
+			MyData app = (MyData) getApplication();
+			app.userdata = userdata;
 		}
 	}
 
@@ -156,7 +160,6 @@ public class ServiceActivity extends Activity implements OnClickListener {
 			}
 		}
 		service_choice.setData(contsData.data);
-
 	}
 
 	@Override
