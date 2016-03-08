@@ -187,7 +187,7 @@
         android:layout_below="@+id/linearLayout1"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="42dp"
-        android:background="@drawable/btn4"
+        android:background="@drawable/btn_btn"
         android:paddingLeft="70dp"
         android:paddingRight="70dp"
         android:text="提交"
