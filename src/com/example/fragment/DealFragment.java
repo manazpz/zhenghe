@@ -30,6 +30,7 @@ import com.smorra.asyncsocket.TcpClient;
 
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -127,6 +128,14 @@ public class DealFragment extends Fragment {
 		ListView mdeal = (ListView) layout.findViewById(R.id.lv_deal);
 		dealAdapter = new DealAdapter(cjlist);
 		mdeal.setAdapter(dealAdapter);
+		layout.findViewById(R.id.tv_updata).setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				cjlist.clear();
+				initData();
+			}
+		});
 	}
 
 }

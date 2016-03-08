@@ -8,6 +8,7 @@ import com.example.datasave.MySharedPreferences;
 import com.example.datasave.contsData;
 import com.example.fragment.Socket.AnScoket;
 import com.example.fragment.Socket.SocketCall;
+import com.example.fragment.Socket.structScoket;
 import com.example.hs.R;
 import com.example.hs.R.layout;
 import com.example.jsData.userData;
@@ -29,7 +30,7 @@ public class MarketFragment extends Fragment {
 	private View layout;
 	private LayoutInflater inflater;
 	private int pageNum;
-	private AnScoket janScoket;
+	private structScoket janScoket;
 	
 
 	public MarketFragment(int position) {
@@ -51,7 +52,7 @@ public class MarketFragment extends Fragment {
 	private void initData() {
 		String str = contsData.hhost.get(contsData.sername + "h");
 		String[] sername = str.split("\\:");
-		janScoket = new AnScoket(getActivity(), sername[0], Integer.parseInt(sername[1]), new SocketCall() {
+		janScoket = new structScoket(getActivity(), sername[0], Integer.parseInt(sername[1]), new SocketCall() {
 
 			@Override
 			public void writeing(Boolean flag) {
@@ -63,12 +64,12 @@ public class MarketFragment extends Fragment {
 		});
 		janScoket.setLoginstr("uclient|" + "USDJPY" + "|"
 				+ 0);
-		try {
-			janScoket.SocketOnline();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+//			janScoket.SocketOnline();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		
 	}
 	
