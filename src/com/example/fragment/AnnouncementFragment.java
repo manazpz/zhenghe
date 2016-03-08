@@ -116,9 +116,16 @@ public class AnnouncementFragment extends Fragment {
 		list_announcement = (ListView) layout.findViewById(R.id.list_announcement);
 		adapter = new announcementAdapter();
 		list_announcement.setAdapter(adapter);
+		
 	}
-
+	
+	 
 	class announcementAdapter extends BaseAdapter {
+		
+		@Override
+		public boolean isEnabled(int position) {
+			return false;
+		}
 
 		@Override
 		public int getCount() {
