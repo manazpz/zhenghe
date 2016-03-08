@@ -15,6 +15,7 @@ import com.example.datasave.contsData;
 import com.example.fragment.Socket.AnScoket;
 import com.example.fragment.Socket.CloseThread;
 import com.example.fragment.Socket.SocketCall;
+import com.example.jsData.codeData;
 import com.example.jsData.userData;
 import com.smorra.asyncsocket.TcpClient;
 
@@ -36,6 +37,7 @@ public class ServiceActivity extends Activity implements OnClickListener {
 	private String[] service = null;
 	private Button btn_sure;
 	private AnScoket janScoket;
+	private AnScoket hyanScoket;
 	private userData userdata;
 
 	@Override
@@ -59,7 +61,7 @@ public class ServiceActivity extends Activity implements OnClickListener {
 			}
 
 			@Override
-			public void reading(String result,TcpClient tcpClient) {
+			public void reading(String result, TcpClient tcpClient) {
 				if (result.length() > 0) {
 					String text = new String(Base64.decode(result, Base64.DEFAULT));
 					String[] str = text.split("\\|");
@@ -68,10 +70,9 @@ public class ServiceActivity extends Activity implements OnClickListener {
 						MyData app = (MyData) getApplication();
 						app.userdata = userdata;
 						startActivity(new Intent(ServiceActivity.this, MainActivity.class));
+					} else {
 						new CloseThread(tcpClient).start();
 					}
-				}else {
-					new CloseThread(tcpClient).start();
 				}
 			}
 		});
@@ -86,6 +87,42 @@ public class ServiceActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	private void gethy(String text) {
+		contsData.sername = text;
+		String str = contsData.jhost.get(text + "j");
+		String[] sername = str.split("\\:");
+		hyanScoket = new AnScoket(ServiceActivity.this, sername[0], Integer.parseInt(sername[1]), new SocketCall() {
+
+			@Override
+			public void writeing(Boolean flag) {
+			}
+
+			@Override
+			public void reading(String result, TcpClient tcpClient) {
+				if (result.length() > 0) {
+					String text = new String(Base64.decode(result, Base64.DEFAULT));
+					String[] str = text.split("\\|");
+					if ("ugetcodelist".equals(str[0])) {
+						for (int i = 1; i < str.length; i++) {
+							String[] hym = str[i].split(",");
+							contsData.codelist.add(new codeData(hym[0], hym[1]));
+						}
+					} else {
+						new CloseThread(tcpClient).start();
+					}
+				}
+			}
+		});
+		Admin admin = MySharedPreferences.ReadAdmin(ServiceActivity.this);
+		hyanScoket.setLoginstr("<ugetcodelist|" + 3 + "|" + admin.getUsername() + ">");
+		try {
+			hyanScoket.SocketOnline();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	private void initUI() {
 		service_choice = (PickerView) findViewById(R.id.service_choice);
 		findViewById(R.id.btn_sure).setOnClickListener(this);
@@ -94,6 +131,7 @@ public class ServiceActivity extends Activity implements OnClickListener {
 			@Override
 			public void onSelect(String text) {
 				initData(text);
+				gethy(text);
 			}
 		});
 	}
@@ -118,7 +156,7 @@ public class ServiceActivity extends Activity implements OnClickListener {
 			}
 		}
 		service_choice.setData(contsData.data);
-		
+
 	}
 
 	@Override

@@ -16,9 +16,11 @@ public class contsData {
 	public static HashMap<String, String> hhost = new HashMap<String, String>();
 	public static List<String> data = new ArrayList<String>();
 	public static ArrayList<upbanben> uplist = new ArrayList<upbanben>();
+	public static ArrayList<codeData> codelist = new ArrayList<codeData>();
 	
 	public static String sername;
 	public static String[] newpsw;
 	public static String[] bankxx;
+	
 	
 }

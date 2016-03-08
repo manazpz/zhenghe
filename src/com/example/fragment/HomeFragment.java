@@ -110,11 +110,9 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private RadioButton radio2;
 	private RadioButton radio3;
 	private AnScoket janScoket;
-	private ArrayList<codeData> codelist = new ArrayList<codeData>();
 	private String[] splitcodes1;
 	private String[] splitcodes2;
 	private String[] splitcodes3;
-	
 	public HomeFragment() {
 	}
 
@@ -146,73 +144,14 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		profitorlose.setText("盈亏："+userdata.getDefeatorvictory()+"元");
 		balance.setText("余额："+userdata.getExpendablefund()+"元");
 		
-		
 	}
 
 	private void initUI(View layout) {
 		initVP(layout);
 		initchoice(layout);
 		inittime(layout);
-		initcode();
 		setSlideMenu();
-		
 	}
-
-	private void initcode() {
-
-		String str = contsData.jhost.get(contsData.sername + "j");
-		String[] sername = str.split("\\:");
-		janScoket = new AnScoket(getActivity(), sername[0], Integer.parseInt(sername[1]), new SocketCall() {
-
-			@Override
-			public void writeing(Boolean flag) {
-			}
-
-			@Override
-			public void reading(String result, TcpClient tcpClient) {
-				getresult(result, tcpClient);
-			}
-		});
-		MyData app = (MyData) getActivity().getApplication();
-		userdata = app.userdata;
-		Admin admin = MySharedPreferences.ReadAdmin(getActivity());
-		janScoket.setLoginstr("ugetcodelist|" + userdata.getDid() + "|"
-				+ userdata.getUsername() + ">");
-		try {
-			janScoket.SocketOnline();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	private void getresult(String result, TcpClient tcpClient) {
-		if (result.length() > 0) {
-			String[] split = result.split(">");
-			for (int i = 0; i < split.length; i++) {
-				String text1 = new String(Base64.decode(split[i] + ">", Base64.DEFAULT));
-				String[] str = text1.split("\\|");
-				switch (str[0]) {
-				case "ugetcodelist":
-					for (int j = 0; j < str.length; j++) {
-						if(j>0){
-							splitcodes = str[j].split("\\,");
-							codelist.add(new codeData(splitcodes[0], splitcodes[1]));
-						}
-					}
-					radio0.setText(codelist.get(0).getCode());
-					radio1.setText(codelist.get(1).getCode());
-					radio2.setText(codelist.get(2).getCode());
-					radio3.setText(codelist.get(3).getCode());
-					break;
-				
-				default:
-					new CloseThread(tcpClient).start();
-					break;
-				}
-			}
-		}
-
-	}
-
 
 	private void inittime(View layout) {
 		countimg = (ImageView) layout.findViewById(R.id.iv_time);
@@ -238,7 +177,12 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		radio1 = (RadioButton) layout.findViewById(R.id.radio1);
 		radio2 = (RadioButton) layout.findViewById(R.id.radio2);
 		radio3 = (RadioButton) layout.findViewById(R.id.radio3);
+		radio0.setText(contsData.codelist.get(0).getCode());
+		radio1.setText(contsData.codelist.get(1).getCode());
+		radio2.setText(contsData.codelist.get(2).getCode());
+		radio3.setText(contsData.codelist.get(3).getCode());
 	}
+	
 
 	private void initchoice(View layout) {
 		layout_setprice = (RelativeLayout) layout.findViewById(R.id.layout_setprice);
