@@ -36,7 +36,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="11dp"
             android:text="@string/updata"
-            android:textColor="#0000ee"
+            android:textColor="@color/textcolor"
             android:textSize="15sp" />
         
     </RelativeLayout>

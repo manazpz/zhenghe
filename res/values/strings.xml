@@ -15,5 +15,14 @@
     <string name="title_activity_credits">CreditsActivity</string>
     <string name="title_activity_connect">ConnectActivity</string>
     <string name="title_activity_choice_bank">ChoiceBankActivity</string>
-
+    <drawable name="bths">#aac0c0c0</drawable>
+    <drawable name="bths1">#5e00</drawable>
+    <drawable name="bths2">#50e0</drawable>
+    <drawable name="bths3">#33FFFF</drawable>
+    <drawable name="bths4">#FFCC22</drawable>
+    <drawable name="huise">#c0c0c0</drawable>
+    <drawable name="tm">#0000</drawable>
+    
+    <color  name="blue1">#0000ee</color>
+    <color name="blue2">#aa0000ee</color>
 </resources>

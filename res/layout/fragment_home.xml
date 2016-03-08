@@ -211,7 +211,7 @@
                     android:id="@+id/btn_minus"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="#0000"
+                    android:background="@drawable/btn_xgjj"
                     android:text="" />
 
                 <TextView
@@ -232,7 +232,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/tv_addprice"
-                    android:background="#0000" />
+                    android:background="@drawable/btn_xgjj" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -270,7 +270,7 @@
                     android:id="@+id/btn_timeminus"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="#0000"
+                    android:background="@drawable/btn_xgjj"
                     android:text="" />
 
                 <TextView
@@ -291,7 +291,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/tv_time"
-                    android:background="#0000" />
+                    android:background="@drawable/btn_xgjj" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -327,7 +327,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:background="@drawable/high"
+            android:background="@drawable/btn_h"
             android:clickable="true" >
         </RelativeLayout>
 
@@ -337,7 +337,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"
-            android:background="@drawable/low"
+            android:background="@drawable/btn_l"
             android:clickable="true" >
         </RelativeLayout>
     </RelativeLayout>

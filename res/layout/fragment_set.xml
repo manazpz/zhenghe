@@ -171,7 +171,7 @@
                 android:id="@+id/relativeLayout2"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:background="@drawable/bbb"
+                android:background="@drawable/btn_red"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
@@ -196,7 +196,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/bbb" >
+                android:background="@drawable/btn_red" >
 
                 <TextView
                     android:id="@+id/textView2"
@@ -226,7 +226,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn" >
+                android:background="@drawable/btn_green" >
 
                 <TextView
                     android:id="@+id/cancel"
@@ -246,7 +246,7 @@
                 android:layout_height="40dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn"
+                android:background="@drawable/btn_green"
                 android:orientation="vertical" >
 
                 <TextView
