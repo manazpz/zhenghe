@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.example.hs.R;
+import com.example.jsData.Struct;
 import com.example.jsData.codeData;
 import com.example.jsData.upbanben;
 
@@ -21,6 +22,8 @@ public class contsData {
 	public static String sername;
 	public static String[] newpsw;
 	public static String[] bankxx;
+	
+	public static Struct struct;
 	
 	
 }
