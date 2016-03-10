@@ -2,7 +2,9 @@ package com.example.fragment;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.nio.ByteBuffer;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,6 +33,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 /**
@@ -44,6 +47,16 @@ public class MarketFragment extends Fragment {
 	private int pageNum;
 	private structScoket janScoket;
 	private ArrayList<byte[]> bb = new ArrayList<>();
+	private TextView title;
+	private TextView execute;
+	private TextView buyprice;
+	private TextView sellprice;
+	private TextView openprice;
+	private TextView newprice;
+	private TextView updownprice;
+	private TextView hprice;
+	private TextView lowprice;
+	private TextView rangeprice;
 
 	public MarketFragment(int position) {
 		this.pageNum = position;
@@ -63,6 +76,16 @@ public class MarketFragment extends Fragment {
 	}
 
 	private void initUI() {
+		title = (TextView) layout.findViewById(R.id.tv_tital);
+		execute = (TextView) layout.findViewById(R.id.tv_execute);
+		buyprice = (TextView) layout.findViewById(R.id.tv_buyprice);
+		sellprice = (TextView) layout.findViewById(R.id.tv_sellprice);
+		openprice = (TextView) layout.findViewById(R.id.tv_openprice);
+		newprice = (TextView) layout.findViewById(R.id.tv_newpricenum);
+		updownprice = (TextView) layout.findViewById(R.id.tv_updownprice);
+		hprice = (TextView) layout.findViewById(R.id.tv_topprice);
+		lowprice = (TextView) layout.findViewById(R.id.tv_lowprice);
+		rangeprice = (TextView) layout.findViewById(R.id.tv_rangeprice);
 	}
 
 	private void initData() {
@@ -79,7 +102,6 @@ public class MarketFragment extends Fragment {
 				gethq(result);
 			}
 		});
-		Log.e("asd", contsData.codelist.get(1).getCode());
 		janScoket.setLoginstr("uclient|" + contsData.codelist.get(0).getCode() + "|" + 0);
 		try {
 			janScoket.SocketOnline();
@@ -87,16 +109,32 @@ public class MarketFragment extends Fragment {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 	
-	
+	public void sxUI(Struct struct) {
+		title.setText(new String(struct.getExchangeID()).trim()+"("+new String(struct.getInstrumentID(), 0, 6)+")");
+		execute.setText(struct.getLastPrice()+"");
+		newprice.setText(struct.getLastPrice()+"");
+		lowprice.setText(struct.getLowestPrice()+"");
+		hprice.setText(struct.getHighestPrice()+"");
+		DecimalFormat bl6 = new DecimalFormat("000.000000");
+		openprice.setText(bl6.format(struct.getOpenPrice())+"");
+		double price1 = struct.getLastPrice()-struct.getOpenPrice();
+		DecimalFormat bl5 = new DecimalFormat("0.000000");
+		updownprice.setText(bl5.format(price1)+"");
+		double price2 = price1/struct.getOpenPrice()*100;
+		DecimalFormat bl2 = new DecimalFormat("0.00");
+		rangeprice.setText(bl2.format(price2)+"%");
+		buyprice.setText(struct.getBidPrice1()+"");
+		sellprice.setText(struct.getAskPrice1()+"");
+	}
+
 	public void gethq(byte[] result) {
 		try {
-			String tradingDay = new String(result, 0, 8, "UTF-8");
-			String instrumentID = new String(result, 9, 31, "UTF-8");
+			char[] tradingDay = Myutils.bytesTochar(result, 0, 8);
+			char[] instrumentID = Myutils.bytesTochar(result, 9, 31);
 			String exchangeID = new String(result, 40, 9, "GBK");
-			String exchangeInstID = new String(result, 49, 31, "UTF-8");
+			char[] exchangeInstID = Myutils.bytesTochar(result, 49, 31);
 			double lastPrice = Myutils.ArryToDouble(result, 80);
 			double preSettlementPrice = Myutils.ArryToDouble(result, 88);
 			double preClosePrice = Myutils.ArryToDouble(result, 96);
@@ -111,49 +149,46 @@ public class MarketFragment extends Fragment {
 			double settlementPrice = Myutils.ArryToDouble(result, 164);
 			double upperLimitPrice = Myutils.ArryToDouble(result, 172);
 			double lowerLimitPrice = Myutils.ArryToDouble(result, 180);
-			double preDelta	 = Myutils.ArryToDouble(result, 188);
-			double currDelta	 = Myutils.ArryToDouble(result, 196);
-			
-			String updateTime = new String(result, 204, 9, "UTF-8");
-			int updateMillisec = Myutils.bytesToInt(result, 213);
-			
-			double bidPrice1	 = Myutils.ArryToDouble(result, 217);
-			int bidVolume1 = Myutils.bytesToInt(result, 225);
-			double askPrice1	 = Myutils.ArryToDouble(result, 229);
-			int askVolume1 = Myutils.bytesToInt(result, 237);
-			
-			double bidPrice2	 = Myutils.ArryToDouble(result, 241);
-			int bidVolume2 = Myutils.bytesToInt(result, 249);
-			double askPrice2	 = Myutils.ArryToDouble(result, 253);
-			int askVolume2 = Myutils.bytesToInt(result, 261);
-			
-			double bidPrice3	 = Myutils.ArryToDouble(result, 265);
-			int bidVolume3 = Myutils.bytesToInt(result, 273);
-			double askPrice3	 = Myutils.ArryToDouble(result, 277);
-			int askVolume3 = Myutils.bytesToInt(result, 285);
-			
-			double bidPrice4 = Myutils.ArryToDouble(result, 289);
-			int bidVolume4 = Myutils.bytesToInt(result, 297);
-			double askPrice4 = Myutils.ArryToDouble(result, 301);
-			int askVolume4 = Myutils.bytesToInt(result, 309);
-			
-			double bidPrice5	 = Myutils.ArryToDouble(result, 313);
-			int bidVolume5 = Myutils.bytesToInt(result, 321);
-			double askPrice5 = Myutils.ArryToDouble(result, 325);
-			int askVolume5 = Myutils.bytesToInt(result, 333);
-			double averagePrice	 = Myutils.ArryToDouble(result, 337);
-			
-			contsData.struct = new Struct(tradingDay.trim(), instrumentID, 
-					exchangeID.trim(), exchangeInstID, lastPrice, preSettlementPrice, 
-					preClosePrice, preOpenInterest, openPrice, highestPrice, 
-					lowestPrice, volume, turnover, openInterest, closePrice, 
-					settlementPrice, upperLimitPrice, lowerLimitPrice, preDelta, 
-					currDelta, updateTime, updateMillisec, bidPrice1, bidVolume1, 
-					askPrice1, askVolume1, bidPrice2, bidVolume2, askPrice2, 
-					askVolume2, bidPrice3, bidVolume3, askPrice3, askVolume3, bidPrice4, 
-					bidVolume4, askPrice4, askVolume4, bidPrice5, bidVolume5, 
+			double preDelta = Myutils.ArryToDouble(result, 188);
+			double currDelta = Myutils.ArryToDouble(result, 196);
+
+			char[] updateTime = Myutils.bytesTochar(result, 204, 12);
+			int updateMillisec = Myutils.bytesToInt(result, 216);
+////////////////////////////////////////////////////////////////////////////////
+			double bidPrice1 = Myutils.ArryToDouble(result, 220);
+			int bidVolume1 = Myutils.bytesToInt(result, 228);
+			double askPrice1 = Myutils.ArryToDouble(result, 232);
+			int askVolume1 = Myutils.bytesToInt(result, 240);
+
+			double bidPrice2 = Myutils.ArryToDouble(result, 244);
+			int bidVolume2 = Myutils.bytesToInt(result, 252);
+			double askPrice2 = Myutils.ArryToDouble(result, 256);
+			int askVolume2 = Myutils.bytesToInt(result, 264);
+
+			double bidPrice3 = Myutils.ArryToDouble(result, 268);
+			int bidVolume3 = Myutils.bytesToInt(result, 276);
+			double askPrice3 = Myutils.ArryToDouble(result, 280);
+			int askVolume3 = Myutils.bytesToInt(result, 288);
+
+			double bidPrice4 = Myutils.ArryToDouble(result, 292);
+			int bidVolume4 = Myutils.bytesToInt(result, 300);
+			double askPrice4 = Myutils.ArryToDouble(result, 304);
+			int askVolume4 = Myutils.bytesToInt(result, 312);
+
+			double bidPrice5 = Myutils.ArryToDouble(result, 316);
+			int bidVolume5 = Myutils.bytesToInt(result, 324);
+			double askPrice5 = Myutils.ArryToDouble(result, 328);
+			int askVolume5 = Myutils.bytesToInt(result, 336);
+			double averagePrice = Myutils.ArryToDouble(result, 340);
+			contsData.struct = new Struct(tradingDay, instrumentID, exchangeID, exchangeInstID, 
+					lastPrice, preSettlementPrice, preClosePrice, preOpenInterest, openPrice, 
+					highestPrice, lowestPrice, volume, turnover, openInterest, closePrice, 
+					settlementPrice, upperLimitPrice, lowerLimitPrice, preDelta, currDelta, updateTime, 
+					updateMillisec, bidPrice1, bidVolume1, askPrice1, askVolume1, bidPrice2, bidVolume2, 
+					askPrice2, askVolume2, bidPrice3, bidVolume3, askPrice3, askVolume3, 
+					bidPrice4, bidVolume4, askPrice4, askVolume4, bidPrice5, bidVolume5, 
 					askPrice5, askVolume5, averagePrice);
-			//Log.e("zzz", contsData.struct.toString());
+			sxUI(contsData.struct);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

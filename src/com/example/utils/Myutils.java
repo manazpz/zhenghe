@@ -1,5 +1,7 @@
 package com.example.utils;
 
+import android.util.Xml.Encoding;
+
 public class Myutils {
 	public static double ArryToDouble(byte[] Array, int Pos) {
 		long accum = 0;
@@ -21,4 +23,14 @@ public class Myutils {
 		return value;
 	}
 
+	public static char[] bytesTochar(byte[] src, int offset, int pos) {
+		int possition=0;
+		char[] buffer = new char[pos];
+		for (int i = offset; i < pos+offset; i++) {
+			buffer[possition] = (char)src[i];
+			possition++;
+		}
+		return buffer;
+	}
+	
 }
