@@ -153,6 +153,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="15dp"
                 android:layout_toRightOf="@+id/opening"
+                android:singleLine="true"
                 android:textColor="#fff"
                 android:textSize="18.0sp"
                 android:text="112.747000" />
