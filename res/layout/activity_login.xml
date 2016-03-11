@@ -71,4 +71,13 @@
         android:layout_marginTop="86dp"
         android:src="@drawable/logo" />
 
+    <ImageView
+        android:id="@+id/iv_loading"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:scaleType="fitXY"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"/>
+
 </RelativeLayout>
