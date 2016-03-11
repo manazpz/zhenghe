@@ -70,7 +70,6 @@ public class ChartFragment extends Fragment {
 			@Override
 			public void reading(byte[] result, TcpClient tcpClient) {
 				String string = hqhq.gethq(result).toString();
-				Log.e("asd", string);
 			}
 		});
 		janScoket.setLoginstr("uclient|" + contsData.codelist.get(0).getCode() + "|" + 0);
