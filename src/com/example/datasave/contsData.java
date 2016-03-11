@@ -23,7 +23,4 @@ public class contsData {
 	public static String[] newpsw;
 	public static String[] bankxx;
 	
-	public static Struct struct;
-	
-	
 }
