@@ -22,6 +22,7 @@ import com.xinbo.utils.GsonUtils;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Base64;
@@ -29,6 +30,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 
 /**
  * 
@@ -41,6 +43,8 @@ public class ServiceActivity extends Activity implements OnClickListener {
 	private AnScoket janScoket;
 	private AnScoket hyanScoket;
 	private userData userdata;
+	private ImageView loading;
+	private AnimationDrawable frameAnim;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +111,8 @@ public class ServiceActivity extends Activity implements OnClickListener {
 							String[] hym = str[i].split(",");
 							contsData.codelist.add(new codeData(hym[0], hym[1]));
 						}
+						frameAnim.stop();
+						loading.setVisibility(View.GONE);
 						startActivity(new Intent(ServiceActivity.this,MainActivity.class));
 					} else {
 						new CloseThread(tcpClient).start();
@@ -125,6 +131,9 @@ public class ServiceActivity extends Activity implements OnClickListener {
 	}
 
 	private void initUI() {
+		loading = (ImageView) findViewById(R.id.iv_loading);
+		frameAnim = (AnimationDrawable) getResources().getDrawable(R.drawable.loading);
+		loading.setBackgroundDrawable(frameAnim);
 		service_choice = (PickerView) findViewById(R.id.service_choice);
 		findViewById(R.id.btn_sure).setOnClickListener(this);
 		service_choice.setOnSelectListener(new onSelectListener() {
@@ -132,7 +141,6 @@ public class ServiceActivity extends Activity implements OnClickListener {
 			@Override
 			public void onSelect(String text) {
 				initData(text);
-//				gethy(text);
 			}
 		});
 	}
@@ -166,6 +174,8 @@ public class ServiceActivity extends Activity implements OnClickListener {
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_sure:
+			loading.setVisibility(View.VISIBLE);
+			frameAnim.start();
 			service_choice.gettext();
 			break;
 

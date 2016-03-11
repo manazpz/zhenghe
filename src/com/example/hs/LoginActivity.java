@@ -13,6 +13,7 @@ import com.smorra.asyncsocket.TcpClientCallback;
 import com.xinbo.utils.RegexValidateUtil;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.text.Editable;
@@ -21,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class LoginActivity extends Activity implements OnClickListener{
@@ -35,6 +37,8 @@ public class LoginActivity extends Activity implements OnClickListener{
 	private AnScoket anScoket;
 	private final String host = "121.41.15.147";
 	private final int port = 5555;
+	private ImageView loading;
+	private AnimationDrawable frameAnim;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,8 @@ public class LoginActivity extends Activity implements OnClickListener{
 					}else {
 						MyData app = (MyData) getApplication();
 						app.password = psw;
+						frameAnim.stop();
+						loading.setVisibility(View.GONE);
 						Intent intent = new Intent(LoginActivity.this, ServiceActivity.class);
 						intent.putExtra("servicelist", s);
 						startActivity(intent);
@@ -97,6 +103,9 @@ public class LoginActivity extends Activity implements OnClickListener{
 		edt_psw.setText(admin.getPassword());
 		edittextSelection();
 		
+		loading = (ImageView) findViewById(R.id.iv_loading);
+		frameAnim = (AnimationDrawable) getResources().getDrawable(R.drawable.loading);
+		loading.setBackgroundDrawable(frameAnim);
 	}
 
 
@@ -111,6 +120,8 @@ public class LoginActivity extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.btn_login:
+			loading.setVisibility(View.VISIBLE);
+			frameAnim.start();
 			login();
 			break;
 
