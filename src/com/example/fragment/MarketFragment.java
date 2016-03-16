@@ -58,6 +58,8 @@ public class MarketFragment extends Fragment {
 	private TextView lowprice;
 	private TextView rangeprice;
 	private HuoQuHq hqhq = new HuoQuHq();
+	private int code =0;
+	private MyData app;
 	public MarketFragment(int position) {
 		this.pageNum = position;
 	}
@@ -103,11 +105,11 @@ public class MarketFragment extends Fragment {
 				}
 			}
 		});
-		janScoket.setLoginstr("uclient|" + contsData.codelist.get(0).getCode() + "|" + 0);
+		app = (MyData) getActivity().getApplication();
+		janScoket.setLoginstr("uclient|" + app.getCode() + "|" + 0);
 		try {
 			janScoket.SocketOnline();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
