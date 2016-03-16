@@ -1,33 +1,21 @@
 package com.example.fragment;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
 import android.util.Log;
-
 import java.io.IOException;
 import java.util.ArrayList;
-
-import com.example.datasave.Admin;
-import com.example.datasave.MD5;
 import com.example.datasave.MyData;
-import com.example.datasave.MySharedPreferences;
 import com.example.datasave.contsData;
 import com.example.fragment.Socket.AnScoket;
 import com.example.fragment.Socket.CloseThread;
 import com.example.fragment.Socket.SocketCall;
-import com.example.hs.MainActivity;
 import com.example.hs.R;
-import com.example.hs.ServiceActivity;
-import com.example.hs.R.layout;
-import com.example.jsData.AnnouncementData;
 import com.example.jsData.cjData;
-import com.example.jsData.upbanben;
 import com.example.jsData.userData;
 import com.smorra.asyncsocket.TcpClient;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -110,6 +98,7 @@ public class DealFragment extends Fragment {
 							cjlist.add(new cjData(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8], 
 									str[9], str[10], str[11], str[12], str[13], str[14], str[15], str[16]));
 							dealAdapter.notifyDataSetChanged();
+							
 						}
 						break;
 						
@@ -172,7 +161,9 @@ class DealAdapter extends BaseAdapter {
 			holder = (Viewdeal) convertView.getTag();
 		}
 		holder.realname.setText(list.get(position).getHycode());
+		//投资
 		double d1 = Double.parseDouble(list.get(position).getTzprice());
+		//盈利
 		double d2 = Double.parseDouble(list.get(position).getYlpricate());
 		if ("1".equals(list.get(position).getM_up_down())) {
 			holder.tz.setTextColor(Color.RED);
@@ -186,7 +177,7 @@ class DealAdapter extends BaseAdapter {
 				holder.zt.setTextColor(Color.GREEN);
 				holder.zt.setText("状态：▼跌");
 				holder.result.setText("结果：赢利");
-				holder.sy.setText("收益：￥"+d1+d2);
+				holder.sy.setText("收益：￥"+(d1+d2));
 			}
 		}else {
 			holder.tz.setTextColor(Color.GREEN);
