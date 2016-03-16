@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="tc" format = "color|reference"
+        ></attr>
+      <attr name="bg" format = "color|reference"
+        ></attr>
+</resources>

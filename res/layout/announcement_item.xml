@@ -12,6 +12,7 @@
         android:layout_marginLeft="19dp"
         android:layout_marginTop="16dp"
         android:textSize="18.0sp"
+        android:textColor="#fff"
         android:text="" />
 
     <TextView
@@ -22,6 +23,7 @@
         android:layout_below="@+id/tv_tital"
         android:layout_marginTop="40dp"
         android:textSize="16.0sp"
+        android:textColor="#fff"
         android:text="" />
 
     <TextView
@@ -32,6 +34,7 @@
         android:layout_below="@+id/tv_message"
         android:layout_marginRight="25dp"
         android:layout_marginTop="47dp"
+        android:textColor="#fff"
         android:text="" />
 
 </RelativeLayout>

@@ -65,6 +65,11 @@
             android:layout_height="wrap_content" 
             android:layout_weight="1">
 
+          <RelativeLayout
+            android:id="@+id/layout_01"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content" 
+            >
             <TextView
                 android:id="@+id/tv_buy"
                 android:layout_width="wrap_content"
@@ -84,16 +89,24 @@
                 android:textSize="18.0sp"
                 android:textColor="#ff0000"
                 android:text="112.736000" />
+            </RelativeLayout>
+            
+            
+            <RelativeLayout
+                android:layout_toRightOf="@+id/layout_01"
+            	android:layout_width="match_parent"
+            	android:layout_height="wrap_content" 
+           	 	>
 
             <TextView
                 android:id="@+id/tv_sell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="15dp"
                 android:textColor="#adadad"
                 android:textSize="18.0sp"
-                android:layout_toLeftOf="@+id/tv_sellprice"
+                android:layout_marginRight="15.0dp"
+                android:layout_marginLeft="5.0dp"
                 android:text="卖出" />
 
             <TextView
@@ -101,11 +114,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="15dp"
                 android:textColor="#ff0000"
                 android:textSize="18.0sp"
-                android:layout_toRightOf="@+id/tv_buy"
+                android:layout_toRightOf="@+id/tv_sell"
                 android:text="112.747000" />
+            </RelativeLayout>
 
         </RelativeLayout>
 
@@ -114,6 +127,12 @@
             android:layout_height="wrap_content" 
             android:paddingTop="16dp"
             android:layout_weight="1">
+            
+           <RelativeLayout
+            android:id="@+id/layout_03"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content" 
+            >
             
              <TextView
                 android:id="@+id/opening"
@@ -134,16 +153,23 @@
                 android:textColor="#ff0000"
                 android:textSize="18.0sp"
                 android:text="112.736000" />
+            </RelativeLayout>
+            
+           <RelativeLayout
+            	android:id="@+id/layout_04"
+            	android:layout_toRightOf="@+id/layout_03"
+            	android:layout_width="match_parent"
+            	android:layout_height="wrap_content" 
+            	>
 
             <TextView
                 android:id="@+id/tv_newprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="15.0dp"
+                android:layout_marginLeft="5.0dp"
                 android:textColor="#adadad"
                 android:textSize="18.0sp"
-                android:layout_toLeftOf="@+id/tv_newpricenum"
                 android:text="最新" />
 
             <TextView
@@ -151,12 +177,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/opening"
+                android:layout_toRightOf="@+id/tv_newprice"
                 android:singleLine="true"
                 android:textColor="#fff"
                 android:textSize="18.0sp"
                 android:text="112.747000" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -164,6 +190,12 @@
             android:layout_height="wrap_content"
             android:paddingTop="16dp"
             android:layout_weight="1">
+           
+          <RelativeLayout
+            android:id="@+id/layout_05"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content" 
+            >
             
              <TextView
                 android:id="@+id/tv_updown"
@@ -184,14 +216,22 @@
                 android:textColor="#ff0000"
                 android:textSize="18.0sp"
                 android:text="112.736000" />
+            </RelativeLayout>
+            
+            <RelativeLayout
+            	android:id="@+id/layout_06"
+            	android:layout_toRightOf="@+id/layout_05"
+            	android:layout_width="match_parent"
+            	android:layout_height="wrap_content" 
+            	>
 
             <TextView
                 android:id="@+id/tv_top"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="15dp"
-                android:layout_toLeftOf="@+id/tv_topprice"
+                android:layout_marginRight="15.0dp"
+                android:layout_marginLeft="5.0dp"
                 android:textColor="#adadad"
                 android:textSize="18.0sp"
                 android:text="最高" />
@@ -201,11 +241,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/tv_updown"
+                android:layout_toRightOf="@+id/tv_top"
                 android:textColor="#ff0000"
                 android:textSize="18.0sp"
                 android:text="112.747000" />
+            </RelativeLayout>
         </RelativeLayout>
 
         <RelativeLayout
@@ -213,6 +253,12 @@
             android:layout_height="wrap_content"
             android:paddingTop="16dp" 
             android:layout_weight="1">
+            
+          <RelativeLayout
+            android:id="@+id/layout_07"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content" 
+            >
             
              <TextView
                 android:id="@+id/tv_range"
@@ -233,14 +279,22 @@
                 android:textColor="#f9f900"
                 android:textSize="18.0sp"
                 android:text="112.736000" />
+            </RelativeLayout>
+            
+            <RelativeLayout
+            	android:id="@+id/layout_08"
+            	android:layout_toRightOf="@+id/layout_07"
+            	android:layout_width="match_parent"
+            	android:layout_height="wrap_content" 
+            	>
 
             <TextView
                 android:id="@+id/tv_low"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginRight="15dp"
-                android:layout_toLeftOf="@+id/tv_lowprice"
+                android:layout_marginRight="15.0dp"
+                android:layout_marginLeft="5.0dp"
                 android:textColor="#adadad"
                 android:textSize="18.0sp"
                 android:text="最低" />
@@ -250,11 +304,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/tv_range"
+                android:layout_toRightOf="@+id/tv_low"
                 android:textColor="#ff0000"
                 android:textSize="18.0sp"
                 android:text="112.747000" />
+            </RelativeLayout>
         </RelativeLayout>
 
     </LinearLayout>

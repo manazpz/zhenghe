@@ -9,6 +9,10 @@
     <string name="deal">成交</string>
     <string name="option">持仓</string>
     <string name="updata">刷新</string>
+    <drawable name="Actionbar">#c0c0c0</drawable>
+    <string name="drawer_title">Navigation</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_service">ServiceActivity</string>
     <string name="title_activity_change_password_">ChangePassword_Activity</string>

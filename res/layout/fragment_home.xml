@@ -111,7 +111,7 @@
                 android:visibility="gone" >
 
                 <ImageView
-                    android:id="@+id/imageView1"
+                    android:id="@+id/img_result"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
@@ -121,7 +121,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/imageView1"
+                    android:layout_below="@+id/img_result"
                     android:layout_marginTop="80dp" >
 
                     <TextView
@@ -130,12 +130,12 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentTop="true"
                         android:layout_marginLeft="16dp"
-                        android:layout_toRightOf="@+id/textView1"
+                        android:layout_toRightOf="@+id/tv_showmsg"
                         android:text="930.00"
                         android:textColor="#fff" />
 
                     <TextView
-                        android:id="@+id/textView1"
+                        android:id="@+id/tv_showmsg"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
@@ -145,7 +145,25 @@
                         android:textColor="#fff" />
                 </RelativeLayout>
             </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_above="@+id/layout_show"
+                android:layout_centerHorizontal="true"
+                android:focusable="false"
+                android:layout_marginTop="10dp" >
+
+                <TextView
+                    android:id="@+id/tv_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="" />
+            </RelativeLayout>
+
         </RelativeLayout>
+
     </FrameLayout>
 
     <LinearLayout
@@ -279,7 +297,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
-                    android:text="30秒"
+                    android:text="1小时"
                     android:textColor="#000"
                     android:textSize="16sp"
                     android:textStyle="bold" />
