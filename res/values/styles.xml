@@ -22,11 +22,4 @@
         <item name="android:windowExitAnimation">@anim/toast_exit</item>
     </style>
     
-    <style name="lightTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="tc">#ffffff</item>
-        <item name="bg">#000000</item>
-     </style>
-   
-  
-
 </resources>
