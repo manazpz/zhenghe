@@ -3,8 +3,11 @@ package com.example.fragment;
 import android.R.color;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.StateListDrawable;
@@ -14,6 +17,7 @@ import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.Base64;
@@ -41,9 +45,6 @@ import com.example.jsData.cjData;
 import com.example.jsData.codeData;
 import com.example.jsData.userData;
 import com.smorra.asyncsocket.TcpClient;
-import com.example.hs.Util;
-
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,9 +58,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import cn.bmob.v3.c.V;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,8 +81,8 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private TextView tv_addprice;
 	private long price = 100;
 	private int timechange = 0;
-	private String str;
-	private String time[] = { "30秒", "1分钟", "5分钟", "15分钟", "半小时", "1小时" };
+	private String strprice;
+	private String time[] = { "1小时", "半小时", "15分钟", "5分钟", "1分钟", "30秒" };
 	private HashMap<String, Integer> timenum = new HashMap<String, Integer>();
 	private TextView tv_time;
 	private PagerSlidingTabStrip tabs;
@@ -104,17 +105,14 @@ public class HomeFragment extends Fragment implements OnClickListener {
 	private TextView hold;
 	private TextView profitorlose;
 	private TextView balance;
-	private RadioGroup radioGroup;
-	private RadioButton radio0;
-	private RadioButton radio1;
-	private RadioButton radio2;
-	private RadioButton radio3;
 	private AnScoket janScoket;
-	private String[] splitcodes1;
-	private String[] splitcodes2;
-	private String[] splitcodes3;
+	private String bql="";
+	private ArrayList<cjData> cjlistinfo = new ArrayList<cjData>();
+	
 	public HomeFragment() {
+		
 	}
+
 
 
 	@Override
@@ -125,19 +123,78 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			// 初始化静态UI
 			initUI(layout);
 			initData();
+			
 		}
 		return layout;
 	}
 
-	private void initData() {
-		timenum.put(time[0], 30000);
-		timenum.put(time[1], 60000);
-		timenum.put(time[2], 300000);
-		timenum.put(time[3], 900000);
-		timenum.put(time[4], 1800000);
-		timenum.put(time[5], 3600000);
+	private void initWagerData(int choice) {
 		
-		MyData app = (MyData) getActivity().getApplication();
+		String str = contsData.jhost.get(contsData.sername + "j");
+		String[] sername = str.split("\\:");
+		janScoket = new AnScoket(getActivity(), sername[0], Integer.parseInt(sername[1]), new SocketCall() {
+
+			@Override
+			public void writeing(Boolean flag) {
+			}
+
+			@Override
+			public void reading(String result, TcpClient tcpClient) {
+				getresult(result, tcpClient);
+			}
+		});
+		janScoket.setLoginstr("<uorder|" + userdata.getDid() + "|"+ userdata.getUsername() + "|"+ app.getCode() +"|"+ price + "|"+ timenum.get(tv_time.getText().toString())/1000 + "|"+ choice +">");
+		try {
+			janScoket.SocketOnline();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+	protected void getresult(String result, TcpClient tcpClient) {
+
+		if (result.length() > 0) {
+			//数据连接出错，可参考
+			if (">".equals(result.substring(result.length()-1))) {
+				if (!"".equals(bql)) {
+					result = bql + result;
+					bql = "";
+				}
+				String[] split = result.split(">");
+				for (int i = 0; i < split.length; i++) {
+					String text1 = new String(Base64.decode(split[i] + ">", Base64.DEFAULT));
+					Log.e("tttt", text1);
+					String[] str = text1.split("\\|");
+					
+					switch (str[0]) {
+					case "uorder":
+							if("0".equals(str[1])){
+								tishiDialog(str[2]);
+							}else if("1".equals(str[1])){
+								Log.e("rrre", "5541");
+								tishi1Dialog();
+						}
+						break;
+					default:
+						new CloseThread(tcpClient).start();
+						break;
+					}
+				}
+			}
+		}
+	}
+
+
+	private void initData() {
+		timenum.put(time[0], 3600000);
+		timenum.put(time[1], 1800000);
+		timenum.put(time[2], 900000);
+		timenum.put(time[3], 300000);
+		timenum.put(time[4], 60000);
+		timenum.put(time[5], 30000);
+		
+		app = (MyData) getActivity().getApplication();
 		userdata = app.userdata;
 		current_price.setText("当前："+userdata.getPrice());
 		hold.setText("持仓："+userdata.getInvested()+"元");
@@ -150,7 +207,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		initVP(layout);
 		initchoice(layout);
 		inittime(layout);
-		setSlideMenu();
 	}
 
 	private void inittime(View layout) {
@@ -162,6 +218,9 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		animation = AnimationUtils.loadAnimation(getContext(), R.anim.count_down_exit);
 		layout_show = (RelativeLayout) layout.findViewById(R.id.layout_show);
 		layout_show.setOnClickListener(this);
+		tv_profit = (TextView) layout.findViewById(R.id.tv_profit);
+		tv_showmsg = (TextView) layout.findViewById(R.id.tv_showmsg);
+		img_result = (ImageView) layout.findViewById(R.id.img_result);
 		mtimerl = (RelativeLayout) layout.findViewById(R.id.rl_timerl);
 		mstate = (ImageView) layout.findViewById(R.id.iv_state);
 		mjishu = (TextView) layout.findViewById(R.id.tv_jishu);
@@ -169,20 +228,9 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		hold = (TextView) layout.findViewById(R.id.tv_hold);
 		profitorlose = (TextView) layout.findViewById(R.id.tv_profitorlose);
 		balance = (TextView) layout.findViewById(R.id.tv_balance);
+		tv_msg = (TextView) layout.findViewById(R.id.tv_msg);
 	}
 
-	private void setSlideMenu() {
-		radioGroup = (RadioGroup) layout.findViewById(R.id.radioGroup);
-		radio0 = (RadioButton) layout.findViewById(R.id.radio0);
-		radio1 = (RadioButton) layout.findViewById(R.id.radio1);
-		radio2 = (RadioButton) layout.findViewById(R.id.radio2);
-		radio3 = (RadioButton) layout.findViewById(R.id.radio3);
-		radio0.setText(contsData.codelist.get(0).getCode());
-		radio1.setText(contsData.codelist.get(1).getCode());
-		radio2.setText(contsData.codelist.get(2).getCode());
-		radio3.setText(contsData.codelist.get(3).getCode());
-	}
-	
 
 	private void initchoice(View layout) {
 		layout_setprice = (RelativeLayout) layout.findViewById(R.id.layout_setprice);
@@ -281,19 +329,19 @@ public class HomeFragment extends Fragment implements OnClickListener {
 
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						str = editText.getText().toString();
+						strprice = editText.getText().toString();
 						Pattern p = Pattern.compile("[0-9]*");
-						Matcher m = p.matcher(str);
-						if ("".equals(str)) {
+						Matcher m = p.matcher(strprice);
+						if ("".equals(strprice)) {
 							Mydialog.Dialog_ON_OFF(dialog, true);
 						} else {
 							if (m.matches()) {
 								String[] split = userdata.getExpendablefund().split("\\.");
-								if (Long.valueOf(str).longValue() > Long.valueOf(split[0]).longValue()) {
+								if (Long.valueOf(strprice).longValue() > Long.valueOf(split[0]).longValue()) {
 									yDialog();
 								}else {
-									tv_addprice.setText(str);
-									price = Long.parseLong(str);
+									tv_addprice.setText(strprice+"元");
+									price = Long.parseLong(strprice);
 								}
 								Mydialog.Dialog_ON_OFF(dialog, true);
 							} else {
@@ -345,12 +393,14 @@ public class HomeFragment extends Fragment implements OnClickListener {
 						mtimerl.setVisibility(View.VISIBLE);
 						mstate.setImageResource(R.drawable.updeadtime);
 					}
+					initWagerData(flag);
 				}else {
+					initWagerData(flag);
 					handlern.removeMessages(1);
 					handlern.sendEmptyMessageDelayed(2, 100);
 				}
-				
 			}
+
 		})
 		.setNegativeButton("取消", new DialogInterface.OnClickListener() {
 			
@@ -377,6 +427,22 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			}
 		}).show();
 	}
+	public  void tishiDialog(String msg) {
+		new AlertDialog.Builder(getActivity()).setTitle("下注失败").setMessage(msg)
+		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		}).show();
+	}
+	public  void tishi1Dialog() {
+		new AlertDialog.Builder(getActivity()).setTitle("下注成功")
+		.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		}).show();
+	}
 	
 	
 
@@ -395,24 +461,28 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			reduce(d);
 			break;
 		case R.id.btn_timeminus:
-			timereduce();
+			timeadd();
 			break;
 		case R.id.btn_timeadd:
-			timeadd();
+			
+			timereduce();
 			break;
 		case R.id.relativeLayout1:
 			if (price > 1000) {
 				maxDialog();
 			}else {
 				hlDialog(1);
+				
 			}
 			break;
 		case R.id.relativeLayout2:
 			if (price > 1000) {
 				maxDialog();
 			}else {
-				hlDialog(1);
+				hlDialog(0);
+				
 			}
+			
 			break;
 		case R.id.layout_show:
 			layoutshow();
@@ -480,6 +550,7 @@ public class HomeFragment extends Fragment implements OnClickListener {
 						handler.removeMessages(0);
 						handler.sendEmptyMessageDelayed(1, 1000);
 						countimg.setVisibility(View.GONE);
+						
 					}else {
 						countimg.setVisibility(View.VISIBLE);
 						handler.sendEmptyMessageDelayed(0, 1000);
@@ -499,8 +570,10 @@ public class HomeFragment extends Fragment implements OnClickListener {
 					handlern.sendEmptyMessageDelayed(1, 100);
 					higt.setClickable(true);
 					low.setClickable(true);
+					cjlistinfo.clear();
 					mtimerl.setVisibility(View.GONE);
 					layout_show.setVisibility(View.VISIBLE);
+					
 					countnum = timenum.get(tv_time.getText().toString());
 				}else {
 					handlern.sendEmptyMessageDelayed(0, 100);
@@ -521,7 +594,11 @@ public class HomeFragment extends Fragment implements OnClickListener {
 			}
 		};
 	};
-	private String[] splitcodes;
+	private TextView tv_msg;
+	private MyData app;
+	private TextView tv_profit;
+	private TextView tv_showmsg;
+	private ImageView img_result;
 	
 	private int getCount() {
 		count--;
@@ -531,6 +608,9 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		return count;
 	}
 	
+	 
+
+
 	private int getcountnum() {
 		countnum -= 50;
 		if (countnum < 0) {
@@ -543,5 +623,6 @@ public class HomeFragment extends Fragment implements OnClickListener {
 		animation.reset();
 		countimg.startAnimation(animation);
 	}
-
+	
+	
 }
