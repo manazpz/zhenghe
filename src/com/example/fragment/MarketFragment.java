@@ -69,8 +69,8 @@ public class MarketFragment extends Fragment {
 			layout = layout = inflater.inflate(R.layout.item_market, container, false);
 			// 初始化静态UI
 			initUI();
+			initData();
 		}
-		initData();
 		return layout;
 	}
 
@@ -98,7 +98,9 @@ public class MarketFragment extends Fragment {
 
 			@Override
 			public void reading(byte[] result, TcpClient tcpClient) {
-				sxUI(hqhq.gethq(result));
+				if (result.length>0 ) {
+					sxUI(hqhq.gethq(result));
+				}
 			}
 		});
 		janScoket.setLoginstr("uclient|" + contsData.codelist.get(0).getCode() + "|" + 0);

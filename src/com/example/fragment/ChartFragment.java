@@ -10,6 +10,7 @@ import com.example.fragment.Socket.structScoket;
 import com.example.hs.R;
 import com.example.hs.R.layout;
 import com.example.jsData.HuoQuHq;
+import com.example.jsData.Struct;
 import com.smorra.asyncsocket.TcpClient;
 
 import android.graphics.Color;
@@ -34,11 +35,11 @@ public class ChartFragment extends Fragment {
 	private View item_chart;
 	private View layout;
 	private List<OHLCEntity> ohlc;
-	private List<StickEntity> vol;
 	private MAChart machart;
 	private structScoket janScoket;
 	private HuoQuHq hqhq = new HuoQuHq();
 	private LayoutInflater inflater;
+	private Struct struct;
 
 	public ChartFragment(int position) {
 		this.pageNum = position;
@@ -50,9 +51,7 @@ public class ChartFragment extends Fragment {
 			this.inflater = inflater;
 			layout = inflater.inflate(R.layout.item_chart, container, false);
 			// 初始化静态UI
-			initVOL();
 			initOHLC();
-			initMAChart();
 		}
 		initData();
 		return layout;
@@ -69,7 +68,8 @@ public class ChartFragment extends Fragment {
 
 			@Override
 			public void reading(byte[] result, TcpClient tcpClient) {
-				String string = hqhq.gethq(result).toString();
+				struct = hqhq.gethq(result);
+				initMAChart(struct.getLastPrice());
 			}
 		});
 		janScoket.setLoginstr("uclient|" + contsData.codelist.get(0).getCode() + "|" + 0);
@@ -81,46 +81,27 @@ public class ChartFragment extends Fragment {
 		}
 	}
 
-	private void initMAChart() {
+	
+	
+	
+	private void initMAChart(Double price) {
 
 		machart = (MAChart) layout.findViewById(R.id.machart);
 		List<LineEntity> lines = new ArrayList<LineEntity>();
 
-		// 计算5日均线
-		LineEntity MA5 = new LineEntity();
-		MA5.setTitle("MA5");
-		MA5.setLineColor(Color.WHITE);
-		MA5.setLineData(initMA(5));
-		lines.add(MA5);
-
-		// //计算10日均线
-		// LineEntity MA10 = new LineEntity();
-		// MA10.setTitle("MA10");
-		// MA10.setLineColor(Color.RED);
-		// MA10.setLineData(initMA(10));
-		// lines.add(MA10);
-		//
-		// //计算25日均线
-		// LineEntity MA25 = new LineEntity();
-		// MA25.setTitle("MA25");
-		// MA25.setLineColor(Color.GREEN);
-		// MA25.setLineData(initMA(25));
-		// lines.add(MA25);
+		// 计算日均线
+		LineEntity MA1 = new LineEntity();
+		MA1.setTitle("MA1");
+		MA1.setLineColor(Color.WHITE);
+		MA1.setLineData(initMA(5));
+		lines.add(MA1);
 
 		List<String> ytitle = new ArrayList<String>();
-		ytitle.add("240");
-		ytitle.add("250");
-		ytitle.add("260");
-		ytitle.add("270");
-		ytitle.add("280");
-		List<String> xtitle = new ArrayList<String>();
-		xtitle.add("9:00");
-		xtitle.add("10:00");
-		xtitle.add("11:00");
-		xtitle.add("13:00");
-		xtitle.add("14:00");
-		xtitle.add("15:00");
-		xtitle.add(" ");
+		ytitle.add((price-0.02)+"");
+		ytitle.add((price-0.01)+"");
+		ytitle.add(price+"");
+		ytitle.add((price+0.01)+"");
+		ytitle.add((price+0.02)+"");
 
 		machart.setAxisXColor(Color.LTGRAY);
 		machart.setAxisYColor(Color.LTGRAY);
@@ -128,7 +109,6 @@ public class ChartFragment extends Fragment {
 		machart.setAxisMarginTop(10);
 		machart.setAxisMarginLeft(20);
 		machart.setAxisYTitles(ytitle);
-		machart.setAxisXTitles(xtitle);
 		machart.setLongtitudeFontSize(10);
 		machart.setLongtitudeFontColor(Color.WHITE);
 		machart.setLatitudeColor(Color.GRAY);
@@ -137,7 +117,6 @@ public class ChartFragment extends Fragment {
 		machart.setMaxValue(280);
 		machart.setMinValue(240);
 		machart.setMaxPointNum(36);
-		machart.setDisplayAxisXTitle(true);
 		machart.setDisplayAxisYTitle(true);
 		machart.setDisplayLatitude(true);
 		machart.setDisplayLongitude(true);
@@ -146,162 +125,27 @@ public class ChartFragment extends Fragment {
 		machart.setLineData(lines);
 	}
 
-	private void initVOL() {
-		List<StickEntity> stick = new ArrayList<StickEntity>();
-		this.vol = new ArrayList<StickEntity>();
-		stick.add(new StickEntity(406000, 0, 20110825));
-		stick.add(new StickEntity(232000, 0, 20110824));
-		stick.add(new StickEntity(355000, 0, 20110823));
-		stick.add(new StickEntity(437000, 0, 20110822));
-		stick.add(new StickEntity(460000, 0, 20110819));
-		stick.add(new StickEntity(422000, 0, 20110818));
-		stick.add(new StickEntity(502000, 0, 20110817));
-		stick.add(new StickEntity(509000, 0, 20110816));
-		stick.add(new StickEntity(110000, 0, 20110815));
-		stick.add(new StickEntity(110000, 0, 20110812));
-		stick.add(new StickEntity(310000, 0, 20110811));
-		stick.add(new StickEntity(210000, 0, 20110810));
-		stick.add(new StickEntity(211000, 0, 20110809));
-		stick.add(new StickEntity(577000, 0, 20110808));
-		stick.add(new StickEntity(493000, 0, 20110805));
-		stick.add(new StickEntity(433000, 0, 20110804));
-		stick.add(new StickEntity(479000, 0, 20110803));
-		stick.add(new StickEntity(360000, 0, 20110802));
-		stick.add(new StickEntity(437000, 0, 20110801));
-		stick.add(new StickEntity(504000, 0, 20110729));
-		stick.add(new StickEntity(520000, 0, 20110728));
-		stick.add(new StickEntity(494000, 0, 20110727));
-		stick.add(new StickEntity(312000, 0, 20110726));
-		stick.add(new StickEntity(424000, 0, 20110725));
-		stick.add(new StickEntity(557000, 0, 20110722));
-		stick.add(new StickEntity(596000, 0, 20110721));
-		stick.add(new StickEntity(311000, 0, 20110720));
-		stick.add(new StickEntity(312000, 0, 20110719));
-		stick.add(new StickEntity(312000, 0, 20110718));
-		stick.add(new StickEntity(312000, 0, 20110715));
-		stick.add(new StickEntity(410000, 0, 20110714));
-		stick.add(new StickEntity(311000, 0, 20110713));
-		stick.add(new StickEntity(210000, 0, 20110712));
-		stick.add(new StickEntity(410000, 0, 20110711));
-		stick.add(new StickEntity(214000, 0, 20110708));
-		stick.add(new StickEntity(312000, 0, 20110707));
-		stick.add(new StickEntity(212000, 0, 20110706));
-		stick.add(new StickEntity(414000, 0, 20110705));
-		stick.add(new StickEntity(310000, 0, 20110704));
-		stick.add(new StickEntity(210000, 0, 20110701));
-		stick.add(new StickEntity(190000, 0, 20110630));
-		stick.add(new StickEntity(210000, 0, 20110629));
-		stick.add(new StickEntity(116000, 0, 20110628));
-		stick.add(new StickEntity(142000, 0, 20110627));
-		stick.add(new StickEntity(524000, 0, 20110624));
-		stick.add(new StickEntity(246000, 0, 20110623));
-		stick.add(new StickEntity(432000, 0, 20110622));
-		stick.add(new StickEntity(352000, 0, 20110621));
-		stick.add(new StickEntity(243000, 0, 20110620));
-		stick.add(new StickEntity(165000, 0, 20110617));
-		stick.add(new StickEntity(554000, 0, 20110616));
-		stick.add(new StickEntity(552000, 0, 20110615));
-		stick.add(new StickEntity(431000, 0, 20110614));
-		stick.add(new StickEntity(317000, 0, 20110613));
-		stick.add(new StickEntity(512000, 0, 20110610));
-		stick.add(new StickEntity(283000, 0, 20110609));
-		stick.add(new StickEntity(144000, 0, 20110608));
-		stick.add(new StickEntity(273000, 0, 20110607));
-		stick.add(new StickEntity(278000, 0, 20110603));
-		stick.add(new StickEntity(624000, 0, 20110602));
-		stick.add(new StickEntity(217000, 0, 20110601));
-		stick.add(new StickEntity(116000, 0, 20110531));
-		stick.add(new StickEntity(191000, 0, 20110530));
-		stick.add(new StickEntity(204000, 0, 20110527));
-		stick.add(new StickEntity(236000, 0, 20110526));
-		stick.add(new StickEntity(421000, 0, 20110525));
-		stick.add(new StickEntity(114000, 0, 20110524));
-		stick.add(new StickEntity(403000, 0, 20110523));
-		stick.add(new StickEntity(205000, 0, 20110520));
-		stick.add(new StickEntity(328000, 0, 20110519));
-		stick.add(new StickEntity(109000, 0, 20110518));
-		stick.add(new StickEntity(286000, 0, 20110517));
-		stick.add(new StickEntity(103000, 0, 20110516));
-		stick.add(new StickEntity(114000, 0, 20110513));
-		stick.add(new StickEntity(107000, 0, 20110512));
-		stick.add(new StickEntity(106000, 0, 20110511));
-		stick.add(new StickEntity(146000, 0, 20110510));
-		stick.add(new StickEntity(105000, 0, 20110509));
-		stick.add(new StickEntity(312000, 0, 20110506));
-		stick.add(new StickEntity(530000, 0, 20110505));
-		stick.add(new StickEntity(275000, 0, 20110504));
-		stick.add(new StickEntity(432000, 0, 20110503));
-		// stick.add(new StickEntity(157000,0,20110429));
-		// stick.add(new StickEntity(148000,0,20110428));
-		// stick.add(new StickEntity(224000,0,20110427));
-		// stick.add(new StickEntity(405000,0,20110426));
-		// stick.add(new StickEntity(374000,0,20110425));
-		// stick.add(new StickEntity(473000,0,20110422));
-		// stick.add(new StickEntity(437000,0,20110421));
-		// stick.add(new StickEntity(121000,0,20110420));
-		// stick.add(new StickEntity(208000,0,20110419));
-		// stick.add(new StickEntity(486000,0,20110418));
-		// stick.add(new StickEntity(486000,0,20110415));
-		// stick.add(new StickEntity(473000,0,20110414));
-		// stick.add(new StickEntity(256000,0,20110413));
-		// stick.add(new StickEntity(275000,0,20110412));
-		// stick.add(new StickEntity(471000,0,20110411));
-		// stick.add(new StickEntity(529000,0,20110408));
-		// stick.add(new StickEntity(564000,0,20110407));
-		// stick.add(new StickEntity(257000,0,20110406));
-		// stick.add(new StickEntity(344000,0,20110404));
-		// stick.add(new StickEntity(525000,0,20110401));
-
-		for (int i = stick.size(); i > 0; i--) {
-			this.vol.add(stick.get(i - 1));
-		}
-	}
-
-	private List<Float> initVMA(int days) {
-		if (days < 2) {
-			return null;
-		}
-
-		List<Float> MA5Values = new ArrayList<Float>();
-
-		float sum = 0;
-		float avg = 0;
-		for (int i = 0; i < this.vol.size(); i++) {
-			float close = (float) vol.get(i).getHigh();
-			if (i < days) {
-				sum = sum + close;
-				avg = sum / (i + 1f);
-			} else {
-				sum = sum + close - (float) vol.get(i - days).getHigh();
-				avg = sum / days;
-			}
-			MA5Values.add(avg);
-		}
-
-		return MA5Values;
-	}
-
 	private void initOHLC() {
 		List<OHLCEntity> ohlc = new ArrayList<OHLCEntity>();
 
 		this.ohlc = new ArrayList<OHLCEntity>();
-		ohlc.add(new OHLCEntity(246, 248, 235, 235, 20110825));
-		ohlc.add(new OHLCEntity(240, 242, 236, 242, 20110824));
-		ohlc.add(new OHLCEntity(236, 240, 235, 240, 20110823));
-		ohlc.add(new OHLCEntity(232, 236, 231, 236, 20110822));
-		ohlc.add(new OHLCEntity(240, 240, 235, 235, 20110819));
-		ohlc.add(new OHLCEntity(240, 241, 239, 240, 20110818));
-		ohlc.add(new OHLCEntity(242, 243, 240, 240, 20110817));
-		ohlc.add(new OHLCEntity(239, 242, 238, 242, 20110816));
-		ohlc.add(new OHLCEntity(239, 240, 238, 239, 20110815));
-		ohlc.add(new OHLCEntity(230, 238, 230, 238, 20110812));
-		ohlc.add(new OHLCEntity(236, 237, 234, 234, 20110811));
-		ohlc.add(new OHLCEntity(226, 233, 223, 232, 20110810));
-		ohlc.add(new OHLCEntity(239, 241, 229, 232, 20110809));
-		ohlc.add(new OHLCEntity(242, 244, 240, 242, 20110808));
-		ohlc.add(new OHLCEntity(248, 249, 247, 248, 20110805));
-		ohlc.add(new OHLCEntity(245, 248, 245, 247, 20110804));
-		ohlc.add(new OHLCEntity(249, 249, 245, 247, 20110803));
+//		ohlc.add(new OHLCEntity(246, 248, 235, 235, 20110825));
+//		ohlc.add(new OHLCEntity(240, 242, 236, 242, 20110824));
+//		ohlc.add(new OHLCEntity(236, 240, 235, 240, 20110823));
+//		ohlc.add(new OHLCEntity(232, 236, 231, 236, 20110822));
+//		ohlc.add(new OHLCEntity(240, 240, 235, 235, 20110819));
+//		ohlc.add(new OHLCEntity(240, 241, 239, 240, 20110818));
+//		ohlc.add(new OHLCEntity(242, 243, 240, 240, 20110817));
+//		ohlc.add(new OHLCEntity(239, 242, 238, 242, 20110816));
+//		ohlc.add(new OHLCEntity(239, 240, 238, 239, 20110815));
+//		ohlc.add(new OHLCEntity(230, 238, 230, 238, 20110812));
+//		ohlc.add(new OHLCEntity(236, 237, 234, 234, 20110811));
+//		ohlc.add(new OHLCEntity(226, 233, 223, 232, 20110810));
+//		ohlc.add(new OHLCEntity(239, 241, 229, 232, 20110809));
+//		ohlc.add(new OHLCEntity(242, 244, 240, 242, 20110808));
+//		ohlc.add(new OHLCEntity(248, 249, 247, 248, 20110805));
+//		ohlc.add(new OHLCEntity(245, 248, 245, 247, 20110804));
+//		ohlc.add(new OHLCEntity(249, 249, 245, 247, 20110803));
 		// ohlc.add(new OHLCEntity(249 ,251 ,248 ,250 ,20110802));
 		// ohlc.add(new OHLCEntity(250 ,252 ,248 ,250 ,20110801));
 		// ohlc.add(new OHLCEntity(250 ,251 ,248 ,250 ,20110729));
