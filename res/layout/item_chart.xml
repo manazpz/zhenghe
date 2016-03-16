@@ -19,7 +19,8 @@
             android:id="@+id/machart"
             android:layout_width="fill_parent"
             android:layout_height="220.0dip" />
-
+        
+	
     </LinearLayout>
 
 </ScrollView>
