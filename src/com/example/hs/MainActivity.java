@@ -8,6 +8,7 @@ import com.example.datasave.contsData;
 import com.example.fragment.DealFragment;
 import com.example.fragment.HoldFragment;
 import com.example.fragment.HomeFragment;
+import com.example.fragment.MarketFragment;
 import com.example.fragment.SetFragment;
 import com.example.fragment.Socket.AnScoket;
 import com.example.fragment.Socket.CloseThread;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
 	private MyAdapter adapter;
 	private MyData app;
 	private String bql;
+	private MarketFragment mf = new MarketFragment();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -113,6 +115,7 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		app.setCode(contsData.codelist1.get(position).getCode());
+		mf.updatalist(contsData.codelist1.get(position).getCode());
 		// 关闭侧滑菜单布局
 		drawerLayout.closeDrawer(mMenuDrawer);
 	}
@@ -258,6 +261,8 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
 	
 }
 /** ----------------DrawerToggle end------------------------ */
+	
+	
 	
 	public class Sendmsg {
 

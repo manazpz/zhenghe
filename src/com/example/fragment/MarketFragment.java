@@ -14,6 +14,7 @@ import com.example.datasave.MyData;
 import com.example.datasave.MySharedPreferences;
 import com.example.datasave.contsData;
 import com.example.fragment.Socket.AnScoket;
+import com.example.fragment.Socket.CloseThread;
 import com.example.fragment.Socket.SocketCall;
 import com.example.fragment.Socket.SocketCallbyte;
 import com.example.fragment.Socket.structScoket;
@@ -45,7 +46,6 @@ public class MarketFragment extends Fragment {
 
 	private View layout;
 	private LayoutInflater inflater;
-	private int pageNum;
 	private structScoket janScoket;
 	private TextView title;
 	private TextView execute;
@@ -60,8 +60,8 @@ public class MarketFragment extends Fragment {
 	private HuoQuHq hqhq = new HuoQuHq();
 	private int code =0;
 	private MyData app;
-	public MarketFragment(int position) {
-		this.pageNum = position;
+	public MarketFragment() {
+		
 	}
 
 	@Override
@@ -71,9 +71,13 @@ public class MarketFragment extends Fragment {
 			layout = layout = inflater.inflate(R.layout.item_market, container, false);
 			// 初始化静态UI
 			initUI();
-			initData();
+			initData("USDJPY");
 		}
 		return layout;
+	}
+	
+	public void updatalist(String hycode) {
+		initData(hycode);
 	}
 
 	private void initUI() {
@@ -89,7 +93,7 @@ public class MarketFragment extends Fragment {
 		rangeprice = (TextView) layout.findViewById(R.id.tv_rangeprice);
 	}
 
-	private void initData() {
+	private void initData(String hycode) {
 		String str = contsData.hhost.get(contsData.sername + "h");
 		String[] sername = str.split("\\:");
 		janScoket = new structScoket(getActivity(), sername[0], Integer.parseInt(sername[1]), new SocketCallbyte() {
@@ -105,8 +109,7 @@ public class MarketFragment extends Fragment {
 				}
 			}
 		});
-		app = (MyData) getActivity().getApplication();
-		janScoket.setLoginstr("uclient|" + app.getCode() + "|" + 0);
+		janScoket.setLoginstr("uclient|" + hycode + "|" + 0);
 		try {
 			janScoket.SocketOnline();
 		} catch (IOException e) {

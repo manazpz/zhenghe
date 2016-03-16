@@ -28,7 +28,6 @@ import android.widget.TextView;
  *
  */
 public class AnnouncementFragment extends Fragment {
-	private int pageNum;
 	private View layout;
 	private ListView list_announcement;
 	private announcementAdapter adapter;
@@ -42,8 +41,7 @@ public class AnnouncementFragment extends Fragment {
 	private AnnouncementData data;
 	private String bql = "";
 
-	public AnnouncementFragment(int position) {
-		this.pageNum = position;
+	public AnnouncementFragment() {
 	}
 
 	@Override

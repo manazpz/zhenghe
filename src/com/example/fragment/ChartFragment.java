@@ -32,7 +32,6 @@ import cn.limc.androidcharts.view.MAChart;
  */
 public class ChartFragment extends Fragment {
 
-	private int pageNum;
 	private View item_chart;
 	private View layout;
 	private List<OHLCEntity> ohlc;
@@ -43,8 +42,7 @@ public class ChartFragment extends Fragment {
 	private int code;
 	private Struct struct;
 
-	public ChartFragment(int position) {
-		this.pageNum = position;
+	public ChartFragment() {
 	}
 
 	@Override

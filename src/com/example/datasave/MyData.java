@@ -15,7 +15,7 @@ import android.app.Application;
 public class MyData extends Application {
 	public String password;
 	public userData userdata;
-	private String code ;
+	private String code = "";
 	public String getCode() {
 		return code;
 	}
