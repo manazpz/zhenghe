@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.datasave.MyData;
 import com.example.datasave.contsData;
 import com.example.fragment.Socket.SocketCallbyte;
 import com.example.fragment.Socket.structScoket;
@@ -39,6 +40,7 @@ public class ChartFragment extends Fragment {
 	private structScoket janScoket;
 	private HuoQuHq hqhq = new HuoQuHq();
 	private LayoutInflater inflater;
+	private int code;
 	private Struct struct;
 
 	public ChartFragment(int position) {
@@ -53,33 +55,54 @@ public class ChartFragment extends Fragment {
 			// 初始化静态UI
 			initOHLC();
 		}
-		initData();
+//		initData();
 		return layout;
 	}
 	
-	private void initData() {
-		String str = contsData.hhost.get(contsData.sername + "h");
-		String[] sername = str.split("\\:");
-		janScoket = new structScoket(getActivity(), sername[0], Integer.parseInt(sername[1]), new SocketCallbyte() {
+//	private void initData() {
+//		String str = contsData.hhost.get(contsData.sername + "h");
+//		String[] sername = str.split("\\:");
+//		janScoket = new structScoket(getActivity(), sername[0], Integer.parseInt(sername[1]), new SocketCallbyte() {
+//
+//			@Override
+//			public void writeing(Boolean flag) {
+//			}
+//
+//			@Override
+//			public void reading(byte[] result, TcpClient tcpClient) {
+//				String string = hqhq.gethq(result).toString();
+//			}
+//		});
+//		MyData app = (MyData)getActivity().getApplication();
+//		code = app.code;
+//		janScoket.setLoginstr("uclient|" + contsData.codelist1.get(code).getCode() + "|" + 0);
+//		try {
+//			janScoket.SocketOnline();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
-			@Override
-			public void writeing(Boolean flag) {
-			}
 
-			@Override
-			public void reading(byte[] result, TcpClient tcpClient) {
-				struct = hqhq.gethq(result);
-				initMAChart(struct.getLastPrice());
-			}
-		});
-		janScoket.setLoginstr("uclient|" + contsData.codelist.get(0).getCode() + "|" + 0);
-		try {
-			janScoket.SocketOnline();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//			@Override
+//			public void writeing(Boolean flag) {
+//			}
+//
+//			@Override
+//			public void reading(byte[] result, TcpClient tcpClient) {
+//				struct = hqhq.gethq(result);
+//				initMAChart(struct.getLastPrice());
+//			}
+//		});
+//		janScoket.setLoginstr("uclient|" + contsData.codelist.get(0).getCode() + "|" + 0);
+//		try {
+//			janScoket.SocketOnline();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 
 	
 	
