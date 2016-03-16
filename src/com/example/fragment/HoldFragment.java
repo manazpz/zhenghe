@@ -23,6 +23,7 @@ import com.example.fragment.Socket.SocketCall;
 import com.example.hs.R;
 import com.example.hs.R.layout;
 import com.example.jsData.cjData;
+import com.example.jsData.codeData;
 import com.example.jsData.userData;
 import com.smorra.asyncsocket.TcpClient;
 
@@ -42,8 +43,11 @@ public class HoldFragment extends Fragment {
 	private View layout;
 	private AnScoket janScoket;
 	private ArrayList<cjData> cclist = new ArrayList<cjData>();
+	private ArrayList<String> lcid = new ArrayList<String>();
 	private OptionAdapter optionAdapter;
 	private userData userdata;
+	private int code;
+	private MyData app;
 	public HoldFragment() {
 	}
 
@@ -56,8 +60,107 @@ public class HoldFragment extends Fragment {
 			initUI();
 		}
 		cclist.clear();
+		lcid.clear();
 		initData();
 		return layout;
+	}
+
+	private void initUaskpriceData() {
+		String str = contsData.jhost.get(contsData.sername + "j");
+		String[] sername = str.split("\\:");
+		janScoket = new AnScoket(getActivity(), sername[0], Integer.parseInt(sername[1]), new SocketCall() {
+
+			@Override
+			public void writeing(Boolean flag) {
+			}
+
+			@Override
+			public void reading(String result, TcpClient tcpClient) {
+				getresultprice(result, tcpClient);
+			}
+		});
+		app = (MyData) getActivity().getApplication();
+		userdata = app.userdata;
+		Admin admin = MySharedPreferences.ReadAdmin(getActivity());
+		Log.e("ewewe", app.getCode());
+		janScoket.setLoginstr("<uaskprice|" + app.getCode() + ">");
+		try {
+			janScoket.SocketOnline();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void getresultprice(String result, TcpClient tcpClient) {
+		if (result.length() > 0) {
+			String[] split = result.split(">");
+			for (int i = 0; i < split.length; i++) {
+				String text1 = new String(Base64.decode(split[i] + ">", Base64.DEFAULT));
+				String[] str = text1.split("\\|");
+				String[] split2 = str[2].split("\\,");
+				switch (str[0]) {
+				case "uaskprice":
+					if (!"0".equals(str[1])) {
+						initAskRemoveData();
+					}
+					break;
+				
+				default:
+					new CloseThread(tcpClient).start();
+					break;
+				}
+			}
+		}
+
+	}
+
+
+	private void initAskRemoveData() {
+		String str = contsData.jhost.get(contsData.sername + "j");
+		String[] sername = str.split("\\:");
+		janScoket = new AnScoket(getActivity(), sername[0], Integer.parseInt(sername[1]), new SocketCall() {
+
+			@Override
+			public void writeing(Boolean flag) {
+			}
+
+			@Override
+			public void reading(String result, TcpClient tcpClient) {
+				getresults(result, tcpClient);
+			}
+		});
+		Log.e("yyyy", lcid.get(0));
+		janScoket.setLoginstr("<uAskRemove|" + lcid.get(0) + ">");
+		try {
+			janScoket.SocketOnline();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private void getresults(String result, TcpClient tcpClient) {
+		if (result.length() > 0) {
+			String[] split = result.split(">");
+			for (int i = 0; i < split.length; i++) {
+				String text1 = new String(Base64.decode(split[i] + ">", Base64.DEFAULT));
+				Log.e("4444", text1);
+				String[] str = text1.split("\\|");
+				Log.e("55555", str[1]);
+				switch (str[0]) {
+				case "uAskRemove":
+					if (lcid.get(0).equals(str[1])) {
+						cclist.clear();
+						optionAdapter.notifyDataSetChanged();
+					}
+					break;
+				
+				default:
+					new CloseThread(tcpClient).start();
+					break;
+				}
+			}
+		}
+
 	}
 
 	private void initUI() {
@@ -106,7 +209,11 @@ public class HoldFragment extends Fragment {
 					if (!"0".equals(str[1])) {
 						cclist.add(new cjData(str[1], str[2], str[3], str[4], str[5], str[6], str[7], str[8], 
 								str[9], str[10], str[11], str[12], str[13], str[14], str[15], str[16]));
+						Log.e("popo", str[1]);
+						lcid.add(cclist.get(0).getCjid());
+						Log.e("uuuu", lcid.get(0));
 						optionAdapter.notifyDataSetChanged();
+						initUaskpriceData();
 					}
 					break;
 				
@@ -177,7 +284,6 @@ class OptionAdapter extends BaseAdapter {
 			c.setTime(new SimpleDateFormat("HHmmss").parse(time1));
 			cc.setTime(new SimpleDateFormat("HHmmss").parse(time2));
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		long timeInMillis1 = c.getTimeInMillis(); 
@@ -187,12 +293,10 @@ class OptionAdapter extends BaseAdapter {
 	
 	@Override
 	public Object getItem(int position) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
 	public long getItemId(int position) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	
