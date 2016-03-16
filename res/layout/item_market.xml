@@ -80,7 +80,7 @@
                 android:text="买入" />
 
             <TextView
-                android:id="@+id/tv_sellprice"
+                android:id="@+id/tv_buyprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -110,7 +110,7 @@
                 android:text="卖出" />
 
             <TextView
-                android:id="@+id/tv_buyprice"
+                android:id="@+id/tv_sellprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -144,7 +144,7 @@
                 android:text="开盘" />
 
             <TextView
-                android:id="@+id/tv_newpricenum"
+                android:id="@+id/tv_openprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -173,7 +173,8 @@
                 android:text="最新" />
 
             <TextView
-                android:id="@+id/tv_openprice"
+                android:id="@+id/tv_newpricenum"
+                
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -207,7 +208,7 @@
                 android:text="涨跌" />
 
             <TextView
-                android:id="@+id/tv_topprice"
+                android:id="@+id/tv_updownprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -237,7 +238,7 @@
                 android:text="最高" />
 
             <TextView
-                android:id="@+id/tv_updownprice"
+                android:id="@+id/tv_topprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
@@ -270,7 +271,7 @@
                 android:text="幅度" />
 
             <TextView
-                android:id="@+id/tv_lowprice"
+                android:id="@+id/tv_rangeprice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
@@ -300,7 +301,8 @@
                 android:text="最低" />
 
             <TextView
-                android:id="@+id/tv_rangeprice"
+                android:id="@+id/tv_lowprice"
+                
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
