@@ -2,6 +2,7 @@ package com.example.datasave;
 
 
 import com.example.jsData.AnnouncementData;
+import com.example.jsData.codeData;
 import com.example.jsData.userData;
 
 
@@ -14,13 +15,24 @@ import android.app.Application;
 public class MyData extends Application {
 	public String password;
 	public userData userdata;
+	private String code ;
+	public String getCode() {
+		return code;
+	}
+
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
 	public AnnouncementData Announcementdata;
 	private List<Activity> mList = new LinkedList<Activity>();
 	private static MyData instance;
 
 	public MyData() {
 	}
-
+	
+	
 	public synchronized static MyData getInstance() {
 		if (null == instance) {
 			instance = new MyData();
