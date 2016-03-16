@@ -109,7 +109,7 @@ public class ServiceActivity extends Activity implements OnClickListener {
 					if ("ugetcodelist".equals(str[0])) {
 						for (int i = 1; i < str.length; i++) {
 							String[] hym = str[i].split(",");
-//							contsData.codelist1.add(new codeData(hym[0], hym[1]));
+							contsData.codelist.add(new codeData(hym[0], hym[1]));
 						}
 						frameAnim.stop();
 						loading.setVisibility(View.GONE);

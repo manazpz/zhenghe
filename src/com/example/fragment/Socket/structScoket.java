@@ -52,7 +52,7 @@ public class structScoket {
 
 			@Override
 			public void onWritten(final TcpClient tcpClient) {
-				sc.writeing(true);
+				sc.writeing(true, tcpClient);
 			}
 
 			@Override
@@ -77,7 +77,7 @@ public class structScoket {
 							}
 							rpos = 0;
 							wpos = k;
-							return ;
+							break;
 						}
 					}
 				}
@@ -96,7 +96,8 @@ public class structScoket {
 			}
 
 			@Override
-			public void onConnect(TcpClient tcpClient) {
+			public void onConnect(TcpClient tcpClient) 
+			{
 				new MyThread(loginstr, tcpClient).start();
 			}
 		}, host, port);

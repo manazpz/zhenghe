@@ -15,6 +15,7 @@ import com.example.datasave.MySharedPreferences;
 import com.example.datasave.contsData;
 import com.example.fragment.Socket.AnScoket;
 import com.example.fragment.Socket.CloseThread;
+import com.example.fragment.Socket.MyThread;
 import com.example.fragment.Socket.SocketCall;
 import com.example.fragment.Socket.SocketCallbyte;
 import com.example.fragment.Socket.structScoket;
@@ -46,7 +47,6 @@ public class MarketFragment extends Fragment {
 
 	private View layout;
 	private LayoutInflater inflater;
-	private structScoket janScoket;
 	private TextView title;
 	private TextView execute;
 	private TextView buyprice;
@@ -58,10 +58,11 @@ public class MarketFragment extends Fragment {
 	private TextView lowprice;
 	private TextView rangeprice;
 	private HuoQuHq hqhq = new HuoQuHq();
-	private int code =0;
+	private int code = 0;
 	private MyData app;
+
 	public MarketFragment() {
-		
+
 	}
 
 	@Override
@@ -71,13 +72,15 @@ public class MarketFragment extends Fragment {
 			layout = layout = inflater.inflate(R.layout.item_market, container, false);
 			// 初始化静态UI
 			initUI();
-			initData("USDJPY");
+			initData(contsData.codelist.get(0).getCode().toString());
 		}
 		return layout;
 	}
 	
+
 	public void updatalist(String hycode) {
-		initData(hycode);
+		String str = "uclient|" + hycode + "|0";
+		new MyThread(str, contsData.tcp).start();
 	}
 
 	private void initUI() {
@@ -93,45 +96,51 @@ public class MarketFragment extends Fragment {
 		rangeprice = (TextView) layout.findViewById(R.id.tv_rangeprice);
 	}
 
+
 	private void initData(String hycode) {
 		String str = contsData.hhost.get(contsData.sername + "h");
 		String[] sername = str.split("\\:");
-		janScoket = new structScoket(getActivity(), sername[0], Integer.parseInt(sername[1]), new SocketCallbyte() {
+			contsData.janScoket = new structScoket(getActivity(), sername[0], Integer.parseInt(sername[1]),
+					new SocketCallbyte() {
 
-			@Override
-			public void writeing(Boolean flag) {
-			}
 
-			@Override
-			public void reading(byte[] result, TcpClient tcpClient) {
-				if (result.length>0 ) {
-					sxUI(hqhq.gethq(result));
-				}
+						@Override
+						public void reading(byte[] result, TcpClient tcpClient) {
+							
+							if (result.length > 0) {
+								sxUI(hqhq.gethq(result));
+							}
+						}
+						@Override
+						public void writeing(Boolean flag, TcpClient tcpClient) {
+							contsData.tcp = tcpClient;
+						}
+					});
+			try {
+				contsData.janScoket.SocketOnline();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		});
-		janScoket.setLoginstr("uclient|" + hycode + "|" + 0);
-		try {
-			janScoket.SocketOnline();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
 	
+		contsData.janScoket.setLoginstr("uclient|" + hycode + "|" + 0);
+	}
+
 	public void sxUI(Struct struct) {
-		title.setText(new String(struct.getExchangeID()).trim()+"("+new String(struct.getInstrumentID(), 0, 6)+")");
-		execute.setText(struct.getLastPrice()+"");
-		newprice.setText(struct.getLastPrice()+"");
-		lowprice.setText(struct.getLowestPrice()+"");
-		hprice.setText(struct.getHighestPrice()+"");
+		title.setText(
+				new String(struct.getExchangeID()).trim() + "(" + new String(struct.getInstrumentID(), 0, 6) + ")");
+		execute.setText(struct.getLastPrice() + "");
+		newprice.setText(struct.getLastPrice() + "");
+		lowprice.setText(struct.getLowestPrice() + "");
+		hprice.setText(struct.getHighestPrice() + "");
 		DecimalFormat bl6 = new DecimalFormat("000.000000");
-		openprice.setText(bl6.format(struct.getOpenPrice())+"");
-		double price1 = struct.getLastPrice()-struct.getOpenPrice();
+		openprice.setText(bl6.format(struct.getOpenPrice()) + "");
+		double price1 = struct.getLastPrice() - struct.getOpenPrice();
 		DecimalFormat bl5 = new DecimalFormat("0.000000");
-		updownprice.setText(bl5.format(price1)+"");
-		double price2 = price1/struct.getOpenPrice()*100;
+		updownprice.setText(bl5.format(price1) + "");
+		double price2 = price1 / struct.getOpenPrice() * 100;
 		DecimalFormat bl2 = new DecimalFormat("0.00");
-		rangeprice.setText(bl2.format(price2)+"%");
-		buyprice.setText(struct.getBidPrice1()+"");
-		sellprice.setText(struct.getAskPrice1()+"");
+		rangeprice.setText(bl2.format(price2) + "%");
+		buyprice.setText(struct.getBidPrice1() + "");
+		sellprice.setText(struct.getAskPrice1() + "");
 	}
 }

@@ -13,6 +13,7 @@ import com.example.fragment.SetFragment;
 import com.example.fragment.Socket.AnScoket;
 import com.example.fragment.Socket.CloseThread;
 import com.example.fragment.Socket.SocketCall;
+import com.example.fragment.Socket.structScoket;
 import com.example.jsData.codeData;
 import com.example.jsData.userData;
 import com.smorra.asyncsocket.TcpClient;
@@ -183,12 +184,10 @@ public class MainActivity extends AppCompatActivity  implements OnItemClickListe
 			if ("ugetcodelist".equals(str[0])) {
 				for (int i = 1; i < str.length; i++) {
 					String[] hym = str[i].split(",");
-					Log.e("dsds", hym[0]);
-					Log.e("dsds", hym[1]);
 					contsData.codelist1.add(new codeData(hym[0], hym[1]));
 				}
 				adapter.notifyDataSetChanged();
-				Log.e("ccccc", ""+contsData.codelist1.size());
+				//mf.initData(contsData.codelist1.get(0).getCode());
 			}else {
 				new CloseThread(tcpClient).start();
 			}

@@ -4,5 +4,5 @@ import com.smorra.asyncsocket.TcpClient;
 
 public interface SocketCallbyte {
 	public void reading(byte[] b, TcpClient tcpClient);
-	public void writeing(Boolean flag);
+	public void writeing(Boolean flag,TcpClient tcpClient);
 }
